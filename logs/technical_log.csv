@@ -1,0 +1,4 @@
+timestamp,tool,operator,action,exit_code,output_path,input_hashes,note
+2023-09-28T10:12:00Z,uv,Applicant,Initialize workspace and virtual environment (Python 3.11.5),0,,,Workspace skeleton created
+2023-09-28T10:18:00Z,uv,Applicant,Install initial dependencies (numpy/pandas/scikit-learn/pytest/streamlit),0,,,Versions captured in environment.json
+2023-09-28T11:02:00Z,manual,Applicant,Create governance templates and unknown-items register,0,,,P00 initialization

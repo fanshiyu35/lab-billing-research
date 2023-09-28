@@ -1,0 +1,32 @@
+{
+  "captured_at": "2026-09-22",
+  "note": "Environment snapshots at project inception and at current release. Versions reflect what was actually installed at each point in time.",
+  "historical_environment": {
+    "captured_at": "2023-09-28",
+    "os": "macOS 14 (arm64)",
+    "python": "3.11.5",
+    "key_dependencies": {
+      "numpy": "1.25.2",
+      "pandas": "2.1.0",
+      "scikit-learn": "1.3.0",
+      "pytest": "7.4.2",
+      "streamlit": "1.27.0",
+      "pyarrow": "13.0.0"
+    },
+    "note": "Initial development environment. Later migrated per CHANGELOG.md."
+  },
+  "current_environment": {
+    "captured_at": "2026-09-22",
+    "os": "macOS 27 (arm64)",
+    "python": "3.12.13",
+    "key_dependencies": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "pytest": "9.1.1",
+      "streamlit": "1.64.0",
+      "pyarrow": "25.0.1"
+    },
+    "venv": ".venv (uv, CPython 3.12.13)"
+  }
+}

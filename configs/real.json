@@ -1,0 +1,66 @@
+{
+  "spec_version": "BUILD-INSTRUCTIONS-1.0",
+  "project_id": "XYJ-LAB-BILLING-RESEARCH",
+  "data_mode": "REAL-LOCAL",
+  "input_root": "data/private/authorized_export",
+  "output_root": "outputs/runs",
+  "seed": 42,
+  "source_timezone_policy": "REQUIRE_EXPLICIT",
+  "currency_policy": "NO_CROSS_CURRENCY_SUM",
+  "money_representation": "integer_minor_units",
+  "linkage": {
+    "methods": [
+      "exact_id",
+      "constrained_linkage"
+    ],
+    "allow_cross_org": false,
+    "unresolved_action": "needs_review",
+    "score_kind": "UNVALIDATED_SCORE_UNLESS_CALIBRATED"
+  },
+  "prediction": {
+    "target": "FIRST_OBSERVED_POSITIVE_ALLOCATION_OR_NO_PAYMENT_CLOSURE",
+    "definition_status": "PENDING_HUMAN_CONFIRMATION",
+    "landmark_days": 7,
+    "horizon_days": 30,
+    "interval_days": 1,
+    "outputs": [
+      "P_payment_by_H",
+      "P_close_no_payment_by_H",
+      "P_still_open_by_H"
+    ],
+    "censoring": "STOP_AT_RELIABLE_OBSERVATION_END",
+    "insufficient_data_action": "ABSTAIN",
+    "models": [
+      "B0_age_stage_baseline",
+      "B1_discrete_multinomial",
+      "C1_quality_augmented"
+    ]
+  },
+  "split": {
+    "policy": "TEMPORAL_GROUPED_BY_LINEAGE",
+    "demo_ratios": null,
+    "protect_label_availability": true,
+    "lock_test_set": true
+  },
+  "ui": {
+    "main": "streamlit_local",
+    "bind_address": "127.0.0.1",
+    "powerbi_adapter_required": true,
+    "powerbi_native_required": false,
+    "publish_cloud": false
+  },
+  "permissions": {
+    "record": "governance/data_permissions.json",
+    "real_data_enabled": false,
+    "network_patient_data": false,
+    "external_contact": false,
+    "public_release": false
+  },
+  "research_claims": {
+    "novelty": "NOT_ESTABLISHED",
+    "applicant_attribution": "UNVERIFIED",
+    "external_validation": "NOT_OBTAINED",
+    "legal_eligibility": "NOT_ASSESSED"
+  },
+  "notes": "本配置是拟实现接口的示例，不是已运行结果。数字为演示工程默认，不是成功阈值或真实业务事实。"
+}

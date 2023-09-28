@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lab-billing-research"
+version = "1.4.0"
+description = "Billing event reconstruction and payment-delay early-warning research tool for clinical laboratory settings"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Proprietary - internal research use"}
+authors = [{name = "Yajie Xu"}]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,12 @@
+# private data and artifacts
+data/private/
+logs/*.payload
+governance/*.secrets.json
+outputs/runs/*/private/
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.idea/
+.DS_Store

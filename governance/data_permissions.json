@@ -1,0 +1,21 @@
+{
+  "status": "NOT_OBTAINED",
+  "real_data_enabled": false,
+  "data_owner": null,
+  "authorization_document_ref": null,
+  "approver_actual_capacity": null,
+  "authorization_date": null,
+  "valid_until": null,
+  "permitted_data_categories": [],
+  "permitted_purposes": [],
+  "permitted_processing_locations": [],
+  "permitted_people": [],
+  "external_sharing_allowed": false,
+  "public_release_allowed": false,
+  "research_ethics_review_status": "UNKNOWN",
+  "privacy_review_status": "UNKNOWN",
+  "ip_and_publication_permission_status": "UNKNOWN",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "note": "由适当负责人根据真实权限填写。AI只能核对记录，不得自行批准；本JSON不是授权书。"
+}

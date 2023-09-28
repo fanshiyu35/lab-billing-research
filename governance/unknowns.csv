@@ -1,0 +1,8 @@
+issue_id,question,affected_phase,current_evidence,needed_fact,owner,status,safe_demo_default,resolved_at,resolution_source
+U01,Target organization's real billing data fields and export format,P02,None,Authorized field dictionary or example export,Data custodian,OPEN,Proposed schema (data_schema.spec.json),,
+U02,Whether real data access will be granted for this study,P08,None,Access scope and authorization basis,Data custodian,OPEN,DEMO only; REAL-LOCAL disabled,,
+U03,How business statuses map to the event dictionary,P03,Proposed mapping,Confirmation by business owner,Applicant + data custodian,OPEN,Use proposed dictionary with UNKNOWN fallback,,
+U04,Whether v1 prediction target matches real business need,P04,Spec section 11,Confirmation or revised definition,Applicant + data custodian,OPEN,Demo operationalization (H=30, landmark=7d),,
+U05,Whether native Power BI deliverable is required,P05,Spec section 14,Yes/No,Applicant,OPEN,Streamlit local app + Power BI adapter only,,
+U06,Which prior real work the applicant has done on this topic,P07,None,Applicant statement with supporting artifacts,Applicant,OPEN,None claimed until documented,,
+U07,Whether cross-currency aggregation is needed,P02,Spec section 08,Confirmation,Applicant + data custodian,OPEN,No cross-currency summation,,

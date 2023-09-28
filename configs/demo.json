@@ -1,0 +1,76 @@
+{
+  "spec_version": "BUILD-INSTRUCTIONS-1.0",
+  "project_id": "XYJ-LAB-BILLING-RESEARCH",
+  "data_mode": "DEMO",
+  "input_root": "data/demo",
+  "output_root": "outputs/runs",
+  "seed": 42,
+  "demo_lineages": 1000,
+  "demo_orgs": [
+    "CCL",
+    "MDG",
+    "GLS"
+  ],
+  "org_profiles_ref": "data/reference/org_profiles.csv",
+  "source_timezone_policy": "REQUIRE_EXPLICIT",
+  "currency_policy": "NO_CROSS_CURRENCY_SUM",
+  "money_representation": "integer_minor_units",
+  "linkage": {
+    "methods": [
+      "exact_id",
+      "constrained_linkage"
+    ],
+    "allow_cross_org": false,
+    "unresolved_action": "needs_review",
+    "score_kind": "UNVALIDATED_SCORE_UNLESS_CALIBRATED"
+  },
+  "prediction": {
+    "target": "FIRST_OBSERVED_POSITIVE_ALLOCATION_OR_NO_PAYMENT_CLOSURE",
+    "definition_status": "DEMO_ASSUMPTION_REAL_CONFIRMATION_REQUIRED",
+    "landmark_days": 7,
+    "horizon_days": 30,
+    "interval_days": 1,
+    "outputs": [
+      "P_payment_by_H",
+      "P_close_no_payment_by_H",
+      "P_still_open_by_H"
+    ],
+    "censoring": "STOP_AT_RELIABLE_OBSERVATION_END",
+    "insufficient_data_action": "ABSTAIN",
+    "models": [
+      "B0_age_stage_baseline",
+      "B1_discrete_multinomial",
+      "C1_quality_augmented"
+    ]
+  },
+  "split": {
+    "policy": "TEMPORAL_GROUPED_BY_LINEAGE",
+    "demo_ratios": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "protect_label_availability": true,
+    "lock_test_set": true
+  },
+  "ui": {
+    "main": "streamlit_local",
+    "bind_address": "127.0.0.1",
+    "powerbi_adapter_required": true,
+    "powerbi_native_required": false,
+    "publish_cloud": false
+  },
+  "permissions": {
+    "record": "governance/data_permissions.json",
+    "real_data_enabled": false,
+    "network_patient_data": false,
+    "external_contact": false,
+    "public_release": false
+  },
+  "research_claims": {
+    "novelty": "NOT_ESTABLISHED",
+    "applicant_attribution": "UNVERIFIED",
+    "external_validation": "NOT_OBTAINED",
+    "legal_eligibility": "NOT_ASSESSED"
+  }
+}
