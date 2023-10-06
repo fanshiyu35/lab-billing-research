@@ -1,0 +1,9 @@
+payer_token,payer_name,payer_type,notes
+AET,Aetna,Commercial health plan,National
+UHC,UnitedHealthcare,Commercial health plan,National
+HUM,Humana,Commercial health plan,National
+BCB,Blue Cross Blue Shield,Commercial health plan,State/regional plans
+CIG,Cigna,Commercial health plan,National
+MCR,Medicare,Government payer,Federal
+MCD,Medicaid,Government payer,State administered
+SELF,Self-pay,Patient direct,No insurance billing

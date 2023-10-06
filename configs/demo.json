@@ -7,9 +7,9 @@
   "seed": 42,
   "demo_lineages": 1000,
   "demo_orgs": [
-    "CCL",
-    "MDG",
-    "GLS"
+    "CPL",
+    "TRI",
+    "NDX"
   ],
   "org_profiles_ref": "data/reference/org_profiles.csv",
   "source_timezone_policy": "REQUIRE_EXPLICIT",
