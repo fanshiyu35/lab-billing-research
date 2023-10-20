@@ -1,0 +1,6 @@
+search_id,query,platform,date,result_summary
+S01,record linkage event log reconstruction uncertainty,Web search,2023-09-30,Fellegi-Sunter 1969 and Christen 2012 identified as core references
+S02,payer response prediction claims machine learning,Web search,2023-10-02,Deep Claim (arXiv:2007.06229) identified as closest applied work
+S03,invoice payment delay prediction accounts receivable,Web search,2023-10-05,Zeng et al. 2007 and Schoonbee 2022 identified for aging-baseline design
+S04,competing risks survival analysis censoring,Web search,2023-10-05,Fine-Gray 1999 and Kaplan-Meier 1958 identified for outcome modeling
+S05,process mining event logs,Web search,2023-10-05,van der Aalst 2016 identified for event normalization concepts

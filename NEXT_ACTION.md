@@ -1,15 +1,17 @@
 # Next action
 
-Last updated: 2023-09-28 (P00 in progress)
+Last updated: 2023-10-20 (P01 complete)
 
 Completed:
-- Workspace skeleton and directory layout (spec section 04).
-- Virtual environment created and initial dependencies installed.
-- Configs split DEMO / REAL-LOCAL; permissions and unknowns registers created.
+- P00 workspace initialization (2023-09-28).
+- P01 research design: prior-work scan (9 references, verified), candidate methods,
+  protocol v1.0 frozen (2023-10-20), decision register D01-D06.
 
-Immediate next:
-1. Freeze demo research assumptions (protocol v0.1).
-2. P01: literature scan and prior-work table (prior_work.csv).
-3. P02: field dictionary, synthetic generator v0.1, fixed fixtures.
+Immediate next (P02):
+1. data_dictionary.csv from data_schema.spec.json.
+2. Schema validator (bills/events/allocations/observation_windows).
+3. synthetic_generator.py with hidden ground truth (seed 42, 1000 lineages, 3 sites).
+4. All fixed fixtures per spec section 09 (24 scenario classes).
+5. Input/ground-truth isolation and data manifest.
 
-Blockers: none for DEMO track. REAL-LOCAL track blocked on data authorization (see governance/unknowns.csv).
+Blockers: none for DEMO track.
