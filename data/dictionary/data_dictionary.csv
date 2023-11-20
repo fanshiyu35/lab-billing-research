@@ -1,0 +1,49 @@
+table_name,field_name,field_type,meaning,unit,nullable,source,allowed_values,known_at_point_in_time
+bills,record_id,string,Unique immutable source row identifier,,-,source system,non-empty string,yes
+bills,org_token,string,Organization code within this study,,-,source system,CPL/TRI/NDX,yes
+bills,source_system,string,Originating system code,,-,source system,free code,yes
+bills,bill_id,string,Native bill number; NOT assumed unique across sources,,-,source system,non-empty string,yes
+bills,version_id,string,Version identifier; derivation rule required if no native version,,-,source system,string,yes
+bills,previous_record_id,string,Native explicit predecessor reference,,-,source system,record_id or empty,yes
+bills,payer_token,string,Payer code,,-,source system,AET/UHC/HUM/BCB/CIG/MCR/MCD/SELF or empty,yes
+bills,service_token,string,Service identifier; NOT patient identity,,-,source system,string or empty,yes
+bills,billed_amount_minor,integer,Billed amount in minor currency units,minor unit,必填,source system,positive integer,yes
+bills,currency,string,Currency,ISO 4217,必填,source system,USD (demo),yes
+bills,submitted_at,datetime,Business submission time with timezone,ISO 8601,必填,source system,ISO 8601 with tz,yes
+bills,available_at,datetime,When this version became knowable in the system,ISO 8601,必填,source system,ISO 8601 with tz,yes
+bills,source_ref,string,Controlled source record reference,,-,source system,ref string,yes
+events,event_id,string,Unique source event identifier,,-,source system,non-empty string,yes
+events,org_token,string,Organization code,,-,source system,CPL/TRI/NDX,yes
+events,source_system,string,Originating system code,,-,source system,free code,yes
+events,bill_record_id,string,Native reference to source row; empty for unallocated payments,,-,source system,record_id or empty,yes
+events,event_type,string,Event type,,-,source system,SUBMITTED/CORRECTED/PAYMENT_POSTED/PAYMENT_REVERSED/VOID_VERSION/CLOSED_NO_PAYMENT/REOPENED/ADJUSTMENT/STATUS_UPDATED/UNKNOWN,yes
+events,event_at,datetime,Business time the event occurred,ISO 8601,必填,source system,ISO 8601 with tz,yes
+events,available_at,datetime,When the event became knowable,ISO 8601,必填,source system,ISO 8601 with tz,yes
+events,amount_minor,integer,Amount semantics defined by event type,minor unit,可空,source system,integer,yes
+events,currency,string,Currency; required when amount present,ISO 4217,有金额则必填,source system,ISO 4217,yes
+events,reverses_event_id,string,Reversal target original event,,-,source system,event_id or empty,yes
+events,terminal_flag,boolean,Explicit source terminal marker; default false and review,,-,source system,true/false,yes
+events,source_ref,string,Controlled source record reference,,-,source system,ref string,yes
+allocations,allocation_id,string,Unique allocation identifier,,-,source system,non-empty string,yes
+allocations,payment_event_id,string,Referenced payment event,,-,source system,event_id,yes
+allocations,bill_record_id,string,Referenced bill record,,-,source system,record_id,yes
+allocations,allocated_amount_minor,integer,Allocated amount,minor unit,必填,source system,positive integer,yes
+allocations,currency,string,Currency,ISO 4217,必填,source system,ISO 4217,yes
+allocations,available_at,datetime,When allocation became knowable,ISO 8601,必填,source system,ISO 8601 with tz,yes
+allocations,source_ref,string,Controlled source record reference,,-,source system,ref string,yes
+observation_windows,window_id,string,Unique window identifier,,-,source system,non-empty string,yes
+observation_windows,org_token,string,Organization code,,-,source system,CPL/TRI/NDX,yes
+observation_windows,source_system,string,Originating system code,,-,source system,free code,yes
+observation_windows,coverage_start,datetime,Coverage start,ISO 8601,必填,source system,ISO 8601 with tz,yes
+observation_windows,coverage_end,datetime,Coverage end,ISO 8601,必填,source system,ISO 8601 with tz,yes
+observation_windows,extracted_at,datetime,Extraction time,ISO 8601,必填,source system,ISO 8601 with tz,yes
+observation_windows,coverage_status,string,Coverage status,,-,source system,complete/partial/unknown,yes
+observation_windows,basis_ref,string,Basis for coverage claims,,-,source system,ref string,yes
+reference_labels,label_id,string,Unique label identifier,,-,human review,non-empty string,-
+reference_labels,left_record_id,string,Left record,,-,human review,record_id,-
+reference_labels,right_record_id,string,Right record,,-,human review,record_id,-
+reference_labels,same_lineage,string,Same-lineage ground truth,,-,human review,true/false/unknown,-
+reference_labels,reviewer_token,string,Reviewer code,,-,human review,string,-
+reference_labels,reviewed_at,datetime,Review time,ISO 8601,可空,human review,ISO 8601,-
+reference_labels,basis_ref,string,Basis for judgment,,-,human review,ref string,-
+reference_labels,adjudication_status,string,Adjudication status,,-,human review,confirmed/contested,-

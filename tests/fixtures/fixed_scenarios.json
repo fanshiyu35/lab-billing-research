@@ -1,0 +1,1309 @@
+{
+  "fixture_version": "1.0",
+  "frozen_at": "2023-11-20",
+  "note": "Each scenario: id, inputs, reference behavior, allowed uncertainty, assertions. Hidden truth is only for scoring, never for linkage input.",
+  "scenarios": {
+    "F01_normal_single_bill": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1001",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "12000",
+            "currency": "USD",
+            "submitted_at": "2023-01-10T09:00:00-06:00",
+            "available_at": "2023-01-10T09:30:00-06:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "SUBMITTED",
+            "event_at": "2023-01-10T09:00:00-06:00",
+            "available_at": "2023-01-10T09:30:00-06:00",
+            "amount_minor": "12000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "Single lineage with one bill and one event. No ambiguity.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "lineage count == 1",
+        "no conflicts",
+        "review queue empty",
+        "status OPEN"
+      ]
+    },
+    "F02_corrected_bill": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1002",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "12000",
+            "currency": "USD",
+            "submitted_at": "2023-01-10T09:00:00-06:00",
+            "available_at": "2023-01-10T09:30:00-06:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1002",
+            "version_id": "2",
+            "previous_record_id": "B1",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "15000",
+            "currency": "USD",
+            "submitted_at": "2023-01-14T10:00:00-06:00",
+            "available_at": "2023-01-14T10:40:00-06:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "SUBMITTED",
+            "event_at": "2023-01-10T09:00:00-06:00",
+            "available_at": "2023-01-10T09:30:00-06:00",
+            "amount_minor": "12000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B2",
+            "event_type": "CORRECTED",
+            "event_at": "2023-01-14T10:00:00-06:00",
+            "available_at": "2023-01-14T10:40:00-06:00",
+            "amount_minor": "15000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "B1 and B2 are versions of the same lineage via native previous_record_id. Amounts are NOT summed.",
+      "allowed_uncertainty": "None; explicit reference.",
+      "assertions": [
+        "one lineage",
+        "two versions retained",
+        "billed amounts not summed",
+        "no conflict"
+      ]
+    },
+    "F03_explicit_predecessor": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_id": "2001",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "MCR",
+            "service_token": "CHEM",
+            "billed_amount_minor": "9000",
+            "currency": "USD",
+            "submitted_at": "2023-02-01T08:00:00-07:00",
+            "available_at": "2023-02-01T08:20:00-07:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "SUBMITTED",
+            "event_at": "2023-02-01T08:00:00-07:00",
+            "available_at": "2023-02-01T08:20:00-07:00",
+            "amount_minor": "9000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "Same as F01; exercises the explicit-id path.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "one lineage",
+        "link rule = exact_id"
+      ]
+    },
+    "F04_missing_reference": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1003",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "AET",
+            "service_token": "MOL",
+            "billed_amount_minor": "68000",
+            "currency": "USD",
+            "submitted_at": "2023-03-05T09:00:00-06:00",
+            "available_at": "2023-03-05T09:20:00-06:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1003",
+            "version_id": "2",
+            "previous_record_id": "",
+            "payer_token": "AET",
+            "service_token": "MOL",
+            "billed_amount_minor": "71000",
+            "currency": "USD",
+            "submitted_at": "2023-03-09T09:00:00-06:00",
+            "available_at": "2023-03-09T09:20:00-06:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Correction without native predecessor. Same bill_id and org => constrained candidate pair; linkage via constrained rules may proceed; if ambiguous, needs_review.",
+      "allowed_uncertainty": "Correct action may be to link (same bill_id) or to queue for review; forced wrong links are the failure mode.",
+      "assertions": [
+        "no cross-org link",
+        "decision is link or needs_review (not reject-without-reason)",
+        "same bill_id drives candidate generation"
+      ]
+    },
+    "F05_ambiguous_multi_candidate": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1010",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "",
+            "service_token": "",
+            "billed_amount_minor": "15000",
+            "currency": "USD",
+            "submitted_at": "2023-04-01T09:00:00-05:00",
+            "available_at": "2023-04-01T09:20:00-05:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1010",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "",
+            "service_token": "",
+            "billed_amount_minor": "15000",
+            "currency": "USD",
+            "submitted_at": "2023-04-01T10:00:00-05:00",
+            "available_at": "2023-04-01T10:20:00-05:00",
+            "source_ref": "r2"
+          },
+          {
+            "record_id": "B3",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1010",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "",
+            "service_token": "",
+            "billed_amount_minor": "15000",
+            "currency": "USD",
+            "submitted_at": "2023-04-01T11:00:00-05:00",
+            "available_at": "2023-04-01T11:20:00-05:00",
+            "source_ref": "r3"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Three identical bills. Whether they are versions or independent services cannot be decided => needs_review, NOT forced merge.",
+      "allowed_uncertainty": "needs_review is the expected output.",
+      "assertions": [
+        "all three records in review queue or linked only if rule evidence forces it",
+        "no silent merge of all three",
+        "conflict preserved"
+      ]
+    },
+    "F06_cross_org_duplicate_number": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "8888888",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "5000",
+            "currency": "USD",
+            "submitted_at": "2023-05-01T09:00:00-05:00",
+            "available_at": "2023-05-01T09:20:00-05:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_id": "8888888",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "5000",
+            "currency": "USD",
+            "submitted_at": "2023-05-01T09:00:00-06:00",
+            "available_at": "2023-05-01T09:20:00-06:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Same bill_id across orgs must never link.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "two separate lineages",
+        "no cross-org link",
+        "T02 pass"
+      ]
+    },
+    "F07_same_service_multiple_bills": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "NDX",
+            "source_system": "SYS",
+            "bill_id": "9001",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "SELF",
+            "service_token": "SRV77",
+            "billed_amount_minor": "12000",
+            "currency": "USD",
+            "submitted_at": "2023-06-01T09:00:00-04:00",
+            "available_at": "2023-06-01T09:20:00-04:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "NDX",
+            "source_system": "SYS",
+            "bill_id": "9002",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "SELF",
+            "service_token": "SRV77",
+            "billed_amount_minor": "12000",
+            "currency": "USD",
+            "submitted_at": "2023-06-15T09:00:00-04:00",
+            "available_at": "2023-06-15T09:20:00-04:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Same service token does NOT imply same lineage. Two independent bills.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "two lineages",
+        "service_token alone never drives a link"
+      ]
+    },
+    "F08_duplicate_import": {
+      "inputs": {
+        "bills": [],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-06-10T10:00:00-05:00",
+            "available_at": "2023-06-10T10:30:00-05:00",
+            "amount_minor": "12000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-06-10T10:00:00-05:00",
+            "available_at": "2023-06-10T10:30:00-05:00",
+            "amount_minor": "12000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1-DUP"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "12000",
+            "currency": "USD",
+            "available_at": "2023-06-10T10:30:00-05:00",
+            "source_ref": "r1"
+          },
+          {
+            "allocation_id": "A2",
+            "payment_event_id": "E2",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "12000",
+            "currency": "USD",
+            "available_at": "2023-06-10T10:30:00-05:00",
+            "source_ref": "r1-DUP"
+          }
+        ],
+        "bills_note": "B1 defined externally"
+      },
+      "reference_behavior": "Duplicate import of the same payment must not double-count.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "net posted amount counted once",
+        "duplicate flagged in conflicts or deduplicated with audit trail"
+      ]
+    },
+    "F09_partial_payment": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1020",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "MCD",
+            "service_token": "PANEL",
+            "billed_amount_minor": "20000",
+            "currency": "USD",
+            "submitted_at": "2023-07-01T09:00:00-05:00",
+            "available_at": "2023-07-01T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-07-20T10:00:00-05:00",
+            "available_at": "2023-07-20T10:30:00-05:00",
+            "amount_minor": "14000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "14000",
+            "currency": "USD",
+            "available_at": "2023-07-20T10:30:00-05:00",
+            "source_ref": "r2"
+          }
+        ]
+      },
+      "reference_behavior": "Partial payment of 14000 against 20000; remaining 6000 stays open.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "allocated 14000",
+        "outstanding 6000",
+        "lineage not closed by partial payment"
+      ]
+    },
+    "F10_one_payment_multiple_bills": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1021",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-07-05T09:00:00-05:00",
+            "available_at": "2023-07-05T09:20:00-05:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1022",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "CHEM",
+            "billed_amount_minor": "16000",
+            "currency": "USD",
+            "submitted_at": "2023-07-05T09:05:00-05:00",
+            "available_at": "2023-07-05T09:25:00-05:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-07-25T10:00:00-05:00",
+            "available_at": "2023-07-25T10:30:00-05:00",
+            "amount_minor": "26000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r3"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "10000",
+            "currency": "USD",
+            "available_at": "2023-07-25T10:30:00-05:00",
+            "source_ref": "r3"
+          },
+          {
+            "allocation_id": "A2",
+            "payment_event_id": "E1",
+            "bill_record_id": "B2",
+            "allocated_amount_minor": "16000",
+            "currency": "USD",
+            "available_at": "2023-07-25T10:30:00-05:00",
+            "source_ref": "r3"
+          }
+        ]
+      },
+      "reference_behavior": "One payment split across two independent bills via allocations.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "two lineages both allocated",
+        "sum of allocations == payment amount",
+        "no unallocated remainder"
+      ]
+    },
+    "F11_multiple_payments_one_bill": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_id": "3001",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "AET",
+            "service_token": "MOL",
+            "billed_amount_minor": "80000",
+            "currency": "USD",
+            "submitted_at": "2023-08-01T09:00:00-06:00",
+            "available_at": "2023-08-01T09:20:00-06:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-08-20T10:00:00-06:00",
+            "available_at": "2023-08-20T10:30:00-06:00",
+            "amount_minor": "50000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-09-05T10:00:00-06:00",
+            "available_at": "2023-09-05T10:30:00-06:00",
+            "amount_minor": "30000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r3"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "50000",
+            "currency": "USD",
+            "available_at": "2023-08-20T10:30:00-06:00",
+            "source_ref": "r2"
+          },
+          {
+            "allocation_id": "A2",
+            "payment_event_id": "E2",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "30000",
+            "currency": "USD",
+            "available_at": "2023-09-05T10:30:00-06:00",
+            "source_ref": "r3"
+          }
+        ]
+      },
+      "reference_behavior": "Two payments settle one bill in full.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "allocated total 80000",
+        "outstanding 0",
+        "two payment events preserved"
+      ]
+    },
+    "F12_unallocated_payment": {
+      "inputs": {
+        "bills": [],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "NDX",
+            "source_system": "SYS",
+            "bill_record_id": "",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-09-10T10:00:00-04:00",
+            "available_at": "2023-09-10T10:30:00-04:00",
+            "amount_minor": "4500",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "Payment without allocations stays unallocated; not guessed onto any bill.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "unallocated bucket contains 4500",
+        "no allocation created"
+      ]
+    },
+    "F13_partial_reversal": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1030",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-08-01T09:00:00-05:00",
+            "available_at": "2023-08-01T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-08-20T10:00:00-05:00",
+            "available_at": "2023-08-20T10:30:00-05:00",
+            "amount_minor": "10000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_REVERSED",
+            "event_at": "2023-08-28T10:00:00-05:00",
+            "available_at": "2023-08-28T10:30:00-05:00",
+            "amount_minor": "4000",
+            "currency": "USD",
+            "reverses_event_id": "E1",
+            "terminal_flag": "false",
+            "source_ref": "r3"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "10000",
+            "currency": "USD",
+            "available_at": "2023-08-20T10:30:00-05:00",
+            "source_ref": "r2"
+          }
+        ]
+      },
+      "reference_behavior": "Partial reversal of 4000 => net observed 6000. Reversal must not double-deduct.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "net_observed_posted == 6000",
+        "reversed == 4000",
+        "gross_posted == 10000"
+      ]
+    },
+    "F14_unresolvable_reversal": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1031",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-08-01T09:00:00-05:00",
+            "available_at": "2023-08-01T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-08-20T10:00:00-05:00",
+            "available_at": "2023-08-20T10:30:00-05:00",
+            "amount_minor": "10000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "",
+            "event_type": "PAYMENT_REVERSED",
+            "event_at": "2023-08-28T10:00:00-05:00",
+            "available_at": "2023-08-28T10:30:00-05:00",
+            "amount_minor": "10000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r3"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "10000",
+            "currency": "USD",
+            "available_at": "2023-08-20T10:30:00-05:00",
+            "source_ref": "r2"
+          }
+        ]
+      },
+      "reference_behavior": "Reversal with no target must be flagged unresolved; it must NOT be arbitrarily deducted from another bill.",
+      "allowed_uncertainty": "unresolved_reversal flag expected.",
+      "assertions": [
+        "unresolved_reversal flagged",
+        "no arbitrary deduction",
+        "review queue contains the reversal"
+      ]
+    },
+    "F15_void_version_lineage_continues": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_id": "3002",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "MCR",
+            "service_token": "CHEM",
+            "billed_amount_minor": "9000",
+            "currency": "USD",
+            "submitted_at": "2023-08-10T09:00:00-06:00",
+            "available_at": "2023-08-10T09:20:00-06:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_id": "3002",
+            "version_id": "2",
+            "previous_record_id": "B1",
+            "payer_token": "MCR",
+            "service_token": "CHEM",
+            "billed_amount_minor": "9500",
+            "currency": "USD",
+            "submitted_at": "2023-08-14T09:00:00-06:00",
+            "available_at": "2023-08-14T09:20:00-06:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_record_id": "B2",
+            "event_type": "VOID_VERSION",
+            "event_at": "2023-08-14T09:00:00-06:00",
+            "available_at": "2023-08-14T09:20:00-06:00",
+            "amount_minor": "9000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "TRI",
+            "source_system": "SYS",
+            "bill_record_id": "B2",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-08-30T10:00:00-06:00",
+            "available_at": "2023-08-30T10:30:00-06:00",
+            "amount_minor": "9500",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r3"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E2",
+            "bill_record_id": "B2",
+            "allocated_amount_minor": "9500",
+            "currency": "USD",
+            "available_at": "2023-08-30T10:30:00-06:00",
+            "source_ref": "r3"
+          }
+        ]
+      },
+      "reference_behavior": "VOID_VERSION voids only v1; lineage continues on v2 and gets paid.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "one lineage",
+        "v1 voided",
+        "v2 paid",
+        "void != close"
+      ]
+    },
+    "F16_closed_no_payment": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "NDX",
+            "source_system": "SYS",
+            "bill_id": "9003",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "SELF",
+            "service_token": "PANEL",
+            "billed_amount_minor": "4500",
+            "currency": "USD",
+            "submitted_at": "2023-09-01T09:00:00-04:00",
+            "available_at": "2023-09-01T09:20:00-04:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "NDX",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "CLOSED_NO_PAYMENT",
+            "event_at": "2023-10-15T10:00:00-04:00",
+            "available_at": "2023-10-15T10:30:00-04:00",
+            "amount_minor": "",
+            "currency": "",
+            "reverses_event_id": "",
+            "terminal_flag": "true",
+            "source_ref": "r2"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "Explicit no-payment closure. Outcome for prediction: close_no_payment event at observable time.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "lineage terminal",
+        "outcome = CLOSED_NO_PAYMENT",
+        "not marked as negative payment sample in a way that ignores closure"
+      ]
+    },
+    "F17_reopened": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1032",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "AET",
+            "service_token": "CHEM",
+            "billed_amount_minor": "12000",
+            "currency": "USD",
+            "submitted_at": "2023-09-10T09:00:00-05:00",
+            "available_at": "2023-09-10T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "CLOSED_NO_PAYMENT",
+            "event_at": "2023-10-01T10:00:00-05:00",
+            "available_at": "2023-10-01T10:30:00-05:00",
+            "amount_minor": "",
+            "currency": "",
+            "reverses_event_id": "",
+            "terminal_flag": "true",
+            "source_ref": "r2"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "REOPENED",
+            "event_at": "2023-10-10T10:00:00-05:00",
+            "available_at": "2023-10-10T10:30:00-05:00",
+            "amount_minor": "",
+            "currency": "",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r3"
+          },
+          {
+            "event_id": "E3",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-10-20T10:00:00-05:00",
+            "available_at": "2023-10-20T10:30:00-05:00",
+            "amount_minor": "12000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r4"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E3",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "12000",
+            "currency": "USD",
+            "available_at": "2023-10-20T10:30:00-05:00",
+            "source_ref": "r4"
+          }
+        ]
+      },
+      "reference_behavior": "Close then reopen then pay. v1 predicts first event only; close event retained, reopen recorded as later event.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "old close event retained",
+        "reopen recorded",
+        "payment observable",
+        "v1 predicts first event (close), full lifecycle not claimed"
+      ]
+    },
+    "F18_late_record": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1033",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-09-15T09:00:00-05:00",
+            "available_at": "2023-10-30T09:00:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "available_at far after submitted_at: at any as_of before available_at this record must not enter features.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "record invisible at as_of 2023-09-20",
+        "record visible at as_of 2023-11-01",
+        "no backfill into earlier snapshots"
+      ]
+    },
+    "F19_same_time_different_source": {
+      "inputs": {
+        "bills": [],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS1",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-10-05T10:00:00-05:00",
+            "available_at": "2023-10-05T10:30:00-05:00",
+            "amount_minor": "8000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          },
+          {
+            "event_id": "E2",
+            "org_token": "CPL",
+            "source_system": "SYS2",
+            "bill_record_id": "B1",
+            "event_type": "CLOSED_NO_PAYMENT",
+            "event_at": "2023-10-05T10:00:00-05:00",
+            "available_at": "2023-10-05T10:30:00-05:00",
+            "amount_minor": "",
+            "currency": "",
+            "reverses_event_id": "",
+            "terminal_flag": "true",
+            "source_ref": "r2"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "Payment and closure at same instant from different sources: order unknowable => ambiguous_outcome, not force one winner.",
+      "allowed_uncertainty": "ambiguous_outcome expected.",
+      "assertions": [
+        "ambiguous_outcome recorded",
+        "neither event forced to win"
+      ]
+    },
+    "F20_future_leak_trap": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1034",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-09-20T09:00:00-05:00",
+            "available_at": "2023-09-20T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "B1",
+            "event_type": "PAYMENT_POSTED",
+            "event_at": "2023-10-20T10:00:00-05:00",
+            "available_at": "2023-10-20T10:30:00-05:00",
+            "amount_minor": "10000",
+            "currency": "USD",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r2"
+          }
+        ],
+        "allocations": [
+          {
+            "allocation_id": "A1",
+            "payment_event_id": "E1",
+            "bill_record_id": "B1",
+            "allocated_amount_minor": "10000",
+            "currency": "USD",
+            "available_at": "2023-10-20T10:30:00-05:00",
+            "source_ref": "r2"
+          }
+        ]
+      },
+      "reference_behavior": "Payment occurs 30 days after submission. A snapshot at t=2023-09-27 must not see it; T10 guards this.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "snapshot at 2023-09-27 has no payment feature",
+        "snapshot at 2023-10-21 sees payment"
+      ]
+    },
+    "F21_observation_expired_still_open": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1035",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-09-01T09:00:00-05:00",
+            "available_at": "2023-09-01T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Submitted, no event, observation window ends before H: right-censored, NOT a negative.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "censored flag",
+        "not labeled payment-negative",
+        "not labeled close-no-payment"
+      ]
+    },
+    "F22_unknown_status": {
+      "inputs": {
+        "bills": [],
+        "events": [
+          {
+            "event_id": "E1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_record_id": "",
+            "event_type": "UNKNOWN",
+            "event_at": "2023-10-01T09:00:00-05:00",
+            "available_at": "2023-10-01T09:30:00-05:00",
+            "amount_minor": "",
+            "currency": "",
+            "reverses_event_id": "",
+            "terminal_flag": "false",
+            "source_ref": "r1"
+          }
+        ],
+        "allocations": []
+      },
+      "reference_behavior": "Unknown status kept with raw code and enters review; not guessed.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "UNKNOWN preserved",
+        "review queue contains it",
+        "no inference attempted"
+      ]
+    },
+    "F23_illegal_amount": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1036",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "-500",
+            "currency": "USD",
+            "submitted_at": "2023-10-02T09:00:00-05:00",
+            "available_at": "2023-10-02T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Illegal amount isolated by validator; original row retained in raw layer.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "validator reports ERROR",
+        "row not silently fixed",
+        "excluded from reconstruction input"
+      ]
+    },
+    "F24_cross_currency": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1037",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-10-03T09:00:00-05:00",
+            "available_at": "2023-10-03T09:20:00-05:00",
+            "source_ref": "r1"
+          },
+          {
+            "record_id": "B2",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1038",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "UHC",
+            "service_token": "PANEL",
+            "billed_amount_minor": "12000",
+            "currency": "CAD",
+            "submitted_at": "2023-10-03T09:00:00-05:00",
+            "available_at": "2023-10-03T09:20:00-05:00",
+            "source_ref": "r2"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Cross-currency amounts never summed; CAD row flagged/isolated.",
+      "allowed_uncertainty": "None.",
+      "assertions": [
+        "no cross-currency aggregation",
+        "CAD row flagged"
+      ]
+    },
+    "F25_never_seen_payer": {
+      "inputs": {
+        "bills": [
+          {
+            "record_id": "B1",
+            "org_token": "CPL",
+            "source_system": "SYS",
+            "bill_id": "1039",
+            "version_id": "1",
+            "previous_record_id": "",
+            "payer_token": "ZZZ",
+            "service_token": "PANEL",
+            "billed_amount_minor": "10000",
+            "currency": "USD",
+            "submitted_at": "2023-10-04T09:00:00-05:00",
+            "available_at": "2023-10-04T09:20:00-05:00",
+            "source_ref": "r1"
+          }
+        ],
+        "events": [],
+        "allocations": []
+      },
+      "reference_behavior": "Unseen payer token: model must state support limits or refuse, not crash or guess.",
+      "allowed_uncertainty": "ABSTAIN or explicit support-limit note acceptable.",
+      "assertions": [
+        "no crash",
+        "support limit stated or ABSTAIN",
+        "no fabricated probability"
+      ]
+    }
+  }
+}
