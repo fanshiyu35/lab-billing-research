@@ -125,7 +125,37 @@ class ReconstructionEngine:
                 continue
             self._link_pair(prev_id, b["record_id"], rule_id="R1_native_previous_id")
 
-    def _link_pair(self, from_id: str, to_id: str, rule_id: str) -> None:
+    # --------------------------------------------------------- constrained
+    def link_constrained(self) -> None:
+        """R2 version chains and R3 weak-evidence candidates (v0.7)."""
+        from .rules import generate_r2_candidates, generate_r3_candidates, resolve_r3
+
+        for c in generate_r2_candidates(self.bills):
+            if c.to_id == "":  # ambiguous version set
+                self.review_queue.append(_review_row(
+                    "AMBIGUOUS_VERSION_SET", [c.from_id],
+                    c.evidence, self.run_id))
+                continue
+            self._link_pair(c.from_id, c.to_id, rule_id=c.rule_id,
+                            reason=c.evidence, score=c.score,
+                            score_kind=c.score_kind)
+
+        accepted, review = resolve_r3(generate_r3_candidates(self.bills))
+        for c in accepted:
+            self._link_pair(c.from_id, c.to_id, rule_id=c.rule_id,
+                            reason=c.evidence, score=c.score,
+                            score_kind=c.score_kind)
+        for c in review:
+            self.review_queue.append(_review_row(
+                "MULTI_CANDIDATE_AMBIGUITY", [c.from_id, c.to_id],
+                c.evidence, self.run_id))
+
+    def _link_pair(self, from_id: str, to_id: str, rule_id: str,
+                   reason: str = "native explicit predecessor reference",
+                   score: str | float = "", score_kind: str = "NOT_SCORED") -> None:
+        if any(l["left_record_id"] == from_id and l["right_record_id"] == to_id
+               for l in self.links):
+            return  # already linked by a higher-priority rule
         src = self.bill_index.get(from_id)
         dst = self.bill_index.get(to_id)
         if src is None or dst is None:
@@ -145,11 +175,14 @@ class ReconstructionEngine:
                 "CYCLE_REFERENCE", [from_id, to_id],
                 "explicit reference would create a cycle", self.run_id))
             return
-        # time order sanity: predecessor submitted before successor
-        if src["submitted_at"] > dst["submitted_at"]:
-            self.conflicts.append(_conflict_row(
-                "TIME_ORDER_VIOLATION", [from_id, to_id],
-                "predecessor submitted after successor", self.run_id))
+        # time order sanity: only meaningful for explicit predecessors and
+        # version chains (R1/R2); R3 weak-evidence pairs are same-lineage
+        # candidates without an inherent ordering
+        if rule_id in ("R1_native_previous_id", "R2_same_bill_id_versions"):
+            if src["submitted_at"] > dst["submitted_at"]:
+                self.conflicts.append(_conflict_row(
+                    "TIME_ORDER_VIOLATION", [from_id, to_id],
+                    f"{rule_id}: predecessor submitted after successor", self.run_id))
         self.links.append({
             "run_id": self.run_id,
             "as_of": _fmt(self.as_of) if self.as_of else "",
@@ -158,11 +191,25 @@ class ReconstructionEngine:
             "right_record_id": to_id,
             "decision": "accepted",
             "rule_ids": rule_id,
-            "reason": "native explicit predecessor reference",
-            "score": "",
-            "score_kind": "NOT_SCORED",
+            "reason": reason,
+            "score": str(score),
+            "score_kind": score_kind,
             "review_required": "false",
         })
+
+    # -------------------------------------------------- transitive conflicts
+    def detect_transitive_conflicts(self) -> None:
+        """Detect conflicting chains: a record claimed by two different
+        predecessors, or time-order contradictions along a chain."""
+        children: dict[str, list[dict]] = defaultdict(list)
+        for link in self.links:
+            children[link["left_record_id"]].append(link)
+        for from_id, links in children.items():
+            if len(links) > 1:
+                self.conflicts.append(_conflict_row(
+                    "MULTIPLE_SUCCESSOR", [from_id],
+                    "one record is the predecessor of several distinct successors",
+                    self.run_id))
 
     # ---------------------------------------------------------------- output
     def build_lineages(self) -> None:
@@ -203,6 +250,8 @@ class ReconstructionEngine:
         self.load(data_dir)
         self.dedup_and_index()
         self.link_exact_ids()
+        self.link_constrained()
+        self.detect_transitive_conflicts()
         self.build_lineages()
         os.makedirs(out_dir, exist_ok=True)
         _write_csv(os.path.join(out_dir, "lineages.csv"), self.lineages)

@@ -75,6 +75,7 @@ class SyntheticGenerator:
         self.true_lineages: list[dict] = []
         self.true_outcomes: list[dict] = []
         self._bill_counter = {org: 0 for org in ORG_TZ}
+        self._record_counter = 0
         self._event_counter = 0
         self._alloc_counter = 0
         self._lin_counter = 0
@@ -157,8 +158,10 @@ class SyntheticGenerator:
 
     def _emit_bill(self, chain: Chain, version: int, prev_record_id: str,
                    amount_minor: int, submitted_local: datetime,
-                   bill_id: str | None = None) -> str:
-        record_id = f"{chain.org}-R{self._next_bill_id_num(chain.org):05d}"
+                   bill_id: str | None = None) -> tuple[str, str]:
+        """Return (record_id, bill_id) so corrections can reuse the bill_id."""
+        self._record_counter += 1
+        record_id = f"{chain.org}-R{self._record_counter:05d}"
         bid = bill_id if bill_id else self._next_bill_id(chain.org)
         available = self._late_arrival(submitted_local)
         self.bills.append({
@@ -176,7 +179,7 @@ class SyntheticGenerator:
             "available_at": _fmt(available),
             "source_ref": self._src_ref(chain.org, "bills"),
         })
-        return record_id
+        return record_id, bid
 
     def _next_bill_id_num(self, org: str) -> int:
         return self._bill_counter[org] + 1
@@ -232,7 +235,7 @@ class SyntheticGenerator:
                       record_ids=[])
 
         # v1
-        rid_v1 = self._emit_bill(chain, 1, "", amount_minor, submitted)
+        rid_v1, bid_v1 = self._emit_bill(chain, 1, "", amount_minor, submitted)
         chain.record_ids.append(rid_v1)
         self._emit_event(chain, "SUBMITTED", submitted, bill_record_id=rid_v1,
                          amount_minor=amount_minor)
@@ -246,7 +249,8 @@ class SyntheticGenerator:
                 v2_time = submitted
             # ~30% of corrections miss the native predecessor reference
             prev = rid_v1 if rng.random() >= 0.30 else ""
-            rid_v2 = self._emit_bill(chain, 2, prev, v2_amount, v2_time)
+            rid_v2, _ = self._emit_bill(chain, 2, prev, v2_amount, v2_time,
+                                        bill_id=bid_v1)
             chain.record_ids.append(rid_v2)
             self._emit_event(chain, "CORRECTED", v2_time, bill_record_id=rid_v2,
                              amount_minor=v2_amount)
@@ -296,8 +300,8 @@ class SyntheticGenerator:
                 sib_time = self._workday_seconds(org, submitted - timedelta(days=int(rng.integers(0, 6))))
                 if sib_time < self.business_start:
                     sib_time = submitted
-                sib_rid = self._emit_bill(Chain(org, lid + "-S", payer, svc, sib_time,
-                                                sibling_amount, []), 1, "", sibling_amount, sib_time)
+                sib_rid, _ = self._emit_bill(Chain(org, lid + "-S", payer, svc, sib_time,
+                                                  sibling_amount, []), 1, "", sibling_amount, sib_time)
                 self._emit_event(Chain(org, lid + "-S", payer, svc, sib_time, sibling_amount, []),
                                  "SUBMITTED", sib_time, bill_record_id=sib_rid,
                                  amount_minor=sibling_amount)
