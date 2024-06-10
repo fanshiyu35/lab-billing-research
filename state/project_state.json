@@ -2,8 +2,8 @@
   "project_id": "XYJ-LAB-BILLING-RESEARCH",
   "spec_version": "BUILD-INSTRUCTIONS-1.0",
   "created_at": "2023-09-28",
-  "last_updated_at": "2023-10-20",
-  "current_phase": "P02",
+  "last_updated_at": "2024-06-10",
+  "current_phase": "P04",
   "data_mode": "DEMO",
   "engineering_status": "NOT_RUN",
   "research_status": "NOT_ASSESSED",
@@ -15,8 +15,8 @@
   "phases": {
     "P00": "DONE",
     "P01": "DONE",
-    "P02": "NOT_STARTED",
-    "P03": "NOT_STARTED",
+    "P02": "DONE",
+    "P03": "DONE",
     "P04": "NOT_STARTED",
     "P05": "NOT_STARTED",
     "P06": "NOT_STARTED",
@@ -24,10 +24,10 @@
     "P08": "NOT_STARTED",
     "P09": "NOT_STARTED"
   },
-  "last_successful_command": "git commit (protocol v1.0 freeze)",
+  "last_successful_command": "pytest tests/test_module_a.py (13 passed)",
   "last_exit_code": null,
   "last_run_id": null,
   "completed_files": [],
   "blockers": [],
-  "next_action": "P02: build field dictionary, schema validator, synthetic generator v0.1 with hidden ground truth, and all fixed fixtures (T01-T11 inputs)."
+  "next_action": "P04: snapshot construction, event labeling, discrete-time competing-event models (B0/B1/C1), T12-T19."
 }

@@ -61,6 +61,8 @@ class ReconstructionEngine:
         self.conflicts: list[dict] = []
         self.review_queue: list[dict] = []
         self.bill_index: dict[str, dict] = {}
+        self.amounts: dict = {}
+        self.duplicate_event_ids: set[str] = set()
 
     # ------------------------------------------------------------------ load
     def load(self, data_dir: str) -> None:
@@ -75,6 +77,10 @@ class ReconstructionEngine:
                 windows, bad_w, iss_w = normalize_observation_windows(f.read())
         except FileNotFoundError:
             windows, bad_w, iss_w = [], [], []
+        if self.as_of is not None:
+            bills = [b for b in bills if b["available_at"] <= self.as_of]
+            events = [e for e in events if e["available_at"] <= self.as_of]
+            allocs = [a for a in allocs if a["available_at"] <= self.as_of]
         self.bills = bills
         self.events = events
         self.allocs = allocs
@@ -115,6 +121,27 @@ class ReconstructionEngine:
         self.bills = kept
         self.bill_index = {b["record_id"]: b for b in kept if b["record_id"]}
         self.audit.append(AuditEntry("dedup", "deduplicated bill rows", {"kept": len(kept)}))
+
+    def dedup_events(self) -> None:
+        """Duplicate event imports: identical business content under
+        different event ids is flagged; the duplicate is excluded from
+        amount computation so payments are not double-counted."""
+        key = lambda e: (e["org_token"], e["source_system"], e["bill_record_id"],
+                         e["event_type"], e["event_at"], e.get("amount_minor"),
+                         e.get("currency"))
+        seen: dict[tuple, str] = {}
+        for e in self.events:
+            k = key(e)
+            if k in seen:
+                self.conflicts.append(_conflict_row(
+                    "DUPLICATE_IMPORT", [seen[k], e["event_id"]],
+                    "identical event content imported twice", self.run_id))
+                self.duplicate_event_ids.add(e["event_id"])
+            else:
+                seen[k] = e["event_id"]
+        self.audit.append(AuditEntry("dedup_events", "duplicate event imports flagged", {
+            "duplicates": len(self.duplicate_event_ids),
+        }))
 
     # -------------------------------------------------------------- exact id
     def link_exact_ids(self) -> None:
@@ -211,6 +238,65 @@ class ReconstructionEngine:
                     "one record is the predecessor of several distinct successors",
                     self.run_id))
 
+    # ------------------------------------------------------ manual decisions
+    def apply_manual_decisions(self, data_dir: str) -> None:
+        """manual_decisions.csv: human adjudications applied as a separate
+        layer; automatic output and post-adjudication state are kept apart."""
+        import csv as _csv
+
+        path = os.path.join(data_dir, "manual_decisions.csv")
+        if not os.path.exists(path):
+            return
+        with open(path, encoding="utf-8") as f:
+            for row in _csv.DictReader(f):
+                decision = (row.get("decision") or "").strip().lower()
+                if decision != "link":
+                    continue
+                frm = (row.get("left_record_id") or "").strip()
+                to = (row.get("right_record_id") or "").strip()
+                if not frm or not to:
+                    continue
+                self._link_pair(frm, to, rule_id="M1_manual_decision",
+                                reason=f"human adjudication by {row.get('operator', 'unknown')}",
+                                score="", score_kind="HUMAN_ADJUDICATED")
+
+    def compute_amounts(self) -> None:
+        from .amounts import AmountEngine
+
+        lineage_of_record: dict[str, str] = {}
+        for lin in self.lineages:
+            for rid in lin["record_ids"].split("|"):
+                if rid:
+                    lineage_of_record[rid] = lin["lineage_id"]
+        eng = AmountEngine(self.run_id)
+        visible_events = [e for e in self.events
+                          if e["event_id"] not in self.duplicate_event_ids]
+        result = eng.compute(visible_events, self.allocs, lineage_of_record)
+        for lin in self.lineages:
+            acc = result.get(lin["lineage_id"])
+            if acc is None:
+                continue
+            lin["gross_posted"] = str(acc.gross_posted)
+            lin["reversed"] = str(acc.reversed)
+            lin["net_observed_posted"] = str(acc.net_observed_posted)
+            lin["unallocated"] = str(acc.unallocated)
+            if lin["status"] == "OPEN" and acc.gross_posted > 0:
+                lin["status"] = "PAYMENT_OBSERVED"
+            elif lin["status"] == "CLOSED_NO_PAYMENT" and acc.gross_posted > 0:
+                lin["status"] = "REOPENED_OR_POST_CLOSE_PAYMENT"
+        for c in eng.conflicts:
+            self.conflicts.append(_conflict_row(
+                c.kind, c.event_ids, c.detail, self.run_id))
+        self.amounts = {k: {
+            "gross_posted": v.gross_posted,
+            "reversed": v.reversed,
+            "net_observed_posted": v.net_observed_posted,
+            "unallocated": v.unallocated,
+        } for k, v in result.items()}
+        self.audit.append(AuditEntry("amounts", "amount engine v1.0", {
+            "lineages_with_amounts": len(result),
+        }))
+
     # ---------------------------------------------------------------- output
     def build_lineages(self) -> None:
         parent: dict[str, str] = {}
@@ -249,10 +335,13 @@ class ReconstructionEngine:
     def run(self, data_dir: str, out_dir: str) -> dict:
         self.load(data_dir)
         self.dedup_and_index()
+        self.dedup_events()
         self.link_exact_ids()
         self.link_constrained()
+        self.apply_manual_decisions(data_dir)
         self.detect_transitive_conflicts()
         self.build_lineages()
+        self.compute_amounts()
         os.makedirs(out_dir, exist_ok=True)
         _write_csv(os.path.join(out_dir, "lineages.csv"), self.lineages)
         _write_csv(os.path.join(out_dir, "links.csv"), self.links)
