@@ -266,7 +266,11 @@ class SyntheticGenerator:
         # outcome branch
         u = rng.random()
         if u < 0.06:  # closed no payment
-            close_time = submitted + timedelta(days=int(rng.uniform(30, 120)))
+            if payer in ("SELF", ""):
+                close_days = int(rng.uniform(20, 55))  # quick self-pay write-offs
+            else:
+                close_days = int(rng.uniform(30, 120))
+            close_time = submitted + timedelta(days=close_days)
             close_time = self._workday_seconds(org, close_time)
             self._emit_event(chain, "CLOSED_NO_PAYMENT", close_time,
                              bill_record_id=current_rid, terminal=True)

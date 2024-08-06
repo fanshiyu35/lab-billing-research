@@ -29,7 +29,7 @@
     "definition_status": "DEMO_ASSUMPTION_REAL_CONFIRMATION_REQUIRED",
     "landmark_days": 7,
     "horizon_days": 30,
-    "interval_days": 1,
+    "interval_days": 5,
     "outputs": [
       "P_payment_by_H",
       "P_close_no_payment_by_H",

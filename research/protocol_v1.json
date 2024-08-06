@@ -1,5 +1,5 @@
 {
-  "protocol_version": "1.0",
+  "protocol_version": "1.1",
   "frozen_at": "2023-10-20",
   "project_id": "XYJ-LAB-BILLING-RESEARCH",
   "data_mode": "DEMO",
@@ -12,7 +12,7 @@
     "status": "DEMO_ASSUMPTION_REAL_CONFIRMATION_REQUIRED",
     "landmark_days": 7,
     "horizon_days": 30,
-    "interval_days": 1,
+    "interval_days": 5,
     "outcomes": [
       "P_payment_by_H",
       "P_close_no_payment_by_H",
@@ -63,5 +63,13 @@
     "inconclusive": "Insufficient sample or class counts; INSUFFICIENT_DATA recorded, no probabilities fabricated."
   },
   "feature_whitelist_frozen": true,
-  "notes": "DEMO results support engineering validation only. Research claims require REAL-LOCAL evaluation."
+  "notes": "DEMO results support engineering validation only. Research claims require REAL-LOCAL evaluation.",
+  "updated_at": "2024-08-06",
+  "change_history": [
+    {
+      "change_id": "PC01",
+      "date": "2024-08-06",
+      "summary": "interval_days 1->5 after sparsity findings; see research/protocol_changes.csv"
+    }
+  ]
 }
