@@ -315,14 +315,44 @@ class ReconstructionEngine:
         groups: dict[str, list[str]] = defaultdict(list)
         for rid, lin in lineage_of.items():
             groups[lin].append(rid)
+        payer_cat = {
+            "AET": "commercial", "UHC": "commercial", "HUM": "commercial",
+            "BCB": "commercial", "CIG": "commercial",
+            "MCR": "government", "MCD": "government", "SELF": "self", "": "unknown",
+        }
+        coverage_by_org: dict[str, dict] = {}
+        for w in self.windows:
+            if w.get("coverage_status") == "complete":
+                coverage_by_org[w["org_token"]] = w
+
         for lin, members in groups.items():
+            member_bills = [self.bill_index[m] for m in members if m in self.bill_index]
+            payer_tokens = {b.get("payer_token", "") for b in member_bills}
+            latest = max(member_bills, key=lambda b: b["submitted_at"]) if member_bills else None
+            cov = coverage_by_org.get(self.bill_index[lin]["org_token"], {})
             self.lineages.append({
                 "run_id": self.run_id,
                 "lineage_id": f"run-{lin[:8]}-{lin}",
                 "record_ids": "|".join(sorted(members)),
                 "org_token": self.bill_index[lin]["org_token"],
                 "status": self._lineage_status(lin, members),
+                "payer_category": payer_cat.get(
+                    next(iter(payer_tokens - {""}), "") if payer_tokens else "", "unknown"),
+                "billed_amount_minor": str(latest["billed_amount_minor"]) if latest else "0",
+                "conflict_count": "0",
+                "review_count": "0",
+                "coverage_status": cov.get("coverage_status", "unknown"),
+                "coverage_end": cov.get("coverage_end", ""),
             })
+        # post-hoc counts for conflicts/reviews touching each lineage
+        for lin in self.lineages:
+            ids = set(lin["record_ids"].split("|"))
+            lin["conflict_count"] = str(sum(
+                1 for c in self.conflicts
+                if any(rid in ids for rid in c.get("record_ids", "").split("|"))))
+            lin["review_count"] = str(sum(
+                1 for r in self.review_queue
+                if any(rid in ids for rid in r.get("record_ids", "").split("|"))))
 
     def _lineage_status(self, root: str, members: list[str]) -> str:
         ids = set(members)
@@ -349,6 +379,8 @@ class ReconstructionEngine:
         _write_csv(os.path.join(out_dir, "review_queue.csv"), self.review_queue)
         _write_csv(os.path.join(out_dir, "events_normalized.csv"),
                    [_ev_norm(e) for e in self.events])
+        _write_csv(os.path.join(out_dir, "allocations_normalized.csv"),
+                   [_al_norm(a) for a in self.allocs])
         audit = {
             "run_id": self.run_id,
             "as_of": _fmt(self.as_of) if self.as_of else None,
@@ -412,6 +444,18 @@ def _review_row(kind: str, record_ids: list[str], detail: str, run_id: str) -> d
         "record_ids": "|".join(record_ids),
         "detail": detail,
         "status": "pending",
+    }
+
+
+def _al_norm(a: dict) -> dict:
+    return {
+        "allocation_id": a["allocation_id"],
+        "payment_event_id": a["payment_event_id"],
+        "bill_record_id": a["bill_record_id"],
+        "allocated_amount_minor": a["allocated_amount_minor"],
+        "currency": a["currency"],
+        "available_at": _fmt(a["available_at"]),
+        "source_ref": a["source_ref"],
     }
 
 

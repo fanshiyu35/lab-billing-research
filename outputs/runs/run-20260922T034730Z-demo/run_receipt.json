@@ -1,11 +1,11 @@
 {
-  "run_id": "run-20260922T034132Z-demo",
+  "run_id": "run-20260922T034730Z-demo",
   "mode": "DEMO",
   "config": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/configs/demo.json",
   "generator_version": "0.1.0",
-  "wall_clock_start": "2026-09-22T03:41:32.119091+00:00",
+  "wall_clock_start": "2026-09-22T03:47:30.923436+00:00",
   "elapsed_seconds": 0.07,
-  "data_dir": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/outputs/runs/run-20260922T034132Z-demo/data",
+  "data_dir": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/outputs/runs/run-20260922T034730Z-demo/data",
   "schema_errors_unexpected": [],
   "expected_dirty_intercepted": 40,
   "status": "OK"
