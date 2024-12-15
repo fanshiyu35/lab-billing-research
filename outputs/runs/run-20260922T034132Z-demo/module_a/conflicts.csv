@@ -1,4 +1,0 @@
-run_id,conflict_type,record_ids,detail
-run-20260922T034132Z-demo-A,MULTIPLE_SUCCESSOR,TRI-R00495,one record is the predecessor of several distinct successors
-run-20260922T034132Z-demo-A,MULTIPLE_SUCCESSOR,NDX-R00918,one record is the predecessor of several distinct successors
-run-20260922T034132Z-demo-A,MULTIPLE_SUCCESSOR,CPL-R00325,one record is the predecessor of several distinct successors
