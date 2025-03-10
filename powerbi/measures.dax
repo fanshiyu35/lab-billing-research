@@ -1,0 +1,48 @@
+// DAX measures — lab billing research model
+// Bills, lineages and payment events are distinct grains; do not sum
+// repeated rows across grains.
+
+Bill Count =
+COUNTROWS ( Bills )
+
+Lineage Count =
+COUNTROWS ( Lineages )
+
+Payment Event Count =
+CALCULATE ( COUNTROWS ( Events ), Events[event_type] = "PAYMENT_POSTED" )
+
+Gross Posted USD =
+SUMX ( Lineages, VALUE ( Lineages[gross_posted] ) )
+
+Reversed USD =
+SUMX ( Lineages, VALUE ( Lineages[reversed] ) )
+
+Net Observed Posted USD =
+SUMX ( Lineages, VALUE ( Lineages[net_observed_posted] ) )
+
+Unallocated USD =
+SUMX ( Lineages, VALUE ( Lineages[unallocated] ) )
+
+Payment Rate at Horizon =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( Predictions ), Predictions[outcome] = "payment" ),
+    CALCULATE ( COUNTROWS ( Predictions ), Predictions[outcome] <> "ABSTAIN" )
+)
+
+Avg P_payment_by_H =
+AVERAGEX (
+    FILTER ( Predictions, Predictions[outcome] <> "ABSTAIN" ),
+    VALUE ( Predictions[P_payment_by_H] )
+)
+
+Avg P_close_no_payment_by_H =
+AVERAGEX (
+    FILTER ( Predictions, Predictions[outcome] <> "ABSTAIN" ),
+    VALUE ( Predictions[P_close_no_payment_by_H] )
+)
+
+Avg P_still_open_by_H =
+AVERAGEX (
+    FILTER ( Predictions, Predictions[outcome] <> "ABSTAIN" ),
+    VALUE ( Predictions[P_still_open_by_H] )
+)
