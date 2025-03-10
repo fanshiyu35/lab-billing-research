@@ -85,6 +85,28 @@ def main() -> int:
         "expected_dirty_intercepted": len(expected_dirty),
         "status": "OK" if not findings else "UNEXPECTED_SCHEMA_ERRORS",
     }
+    # module A: reconstruction
+    from lab_billing.reconstruct import ReconstructionEngine
+    a_dir = os.path.join(out_dir, "module_a")
+    eng = ReconstructionEngine(run_id=f"{run_id}-A",
+                               as_of="2023-11-15T00:00:00Z",
+                               method_version="1.0.0")
+    a_audit = eng.run(data_dir, a_dir)
+    print(f"[run_demo] module A: {a_audit['summary']['lineages']} lineages, "
+          f"{a_audit['summary']['links']} links")
+
+    # module B: forecast
+    from lab_billing.forecast import ForecastPipeline
+    b_dir = os.path.join(out_dir, "module_b")
+    fp = ForecastPipeline(run_id=f"{run_id}-B", interval_days=cfg.get("prediction", {}).get("interval_days", 5))
+    b_report = fp.run(a_dir, b_dir)
+    print(f"[run_demo] module B: {b_report['n_snapshots']} snapshots, "
+          f"models={list(b_report['models'])}")
+
+    receipt["module_a_summary"] = a_audit["summary"]
+    receipt["module_b_summary"] = {
+        k: v for k, v in b_report.items() if k in ("n_snapshots", "n_interval_rows", "models")
+    }
     with open(os.path.join(out_dir, "run_receipt.json"), "w", encoding="utf-8") as f:
         json.dump(receipt, f, indent=2)
     print(f"[run_demo] receipt: {receipt['status']}")
