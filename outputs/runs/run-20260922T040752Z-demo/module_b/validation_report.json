@@ -1,0 +1,68 @@
+{
+  "validation_version": "1.0",
+  "run_dir": "outputs/runs/run-20260922T040752Z-demo",
+  "module_a": {
+    "truth_pairs": 95,
+    "predicted_pairs": 123,
+    "true_positive": 94,
+    "false_positive": 29,
+    "false_negative": 1,
+    "precision": 0.7642,
+    "recall": 0.9895,
+    "refusal_ratio": 0.0956,
+    "note": "Truth pairs are same-lineage adjacent versions; multi-candidate ambiguities queued for review count as neither TP nor FP."
+  },
+  "module_b": {
+    "snapshots": 1037,
+    "test_snapshots": 208,
+    "outcomes": {
+      "payment": 539,
+      "still_open": 488,
+      "censored": 2,
+      "close_no_payment": 8
+    },
+    "models": {
+      "B0_age_stage_baseline": {
+        "status": "FITTED",
+        "snap_brier": 0.5144259569702185,
+        "snap_log_loss": 0.7357284660871263,
+        "n_snapshots": 206,
+        "n_abstain": 0
+      },
+      "B1_discrete_multinomial": {
+        "status": "FITTED",
+        "snap_brier": 0.4618050188966311,
+        "snap_log_loss": 0.6692132603100102,
+        "n_snapshots": 206,
+        "n_abstain": 0
+      },
+      "C1_quality_augmented": {
+        "status": "FITTED",
+        "snap_brier": 0.4615831802291266,
+        "snap_log_loss": 0.6682848894134452,
+        "n_snapshots": 206,
+        "n_abstain": 0
+      }
+    }
+  },
+  "ablations": {
+    "quality_features": {
+      "B1_snap_log_loss": 0.6692132603100102,
+      "C1_snap_log_loss": 0.6682848894134452,
+      "delta": -0.0009,
+      "interpretation": "quality features add no incremental value on the locked test set"
+    },
+    "candidate_vs_baseline": {
+      "B0_snap_log_loss": 0.7357284660871263,
+      "B1_snap_log_loss": 0.6692132603100102,
+      "relative_improvement": 0.0904
+    }
+  },
+  "limitations": {
+    "demo_only": "All figures come from synthetic data (seed 42). No research claim transfers to real operations.",
+    "censored_share": 2,
+    "close_class_rarity": 8,
+    "landmark_fixed": "landmark=7d and H=30d are demo defaults needing business confirmation (unknowns U03/U04).",
+    "leakage_audit": "T10/T13/T14/T15 enforced: as-of truncation, forbidden fields, lineage-grouped splits, train-only preprocessing."
+  }
+}
