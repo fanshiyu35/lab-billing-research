@@ -1,0 +1,15 @@
+{
+  "status": "NOT_OBTAINED",
+  "external_validation": "NOT_OBTAINED",
+  "real_usage_evidence": "NOT_OBTAINED",
+  "publication": "NOT_OBTAINED",
+  "citations": "NOT_OBTAINED",
+  "payments_or_funding": "NONE",
+  "missing": [
+    "independent external test protocol execution",
+    "real-world deployment or usage records",
+    "publication or archival records",
+    "third-party references"
+  ],
+  "note": "No external result may be fabricated. The protocol draft in external/EXTERNAL_VALIDATION_PROTOCOL_DRAFT.md defines the scope for a future independent execution."
+}
