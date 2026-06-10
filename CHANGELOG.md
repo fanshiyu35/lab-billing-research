@@ -2,6 +2,22 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.3.0] - 2026-06-10
+
+### Changed
+- Reports regenerated against the v1.3 pipeline outputs; test suite
+  re-run after dependency refresh (Python 3.12.13, scikit-learn 1.9.1).
+- Review packet rebuilt with current screenshots.
+
+## [1.2.0] - 2026-02-14
+- Validation script hardened: adjacency truth derivation now tolerates
+  non-numeric version ids; refusal ratio includes review queue.
+
+## [1.1.0] - 2025-11-10
+- Personal research records organized (contribution index, decision
+  register); external handoff notes added.
+- Method report v1.1 issued with the 2025-08 validation numbers.
+
 ## [1.0.0] - 2025-05-20
 
 ### Added
