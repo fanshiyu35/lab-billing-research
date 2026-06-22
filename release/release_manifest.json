@@ -1,0 +1,24 @@
+{
+  "release": "v1.4.0",
+  "date": "2026-09-22",
+  "mode": "DEMO",
+  "contents": [
+    "src/lab_billing/ (schema, normalize, reconstruct, forecast)",
+    "scripts/ (run_demo, run_forecast, run_validation, build_reports, build_review_packet, check_release)",
+    "app/main.py",
+    "powerbi/",
+    "tests/ (T01-T25 + fixtures)",
+    "research/ (prior work, decisions, protocol, claim map)",
+    "outputs/reports/ (method report, data card, test protocol/report)",
+    "release/DEMO_REVIEW_PACKET.pdf",
+    "environment.json",
+    "requirements.lock.txt",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "excluded": [
+    "data/private (empty, gitignored)",
+    "outputs/runs/*/data/_ground_truth (hidden truth, gitignored)"
+  ],
+  "note": "No private data, credentials or fabricated external results in this release."
+}
