@@ -5,14 +5,12 @@ analysis and drafting; the applicant's substantive decisions and personal work
 are listed in research/research_decisions.csv and must be reviewed and
 confirmed by the applicant before any attribution claim.
 
-## Design decisions recorded (research/research_decisions.csv)
-- D01 domain scope: clinical laboratory billing
-- D02 linkage philosophy: uncertainty-preserving tiers
-- D03 site contracts: three ownership models
-- D04 prediction target: first observable payment/closure within H
-- D05 modeling frame: discrete-time competing events
-- D06 evaluation split: temporal grouped 60/20/20
-- PC01 interval granularity change (protocol v1.1)
+## Design decisions recorded
+Narrative records (question -> alternatives -> decision -> code -> test)
+are in research/decisions/ (D01-D06, PC01); the register is
+research/research_decisions.csv. Each narrative entry cites the
+corresponding implementation files and the acceptance tests that verify
+the choice.
 
 ## AI assistance log
 - See logs/technical_log.csv and logs/ai_assistance_log.csv for tool, date,
