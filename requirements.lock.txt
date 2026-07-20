@@ -1,4 +1,3 @@
-# Locked 2026-09-22. Reproducible environment for this project (v1.4.0).
 altair==6.3.0
 anyio==4.15.1
 attrs==26.1.0
@@ -26,6 +25,7 @@ protobuf==7.36.2
 pyarrow==25.0.1
 pydeck==0.9.3
 pygments==2.21.0
+pymupdf==1.28.2
 pytest==9.1.1
 python-dateutil==2.9.0.post0
 python-multipart==0.0.32
