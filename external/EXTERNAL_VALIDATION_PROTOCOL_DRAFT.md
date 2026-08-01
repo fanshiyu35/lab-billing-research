@@ -12,7 +12,7 @@ execution has taken place.
 
 ## Data permitted
 - The independent party uses its own billing-event exports or a new
-  synthetic set generated with a different seed (not seed 42), mapped to
+  independent de-identified dataset, mapped to
   the five-table contract in data/dictionary/data_dictionary.csv.
 - Processing location, access people and disclosure scope must be
   documented before execution.

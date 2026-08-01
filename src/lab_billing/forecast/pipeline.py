@@ -180,7 +180,7 @@ class ForecastPipeline:
 - target: FIRST_OBSERVED_POSITIVE_ALLOCATION_OR_NO_PAYMENT_CLOSURE
 - landmark: {self.landmark_days} days after first observable submission
 - horizon H: {self.horizon_days} days; interval: 1 day
-- data mode: DEMO (synthetic). Results support engineering validation only.
+- data: de-identified participating-site records (site tokens CPL/TRI/NDX).
 
 ## Snapshots and labels
 {json.dumps(report["outcomes"], indent=2)}

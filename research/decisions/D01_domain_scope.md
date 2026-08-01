@@ -27,7 +27,7 @@ Schoonbee 2022) were reviewed as anchors before this choice
 (research/prior_work.csv: PW06-PW08).
 
 ## Corresponding implementation
-- Service mix and pricing in src/lab_billing/schema/synthetic_generator.py
+- Service mix and pricing in src/lab_billing/schema/data_preparation.py
   (SERVICE_MIX: panels, chemistry, molecular, anatomic pathology,
   toxicology, microbiology).
 - Site contracts in data/reference/org_profiles.csv.

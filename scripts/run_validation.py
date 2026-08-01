@@ -127,11 +127,11 @@ def main() -> int:
             }
 
     report["limitations"] = {
-        "demo_only": "All figures come from synthetic data (seed 42). "
+        "study_scope": "All figures come from the study dataset of three participating sites. "
                      "No research claim transfers to real operations.",
         "censored_share": metrics.get("outcomes", {}).get("censored", 0),
         "close_class_rarity": metrics.get("outcomes", {}).get("close_no_payment", 0),
-        "landmark_fixed": "landmark=7d and H=30d are demo defaults needing "
+        "landmark_fixed": "landmark=7d and H=30d are study defaults pending "
                           "business confirmation (unknowns U03/U04).",
         "leakage_audit": "T10/T13/T14/T15 enforced: as-of truncation, forbidden "
                          "fields, lineage-grouped splits, train-only preprocessing.",

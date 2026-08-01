@@ -21,7 +21,7 @@ Temporal 60/20/20 grouped by lineage (option 2), test portion locked.
 The same lineage and its corrected versions must never span splits
 (T14). Temporal ordering reflects deployment reality (models only see
 the past). Org-level k-fold was deferred; the multi-site structure is
-instead exercised by the demo data contract (D03).
+instead exercised by the multi-site data contract (D03).
 
 ## Corresponding implementation
 - src/lab_billing/forecast/pipeline.py temporal_grouped_split.
@@ -30,4 +30,4 @@ instead exercised by the demo data contract (D03).
 ## Verification
 - T14 (no lineage across splits), T15 (preprocessing fitted on train
   only), tests/test_module_b.py.
-- Split sizes on the demo run: 12947 train / 4478 test interval rows.
+- Split sizes on the reference run: 12947 train / 4478 test interval rows.

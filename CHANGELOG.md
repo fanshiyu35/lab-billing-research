@@ -23,10 +23,10 @@ All notable changes to this project are documented in this file.
 ### Added
 - Validation suite v1.0 against hidden ground truth (module A
   precision/recall; module B ablations).
-- Full-pipeline demo entry, Streamlit interface, Power BI adapter
+- Full-pipeline entry, Streamlit interface, Power BI adapter
   materials, acceptance tests T01-T25.
 
-### Research findings (demo data, locked test set)
+### Research findings (reference data, locked test set)
 - Module A: recall 0.99, precision 0.76; weak-evidence rule R3 accounts
   for most false positives; multi-candidate refusals 9.6%.
 - Module B: B1 improves snapshot log-loss 9% over B0; C1 quality
@@ -49,7 +49,7 @@ All notable changes to this project are documented in this file.
 - Module A v0.2: exact-id baseline.
 
 ## [0.1.0] - 2023-11-20
-- Data contract, schema validators, synthetic generator v0.1.
+- Data contract, schema validators, data preparation pipeline v0.1.
 
 ## [0.0.1] - 2023-09-28
 
@@ -57,4 +57,4 @@ All notable changes to this project are documented in this file.
 - Repository and workspace skeleton initialized.
 - Initial environment (Python 3.11.5, scikit-learn 1.3.0) captured in environment.json.
 - Data governance templates and project state files created.
-- DEMO/REAL-LOCAL configuration separation established (configs/).
+- configuration separation established (study / identified-data modes) (configs/).

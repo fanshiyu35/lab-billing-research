@@ -20,7 +20,7 @@ def test_T25_full_pipeline_smoke(tmp_path):
     # run_demo writes to outputs/runs under the project root; to keep this
     # test isolated we invoke it and then assert on the newest run dir.
     result = subprocess.run(
-        [PY, "scripts/run_demo.py", "--config", "configs/demo.json"],
+        [PY, "scripts/run_pipeline.py", "--config", "configs/reference.json"],
         cwd=ROOT, capture_output=True, text=True, timeout=600, env=env,
     )
     assert result.returncode == 0, result.stdout[-2000:]

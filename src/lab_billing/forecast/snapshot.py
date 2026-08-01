@@ -1,6 +1,6 @@
 """Snapshot construction and event labeling (module B, spec sections 11-13).
 
-Landmark t = first observable submission + 7 days (demo default). Features
+Landmark t = first observable submission + 7 days (study default). Features
 are computed strictly from data with available_at <= t. Outcomes are the
 first observable positive payment allocation, first no-payment closure, or
 still-open at horizon H=30 days. Observations that end before H without an

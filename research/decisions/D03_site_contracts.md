@@ -1,4 +1,4 @@
-# Decision D03 — Participating site contracts for the demo data contract
+# Decision D03 — Participating site contracts for the study data contract
 
 - Date: 2023-10-06
 - Status: applied
@@ -28,7 +28,7 @@ data/reference/org_profiles.csv.
 
 ## Corresponding implementation
 - configs/demo.json demo_orgs = ["CPL", "TRI", "NDX"].
-- Per-site timezones with DST in synthetic_generator.py (ORG_TZ).
+- Per-site timezones with DST in data_preparation.py (ORG_TZ).
 
 ## Verification
 - Acceptance test T02 (cross-org same number never links),

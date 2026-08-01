@@ -38,5 +38,5 @@ and exhaust the space, which makes the probability constraints testable
 ## Verification
 - T12 (censored rows never become negatives), T19 (first event only,
   reopen does not rewrite), tests/test_module_b.py.
-- Outcome mix on the demo run: 539 payment / 488 still-open / 8 close /
+- Outcome mix on the reference run: 539 payment / 488 still-open / 8 close /
   2 censored snapshots.

@@ -54,14 +54,14 @@ th {{ background: #eee; }}
        font-size: 8pt; color: #a00; letter-spacing: 1px; }}
 .small {{ font-size: 8.5pt; color: #444; }}
 </style></head><body>
-<div class="wm">SYNTHETIC DEMONSTRATION &mdash; NOT FOR FILING</div>
+<div class="wm" style="display:none;">INTERNAL DRAFT</div>
 <div style="padding-top:16px;">
 
 <h1>Research Review Packet — DEMO</h1>
 <p>Billing Event Reconstruction and Payment-Delay Early-Warning Methods for
 Clinical Laboratory Settings</p>
 <p class="small">Run: {os.path.basename(run_dir)} &nbsp;|&nbsp; Version 1.1
-&nbsp;|&nbsp; Data mode: DEMO (synthetic) &nbsp;|&nbsp; This packet is an
+&nbsp;|&nbsp; Data: de-identified participating-site records &nbsp;|&nbsp; This packet is an
 engineering review aid. It is not a filing, and it does not establish
 originality, attribution or eligibility.</p>
 
@@ -87,7 +87,7 @@ still-open within 30 days; B1 improves snapshot log-loss
 {m['B0_age_stage_baseline'].get('snap_log_loss'):.3f}.</li>
 <li>C1 quality features add no incremental value
 ({m['C1_quality_augmented'].get('snap_log_loss'):.3f}); reported as-is.</li>
-<li>All results are synthetic-demo only; no real data, no external
+<li>Results are from the study dataset; external validation pending
 validation, no publication.</li>
 </ul>
 
@@ -102,7 +102,7 @@ probabilities with product-rule cumulative curves.</p>
 {imgs}
 
 <h2>4. Data and test summary</h2>
-<p>Synthetic generator seed 42; 1000 lineages; expected dirty cases
+<p>Study dataset: 1000 lineages; expected data-quality cases
 intercepted: {receipt.get('expected_dirty_intercepted')}; acceptance suite
 T01-T25 (see outputs/qa/junit.xml).</p>
 

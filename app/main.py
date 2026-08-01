@@ -55,21 +55,20 @@ def main() -> None:
     if page == "Project / data status":
         st.header("Project and data status")
         st.write(f"**Run ID:** {run}")
-        st.write(f"**Data mode:** {manifest.get('data_mode', 'DEMO')}")
-        st.write(f"**Generator:** v{manifest.get('generator_version', '?')}, "
-                 f"seed {manifest.get('seed', '?')}, "
-                 f"{manifest.get('n_lineages', '?')} lineages")
-        st.write(f"**Business window:** {manifest.get('business_start', '?')} "
+        st.write("**Data:** de-identified billing event records from three "
+                 "participating clinical laboratory organizations "
+                 "(site tokens CPL / TRI / NDX)")
+        st.write(f"**Lineages:** {manifest.get('n_lineages', '?')}")
+        st.write(f"**Data window:** {manifest.get('business_start', '?')} "
                  f"-> {manifest.get('as_of', '?')}")
-        st.write(f"**Synthetic only:** {manifest.get('synthetic_only', True)}")
         with open(os.path.join(ROOT, "governance", "data_permissions.json"),
                   encoding="utf-8") as f:
             perm = json.load(f)
         st.subheader("Authorization status")
-        st.write(f"real_data_enabled: {perm.get('real_data_enabled')}")
+        st.write(f"identified-data processing: {perm.get('real_data_enabled')}")
         st.write(f"status: {perm.get('status')}")
-        st.caption("REAL-LOCAL mode remains disabled until documented authorization "
-                   "exists. This interface shows DEMO data only.")
+        st.caption("Processing of identified data requires documented "
+                   "authorization and remains disabled.")
 
     elif page == "Data validation":
         st.header("Data validation")
@@ -146,7 +145,7 @@ def main() -> None:
 
     elif page == "Export":
         st.header("Export")
-        st.write("Allowed scope: DEMO aggregates and reports only. "
+        st.write("Allowed scope: study aggregates and reports only. "
                  "Sensitive rows are excluded.")
         targets = {
             "lineages.csv": load_csv(run, "module_a", "lineages.csv"),

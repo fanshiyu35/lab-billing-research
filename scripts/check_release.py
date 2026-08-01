@@ -29,11 +29,11 @@ def check(root: str) -> dict:
         "README.md present")
     req("locked requirements", os.path.exists(os.path.join(root, "requirements.lock.txt")),
         "requirements.lock.txt present")
-    req("demo config", os.path.exists(os.path.join(root, "configs", "demo.json")),
-        "configs/demo.json present")
+    req("pipeline config", os.path.exists(os.path.join(root, "configs", "reference.json")),
+        "configs/reference.json present")
     runs = sorted(os.listdir(os.path.join(root, "outputs", "runs"))) \
         if os.path.isdir(os.path.join(root, "outputs", "runs")) else []
-    req("demo pipeline ran", bool(runs), f"{len(runs)} run directories")
+    req("pipeline ran", bool(runs), f"{len(runs)} run directories")
     req("acceptance suite ran",
         os.path.exists(os.path.join(root, "outputs", "qa", "junit.xml")),
         "outputs/qa/junit.xml present")

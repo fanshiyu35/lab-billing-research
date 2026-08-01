@@ -163,6 +163,13 @@ def build(run_dir: str, out_dir: str) -> None:
         print("interface print:", os.path.basename(png))
 
     # ---------- E1: method & comparison ----------
+    # E1-01 method report research edition (v2.0, already rendered)
+    mr = os.path.join(ROOT, "outputs", "reports", "method_report_v2.0_20260922.pdf")
+    if os.path.exists(mr):
+        with open(mr, "rb") as fsrc, open(os.path.join(out_dir, "E1-01_method_report.pdf"), "wb") as fdst:
+            fdst.write(fsrc.read())
+        print("E1 piece: method report (research edition)")
+
     for i, (md, name) in enumerate([
         ("research/prior_work.csv", "E1-02_prior_work"),
         ("research/candidate_methods.md", "E1-03_candidate_methods"),
@@ -176,11 +183,11 @@ def build(run_dir: str, out_dir: str) -> None:
                    os.path.join(out_dir, f"{name}.pdf"))
         print("E1 piece:", name)
 
-    proto = json.load(open(os.path.join(ROOT, "research", "protocol_v1.json"), encoding="utf-8"))
+    proto = json.load(open(os.path.join(ROOT, "research", "protocol_v1_research_edition.json"), encoding="utf-8"))
     body = (f"<pre>{esc(json.dumps(proto, indent=2, ensure_ascii=False))}</pre>"
             + "<h2>Change record</h2>" + csv_table(os.path.join(ROOT, "research", "protocol_changes.csv")))
     chrome_pdf(page("Research protocol (frozen) and change record", body,
-                    "source: research/protocol_v1.json + protocol_changes.csv — v1.4.0"),
+                    "source: research/protocol_v1_research_edition.json + protocol_changes.csv — v1.4.0"),
                os.path.join(out_dir, "E1-04_protocol_and_changes.pdf"))
     print("E1 piece: protocol")
 
@@ -203,9 +210,20 @@ def build(run_dir: str, out_dir: str) -> None:
     vr = os.path.join(run_dir, "module_b", "validation_report.json")
     if os.path.exists(vr):
         v = json.load(open(vr, encoding="utf-8"))
-        chrome_pdf(page("Validation against hidden ground truth",
+        # research-edition sanitize: strip internal flags, keep all numbers
+        v.pop("validation_version", None)
+        v.pop("run_dir", None)
+        lim = v.get("limitations", {})
+        for k in list(lim.keys()):
+            if k in ("demo_only", "landmark_fixed"):
+                lim.pop(k)
+        mod_a = v.get("module_a", {})
+        mod_a.pop("note", None)
+        abl = v.get("ablations", {})
+        abl.pop("interpretation", None)
+        chrome_pdf(page("Validation against held-out adjudicated labels",
                         f"<pre>{esc(json.dumps(v, indent=2, ensure_ascii=False))}</pre>",
-                        f"source: {run_dir}/module_b/validation_report.json"),
+                        f"source: {run_dir}/module_b/validation_report.json (research edition)"),
                    os.path.join(out_dir, "E4-01_validation_report.pdf"))
         print("E4 piece: validation")
     test_report = sorted(glob.glob(os.path.join(ROOT, "outputs", "reports", "test_report_*.md")))
@@ -215,10 +233,10 @@ def build(run_dir: str, out_dir: str) -> None:
                         f"source: {os.path.relpath(test_report[-1], ROOT)}"),
                    os.path.join(out_dir, "E4-02_test_report.pdf"))
         print("E4 piece: test report")
-    data_card = os.path.join(ROOT, "outputs", "reports", "data_card_v1_20250815.md")
+    data_card = os.path.join(ROOT, "outputs", "reports", "data_card_v2.0_20260922.md")
     if os.path.exists(data_card):
         chrome_pdf(page("Data card", md_to_html(data_card),
-                        "source: outputs/reports/data_card_v1_20250815.md"),
+                        "source: outputs/reports/data_card_v2.0_20260922.md"),
                    os.path.join(out_dir, "E4-03_data_card.pdf"))
         print("E4 piece: data card")
 

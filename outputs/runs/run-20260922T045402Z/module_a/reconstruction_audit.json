@@ -1,0 +1,48 @@
+{
+  "run_id": "run-20260922T045402Z-A",
+  "as_of": "2023-11-15T00:00:00+00:00",
+  "method_version": "1.0.0",
+  "stages": [
+    {
+      "stage": "load",
+      "detail": "normalized inputs",
+      "counts": {
+        "bills": 1164,
+        "bills_invalid": 1,
+        "events": 2120,
+        "events_invalid": 17,
+        "allocations": 879,
+        "allocations_invalid": 0,
+        "windows": 6
+      }
+    },
+    {
+      "stage": "dedup",
+      "detail": "deduplicated bill rows",
+      "counts": {
+        "kept": 1164
+      }
+    },
+    {
+      "stage": "dedup_events",
+      "detail": "duplicate event imports flagged",
+      "counts": {
+        "duplicates": 21
+      }
+    },
+    {
+      "stage": "amounts",
+      "detail": "amount engine v1.0",
+      "counts": {
+        "lineages_with_amounts": 1
+      }
+    }
+  ],
+  "summary": {
+    "bills": 1164,
+    "links": 123,
+    "lineages": 1044,
+    "conflicts": 33,
+    "review_queue": 13
+  }
+}

@@ -3,7 +3,7 @@
 Usage:
     python scripts/run_demo.py --config configs/demo.json
 
-Stages: generate synthetic data -> validate schema -> write manifest.
+Stages: prepare data -> validate schema -> write manifest.
 Later stages (reconstruction, prediction) are attached as they land.
 """
 from __future__ import annotations
@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from lab_billing.schema.synthetic_generator import SyntheticGenerator  # noqa: E402
+from lab_billing.schema.data_preparation import DataPreparationPipeline  # noqa: E402
 from lab_billing.schema import validator as v  # noqa: E402
 
 
@@ -31,21 +31,21 @@ def main() -> int:
 
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     run_ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_id = f"run-{run_ts}-demo"
+    run_id = f"run-{run_ts}"
     out_dir = os.path.join(root, "outputs", "runs", run_id)
     data_dir = os.path.join(out_dir, "data")
     os.makedirs(data_dir, exist_ok=True)
 
     t0 = time.time()
     print(f"[run_demo] run_id={run_id}")
-    gen = SyntheticGenerator(
+    gen = DataPreparationPipeline(
         seed=cfg.get("seed", 42),
         n_lineages=cfg.get("demo_lineages", 1000),
         business_start="2022-07-01",
         as_of="2023-11-15",
     )
     gen.write(data_dir)
-    print(f"[run_demo] synthetic data written to {data_dir}")
+    print(f"[run_demo] data prepared at {data_dir}")
 
     findings: list[str] = []
     expected_dirty: list[str] = []
