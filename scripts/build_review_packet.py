@@ -1,4 +1,4 @@
-"""Build the demo review packet (spec section 19 entry point).
+"""Build the review packet (spec section 19 entry point).
 
 Usage:
     python scripts/build_review_packet.py --mode demo --run-dir outputs/runs/<run_id>
@@ -57,7 +57,7 @@ th {{ background: #eee; }}
 <div class="wm" style="display:none;">INTERNAL DRAFT</div>
 <div style="padding-top:16px;">
 
-<h1>Research Review Packet — DEMO</h1>
+<h1>Research Review Packet</h1>
 <p>Billing Event Reconstruction and Payment-Delay Early-Warning Methods for
 Clinical Laboratory Settings</p>
 <p class="small">Run: {os.path.basename(run_dir)} &nbsp;|&nbsp; Version 1.1
@@ -140,11 +140,11 @@ outputs/qa/junit.xml. References: research/prior_work.csv.</p>
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", default="demo", choices=["demo", "real"])
+    ap.add_argument("--mode", default="study", choices=["study", "identified"])
     ap.add_argument("--run-dir", required=True)
     args = ap.parse_args()
     out = os.path.join(ROOT, "release",
-                       "DEMO_REVIEW_PACKET.pdf" if args.mode == "demo"
+                       "REVIEW_PACKET.pdf" if args.mode == "study"
                        else "RESEARCH_REVIEW_PACKET.pdf")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     build(args.run_dir, out)

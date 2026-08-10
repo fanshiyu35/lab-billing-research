@@ -2,7 +2,7 @@
 
 ## What to hand over
 - Reproducible technical package: source, locked requirements
-  (requirements.lock.txt), README, demo inputs, test suite.
+  (requirements.lock.txt), README, reference inputs, test suite.
 - The protocol draft above and the blank fact sheet below.
 
 ## What to receive back
@@ -16,7 +16,7 @@ responsible_person, capacity_basis, metrics_json, execution_date,
 deviations, relationship_disclosure, payment_or_funding.
 
 ## Rules
-- Only real executions may be recorded. Downloaded/presentation/demo
+- Only real executions may be recorded. Downloaded or presentation-only
   attendance is not deployment. Paid testing is not "voluntary adoption".
   Personal opinion is not institutional endorsement.
 - The system defaults to no outreach, no email, no registration, no

@@ -1,6 +1,6 @@
 {
   "validation_version": "1.0",
-  "run_dir": "outputs/runs/run-20260922T045402Z",
+  "run_dir": "outputs/runs/run-20260922T045731Z",
   "module_a": {
     "truth_pairs": 95,
     "predicted_pairs": 123,

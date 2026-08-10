@@ -3,7 +3,7 @@
 1. **Status page**
    - Cards: Bill Count, Lineage Count, Payment Event Count.
    - Slicer: run_id (from Lineages), org_token.
-   - Note box: DEMO / synthetic-only statement.
+   - Note box: data-source statement (site tokens).
 
 2. **Reconstruction page**
    - Table: Lineages with gross/reversed/net/unallocated.

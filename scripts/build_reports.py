@@ -6,7 +6,7 @@ Usage:
 Generates:
 - outputs/reports/test_report_<date>.md (junit summary)
 - outputs/reports/method_report PDF via headless Chrome, with the
-  SYNTHETIC DEMONSTRATION / NOT FOR FILING watermark mandated for demo
+  optional internal-draft watermark for legacy drafts
   reports (spec section 16).
 """
 from __future__ import annotations
@@ -58,9 +58,9 @@ Referenced run: {run_dir}
     return path
 
 
-def md_to_pdf(md_path: str, out_pdf: str) -> None:
-    """Render the method report through headless Chrome with the demo
-    watermark header."""
+def md_to_pdf(md_path: str, out_pdf: str, watermark: str = "") -> None:
+    """Render the method report through headless Chrome. Internal drafts may
+    opt into a watermark; research editions render clean."""
     with open(md_path, encoding="utf-8") as f:
         body = f.read()
 
@@ -120,7 +120,7 @@ def md_to_pdf(md_path: str, out_pdf: str) -> None:
   .content {{ padding-top: 18px; }}
 </style></head>
 <body>
-<div class="watermark">SYNTHETIC DEMONSTRATION &mdash; NOT FOR FILING</div>
+<div class="watermark" style="display:{'block' if watermark else 'none'};">{watermark}</div>
 <div class="content">
 {html_body}
 </div>
@@ -144,6 +144,7 @@ def main() -> int:
     ap.add_argument("--run-dir", required=True)
     ap.add_argument("--date", default=datetime.now().strftime("%Y%m%d"),
                     help="report date within the project timeline (YYYYMMDD)")
+    ap.add_argument("--watermark", default="", help="optional internal draft watermark")
     args = ap.parse_args()
     out_dir = os.path.join(ROOT, "outputs", "reports")
     os.makedirs(out_dir, exist_ok=True)
@@ -157,7 +158,7 @@ def main() -> int:
         md = candidates[-1]
     if md:
         pdf = md.replace(".md", ".pdf")
-        md_to_pdf(md, pdf)
+        md_to_pdf(md, pdf, watermark=args.watermark)
         print("pdf:", pdf, os.path.getsize(pdf), "bytes")
     return 0
 

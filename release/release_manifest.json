@@ -1,7 +1,7 @@
 {
   "release": "v1.4.0",
   "date": "2026-09-22",
-  "mode": "DEMO",
+  "mode": "STUDY",
   "contents": [
     "src/lab_billing/ (schema, normalize, reconstruct, forecast)",
     "scripts/ (run_demo, run_forecast, run_validation, build_reports, build_review_packet, check_release)",

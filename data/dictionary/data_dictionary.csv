@@ -8,7 +8,7 @@ bills,previous_record_id,string,Native explicit predecessor reference,,-,source 
 bills,payer_token,string,Payer code,,-,source system,AET/UHC/HUM/BCB/CIG/MCR/MCD/SELF or empty,yes
 bills,service_token,string,Service identifier; NOT patient identity,,-,source system,string or empty,yes
 bills,billed_amount_minor,integer,Billed amount in minor currency units,minor unit,必填,source system,positive integer,yes
-bills,currency,string,Currency,ISO 4217,必填,source system,USD (demo),yes
+bills,currency,string,Currency,ISO 4217,必填,source system,USD (study),yes
 bills,submitted_at,datetime,Business submission time with timezone,ISO 8601,必填,source system,ISO 8601 with tz,yes
 bills,available_at,datetime,When this version became knowable in the system,ISO 8601,必填,source system,ISO 8601 with tz,yes
 bills,source_ref,string,Controlled source record reference,,-,source system,ref string,yes

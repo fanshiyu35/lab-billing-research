@@ -1,6 +1,6 @@
 """T25 — full pipeline and interface smoke test (spec section 15).
 
-From a clean outputs tree: run the demo entry, verify module A and module B
+From a clean outputs tree: run the pipeline entry, verify module A and module B
 artifacts exist with real content, and confirm the app reads them.
 """
 from __future__ import annotations
@@ -16,7 +16,7 @@ PY = os.path.join(ROOT, ".venv", "bin", "python")
 
 def test_T25_full_pipeline_smoke(tmp_path):
     env = dict(os.environ)
-    # run demo pipeline with outputs redirected into a temp tree via cwd?
+    # run pipeline with outputs redirected into a temp tree via cwd?
     # run_demo writes to outputs/runs under the project root; to keep this
     # test isolated we invoke it and then assert on the newest run dir.
     result = subprocess.run(

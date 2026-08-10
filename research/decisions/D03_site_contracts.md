@@ -27,7 +27,7 @@ throughout the data contract; the profiles live in
 data/reference/org_profiles.csv.
 
 ## Corresponding implementation
-- configs/demo.json demo_orgs = ["CPL", "TRI", "NDX"].
+- configs/reference.json org_tokens = ["CPL", "TRI", "NDX"].
 - Per-site timezones with DST in data_preparation.py (ORG_TZ).
 
 ## Verification

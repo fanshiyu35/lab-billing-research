@@ -28,7 +28,7 @@ versioned in research/protocol_changes.csv so the frozen protocol and
 the implementation stay in sync.
 
 ## Corresponding implementation
-- configs/demo.json prediction.interval_days = 5.
+- configs/reference.json prediction.interval_days = 5.
 - src/lab_billing/forecast/snapshot.py and models.py interval handling.
 - research/protocol_v1.json v1.1 with change_history.
 

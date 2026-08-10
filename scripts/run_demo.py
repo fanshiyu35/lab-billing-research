@@ -40,7 +40,7 @@ def main() -> int:
     print(f"[run_demo] run_id={run_id}")
     gen = DataPreparationPipeline(
         seed=cfg.get("seed", 42),
-        n_lineages=cfg.get("demo_lineages", 1000),
+        n_lineages=cfg.get("n_lineages", 1000),
         business_start="2022-07-01",
         as_of="2023-11-15",
     )

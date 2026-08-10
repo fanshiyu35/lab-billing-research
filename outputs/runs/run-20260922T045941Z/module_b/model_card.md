@@ -1,6 +1,6 @@
 # Model card — module B (v1.0.0)
 
-- run_id: run-20260922T045405Z-B
+- run_id: run-20260922T045941Z-B
 - target: FIRST_OBSERVED_POSITIVE_ALLOCATION_OR_NO_PAYMENT_CLOSURE
 - landmark: 7 days after first observable submission
 - horizon H: 30 days; interval: 1 day

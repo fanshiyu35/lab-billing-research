@@ -33,7 +33,7 @@ and exhaust the space, which makes the probability constraints testable
 - src/lab_billing/forecast/snapshot.py (SnapshotBuilder._label:
   first observable payment / close / still-open; censored when the
   observation window ends before H).
-- configs/demo.json prediction block (landmark_days=7, horizon_days=30).
+- configs/reference.json prediction block (landmark_days=7, horizon_days=30).
 
 ## Verification
 - T12 (censored rows never become negatives), T19 (first event only,

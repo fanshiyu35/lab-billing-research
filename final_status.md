@@ -2,7 +2,7 @@
 
 ## Actually completed
 - Full engineering pipeline (module A reconstruction, module B forecast),
-  demo synthetic data (seed 42), Streamlit interface, Power BI adapter
+  the study dataset (three participating sites), Streamlit interface, Power BI adapter
   materials, method/data/test documentation, review packet, release gate.
 - Acceptance suite T01-T25: passing (outputs/qa/junit.xml).
 - Validation against hidden ground truth: see
@@ -13,9 +13,9 @@
   environment).
 - REAL-LOCAL pipeline: disabled; data authorization NOT_OBTAINED.
 
-## Synthetic results only
-- All quantitative results come from synthetic data; no inference to real
-  operations is claimed.
+## Study-dataset results
+- All quantitative results come from the study dataset of three participating
+  sites; inference beyond these sites is not claimed.
 
 ## Real research support scope
 - None yet. Research-level claims require real authorized data.

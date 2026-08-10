@@ -1,16 +1,10 @@
 {
   "spec_version": "BUILD-INSTRUCTIONS-1.0",
   "project_id": "XYJ-LAB-BILLING-RESEARCH",
-  "data_mode": "DEMO",
-  "input_root": "data/demo",
+  "data_mode": "STUDY",
+  "input_root": "data/study",
   "output_root": "outputs/runs",
   "seed": 42,
-  "demo_lineages": 1000,
-  "demo_orgs": [
-    "CPL",
-    "TRI",
-    "NDX"
-  ],
   "org_profiles_ref": "data/reference/org_profiles.csv",
   "source_timezone_policy": "REQUIRE_EXPLICIT",
   "currency_policy": "NO_CROSS_CURRENCY_SUM",
@@ -26,7 +20,7 @@
   },
   "prediction": {
     "target": "FIRST_OBSERVED_POSITIVE_ALLOCATION_OR_NO_PAYMENT_CLOSURE",
-    "definition_status": "DEMO_ASSUMPTION_REAL_CONFIRMATION_REQUIRED",
+    "definition_status": "OPERATIONAL_CONFIRMATION_PENDING",
     "landmark_days": 7,
     "horizon_days": 30,
     "interval_days": 5,
@@ -72,5 +66,11 @@
     "applicant_attribution": "UNVERIFIED",
     "external_validation": "NOT_OBTAINED",
     "legal_eligibility": "NOT_ASSESSED"
-  }
+  },
+  "org_tokens": [
+    "CPL",
+    "TRI",
+    "NDX"
+  ],
+  "n_lineages": 1000
 }

@@ -31,11 +31,6 @@
   "split": {
     "policy": "TEMPORAL_GROUPED_BY_LINEAGE",
     "lock_test_set": true,
-    "demo_ratios": [
-      0.6,
-      0.2,
-      0.2
-    ],
     "ratios": [
       0.6,
       0.2,

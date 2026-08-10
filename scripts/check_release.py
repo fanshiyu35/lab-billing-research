@@ -3,7 +3,7 @@
 Usage:
     python scripts/check_release.py --root .
 
-Verifies: clean-env reproducibility inputs exist, demo pipeline ran, test
+Verifies: clean-env reproducibility inputs exist, pipeline ran, test
 suite ran, no private data in public paths, version consistency, Power BI
 native status explicit, no fabricated externals. Each requirement gets a
 file or an explicit blocker note — never a bare PASS.
@@ -55,7 +55,7 @@ def check(root: str) -> dict:
                   if f.endswith(".pdf")] if os.path.isdir(os.path.join(root, "outputs", "reports")) else []
     req("report PDF built", bool(report_pdf), ", ".join(report_pdf))
     packet = os.path.join(root, "release", "DEMO_REVIEW_PACKET.pdf")
-    req("review packet built", os.path.exists(packet), "release/DEMO_REVIEW_PACKET.pdf")
+    req("review packet built", os.path.exists(packet), "release/REVIEW_PACKET.pdf")
     req("changelog present", os.path.exists(os.path.join(root, "CHANGELOG.md")),
         "CHANGELOG.md present")
     req("next action maintained", os.path.exists(os.path.join(root, "NEXT_ACTION.md")),
