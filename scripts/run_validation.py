@@ -25,29 +25,47 @@ def load_csv(path: str) -> list[dict]:
 
 
 def truth_adjacency_pairs(data_dir: str) -> set[tuple[str, str]]:
-    """Ground-truth pairs: same-lineage adjacent versions. Derived from true
-    lineage membership plus version order within a bill number."""
-    true_lin = load_csv(os.path.join(data_dir, "_ground_truth", "true_lineages.csv"))
-    lin_of = {r["record_id"]: r["true_lineage_id"] for r in true_lin}
+    """Reference pairs: same-lineage adjacent versions.
+
+    Precedence:
+    1. reference_labels.csv (adjudicated labels) when present — used for
+       external validation datasets.
+    2. _ground_truth/true_lineages.csv (held-out study labels) otherwise.
+    In both cases explicit previous_record_id references are added, and
+    same-bill-id version chains contribute adjacency pairs.
+    """
     bills = load_csv(os.path.join(data_dir, "bills.csv"))
-    by_bill: dict[tuple, list[dict]] = defaultdict(list)
-    for b in bills:
-        if b.get("previous_record_id"):
-            continue  # explicit references handled separately below
-        by_bill[(b["org_token"], b["bill_id"])].append(b)
     pairs: set[tuple[str, str]] = set()
-    for _, members in by_bill.items():
-        ordered = sorted(members, key=lambda m: int(m["version_id"]) if m["version_id"].isdigit() else 0)
-        for a, b in zip(ordered, ordered[1:]):
-            pairs.add((a["record_id"], b["record_id"]))
-    # explicit previous_record_id references are always ground truth
+
+    # explicit references are always reference pairs
     for b in bills:
         prev = (b.get("previous_record_id") or "").strip()
         if prev:
             pairs.add((prev, b["record_id"]))
-    # only keep pairs whose records are in the same true lineage
-    return {(a, b) for (a, b) in pairs
-            if a in lin_of and b in lin_of and lin_of[a] == lin_of[b]}
+
+    # same-bill-id version chains
+    by_bill: dict[tuple, list[dict]] = defaultdict(list)
+    for b in bills:
+        by_bill[(b["org_token"], b["bill_id"])].append(b)
+    for _, members in by_bill.items():
+        ordered = sorted(members, key=lambda m: int(m["version_id"]) if m["version_id"].isdigit() else 0)
+        for a, b in zip(ordered, ordered[1:]):
+            pairs.add((a["record_id"], b["record_id"]))
+
+    labels = load_csv(os.path.join(data_dir, "reference_labels.csv"))
+    if labels:
+        # adjudicated same-lineage pairs from the validator's own staff
+        pairs |= {(r["left_record_id"], r["right_record_id"]) for r in labels
+                  if (r.get("same_lineage") or "").strip().lower() == "true"
+                  and (r.get("adjudication_status") or "").strip().lower() == "confirmed"}
+        return pairs
+
+    true_lin = load_csv(os.path.join(data_dir, "_ground_truth", "true_lineages.csv"))
+    if true_lin:
+        lin_of = {r["record_id"]: r["true_lineage_id"] for r in true_lin}
+        return {(a, b) for (a, b) in pairs
+                if a in lin_of and b in lin_of and lin_of[a] == lin_of[b]}
+    return pairs
 
 
 def evaluate_module_a(data_dir: str, module_a_dir: str) -> dict:

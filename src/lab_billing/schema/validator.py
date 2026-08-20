@@ -41,8 +41,22 @@ class ValidationResult:
 
 _ISO_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$")
 _ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
-_ORG_OK = {"CPL", "TRI", "NDX"}
-_PAYER_OK = {"AET", "UHC", "HUM", "BCB", "CIG", "MCR", "MCD", "SELF", ""}
+_ORG_OK_DEFAULT = {"CPL", "TRI", "NDX"}
+_PAYER_OK_DEFAULT = {"AET", "UHC", "HUM", "BCB", "CIG", "MCR", "MCD", "SELF", ""}
+
+
+def _org_ok(row: dict, extra: set | None) -> bool:
+    ok = set(_ORG_OK_DEFAULT)
+    if extra:
+        ok |= extra
+    return row.get("org_token", "") in ok
+
+
+def _payer_ok(row: dict, extra: set | None) -> bool:
+    ok = set(_PAYER_OK_DEFAULT)
+    if extra:
+        ok |= extra
+    return row.get("payer_token", "") in ok
 _CURRENCY_OK = {"USD"}
 
 
@@ -80,14 +94,15 @@ def _parsed(s: str):
         return None
 
 
-def validate_bills(text: str) -> ValidationResult:
+def validate_bills(text: str, extra_orgs: set | None = None,
+                  extra_payers: set | None = None) -> ValidationResult:
     r = ValidationResult("bills")
     reader = csv.DictReader(io.StringIO(text))
     for i, row in enumerate(reader, start=2):
         rid = row.get("record_id", "")
         if not _ID_RE.match(rid):
             r.findings.append(Finding(f"row{i}", "record_id", "invalid or missing", "ERROR"))
-        if row.get("org_token", "") not in _ORG_OK:
+        if not _org_ok(row, extra_orgs):
             r.findings.append(Finding(f"row{i}", "org_token", "unknown org", "ERROR"))
         if not row.get("bill_id", ""):
             r.findings.append(Finding(f"row{i}", "bill_id", "missing", "ERROR"))
@@ -105,7 +120,7 @@ def validate_bills(text: str) -> ValidationResult:
         if prev and not _ID_RE.match(prev):
             r.findings.append(Finding(f"row{i}", "previous_record_id", "invalid format", "ERROR"))
         pt = row.get("payer_token", "")
-        if pt not in _PAYER_OK:
+        if not _payer_ok(row, extra_payers):
             r.findings.append(Finding(f"row{i}", "payer_token", "unknown payer token", "WARNING"))
         if r.findings and r.findings[-1].row_ref == f"row{i}":
             invalid = any(f.severity == "ERROR" for f in r.findings if f.row_ref == f"row{i}")
@@ -116,7 +131,8 @@ def validate_bills(text: str) -> ValidationResult:
     return r
 
 
-def validate_events(text: str) -> ValidationResult:
+def validate_events(text: str, extra_orgs: set | None = None,
+                    extra_payers: set | None = None) -> ValidationResult:
     from .event_dict import is_known_event_type
 
     r = ValidationResult("events")
@@ -125,7 +141,7 @@ def validate_events(text: str) -> ValidationResult:
         rid = row.get("event_id", "")
         if not _ID_RE.match(rid):
             r.findings.append(Finding(f"row{i}", "event_id", "invalid or missing", "ERROR"))
-        if row.get("org_token", "") not in _ORG_OK:
+        if not _org_ok(row, extra_orgs):
             r.findings.append(Finding(f"row{i}", "org_token", "unknown org", "ERROR"))
         et = row.get("event_type", "")
         if not is_known_event_type(et):
@@ -153,7 +169,7 @@ def validate_events(text: str) -> ValidationResult:
     return r
 
 
-def validate_allocations(text: str) -> ValidationResult:
+def validate_allocations(text: str, extra_orgs: set | None = None) -> ValidationResult:
     r = ValidationResult("allocations")
     reader = csv.DictReader(io.StringIO(text))
     for i, row in enumerate(reader, start=2):
@@ -174,13 +190,13 @@ def validate_allocations(text: str) -> ValidationResult:
     return r
 
 
-def validate_observation_windows(text: str) -> ValidationResult:
+def validate_observation_windows(text: str, extra_orgs: set | None = None) -> ValidationResult:
     r = ValidationResult("observation_windows")
     reader = csv.DictReader(io.StringIO(text))
     for i, row in enumerate(reader, start=2):
         if not _ID_RE.match(row.get("window_id", "")):
             r.findings.append(Finding(f"row{i}", "window_id", "invalid or missing", "ERROR"))
-        if row.get("org_token", "") not in _ORG_OK:
+        if not _org_ok(row, extra_orgs):
             r.findings.append(Finding(f"row{i}", "org_token", "unknown org", "ERROR"))
         for f in ("coverage_start", "coverage_end", "extracted_at"):
             if not _tz_ok(row.get(f, "")):

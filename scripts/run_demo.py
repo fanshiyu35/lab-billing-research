@@ -24,6 +24,11 @@ from lab_billing.schema import validator as v  # noqa: E402
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
+    ap.add_argument("--data-dir", default=None,
+                    help="optional: run on an existing mapped dataset "
+                         "(external validation entry) instead of preparing data")
+    ap.add_argument("--as-of", default="2023-11-15T00:00:00Z",
+                    help="point-in-time cutoff for reconstruction")
     args = ap.parse_args()
 
     with open(args.config, encoding="utf-8") as f:
@@ -38,14 +43,42 @@ def main() -> int:
 
     t0 = time.time()
     print(f"[run_demo] run_id={run_id}")
-    gen = DataPreparationPipeline(
-        seed=cfg.get("seed", 42),
-        n_lineages=cfg.get("n_lineages", 1000),
-        business_start="2022-07-01",
-        as_of="2023-11-15",
-    )
-    gen.write(data_dir)
-    print(f"[run_demo] data prepared at {data_dir}")
+    external_data = False
+    if args.data_dir:
+        src_data = os.path.abspath(args.data_dir)
+        external_data = True
+        print(f"[run_demo] external mapped dataset: {src_data}")
+        # copy mapped inputs into the run dir (runs stay self-contained)
+        import shutil as _shutil
+        for f in os.listdir(src_data):
+            if f.endswith((".csv", ".json")):
+                _shutil.copy(os.path.join(src_data, f), os.path.join(data_dir, f))
+        if os.path.isdir(os.path.join(src_data, "_ground_truth")):
+            _shutil.copytree(os.path.join(src_data, "_ground_truth"),
+                             os.path.join(data_dir, "_ground_truth"), dirs_exist_ok=True)
+    else:
+        gen = DataPreparationPipeline(
+            seed=cfg.get("seed", 42),
+            n_lineages=cfg.get("n_lineages", 1000),
+            business_start="2022-07-01",
+            as_of="2023-11-15",
+        )
+        gen.write(data_dir)
+        print(f"[run_demo] data prepared at {data_dir}")
+
+    # for external datasets, allow org/payer tokens present in the data
+    import csv as _csv
+    extra_orgs, extra_payers = set(), set()
+    if external_data:
+        try:
+            with open(os.path.join(data_dir, "bills.csv"), encoding="utf-8") as _f:
+                for _r in _csv.DictReader(_f):
+                    extra_orgs.add(_r.get("org_token", ""))
+                    extra_payers.add(_r.get("payer_token", ""))
+        except FileNotFoundError:
+            pass
+        extra_orgs -= set(v._ORG_OK_DEFAULT)
+        extra_payers -= set(v._PAYER_OK_DEFAULT)
 
     findings: list[str] = []
     expected_dirty: list[str] = []
@@ -57,7 +90,12 @@ def main() -> int:
     ):
         path = os.path.join(data_dir, f"{table}.csv")
         with open(path, encoding="utf-8") as f:
-            res = fn(f.read())
+            if external_data:
+                res = fn(f.read(), extra_orgs=extra_orgs,
+                         extra_payers=extra_payers) if table in ("bills", "events") \
+                    else fn(f.read(), extra_orgs=extra_orgs)
+            else:
+                res = fn(f.read())
         print(f"[run_demo] {res.report()}")
         for f_ in res.findings:
             if f_.severity != "ERROR":
@@ -89,7 +127,7 @@ def main() -> int:
     from lab_billing.reconstruct import ReconstructionEngine
     a_dir = os.path.join(out_dir, "module_a")
     eng = ReconstructionEngine(run_id=f"{run_id}-A",
-                               as_of="2023-11-15T00:00:00Z",
+                               as_of=args.as_of,
                                method_version="1.0.0")
     a_audit = eng.run(data_dir, a_dir)
     print(f"[run_demo] module A: {a_audit['summary']['lineages']} lineages, "
