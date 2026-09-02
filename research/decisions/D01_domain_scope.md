@@ -7,7 +7,7 @@
 ## Background
 At project inception the method could target any high-volume billing
 environment. The choice of domain determines the event dictionary, the
-data contract and the realism targets of the generator.
+data contract and the realism targets of the data preparation.
 
 ## Options considered
 1. General healthcare billing (hospitals, clinics, mixed service lines).
@@ -33,5 +33,6 @@ Schoonbee 2022) were reviewed as anchors before this choice
 - Site contracts in data/reference/org_profiles.csv.
 
 ## Verification
-Domain realism checked in the data-quality review of the first generator
+Domain realism checked in the data-quality review of the first
+prepared dataset
 run (amount distributions, payer mix, weekday rhythms).

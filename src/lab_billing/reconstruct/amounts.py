@@ -60,6 +60,7 @@ class AmountEngine:
                 else:
                     reversals_unresolved.append(e)
 
+        payment_to_bills: dict[str, list[str]] = {}
         for a in allocations:
             if a.get("currency") != "USD":
                 self.conflicts.append(AmountConflict(
@@ -69,6 +70,9 @@ class AmountEngine:
             peid = a["payment_event_id"]
             amt = a.get("allocated_amount_minor") or 0
             allocation_sum[peid] = allocation_sum.get(peid, 0) + amt
+            bid = (a.get("bill_record_id") or "").strip()
+            if bid:
+                payment_to_bills.setdefault(peid, []).append(bid)
 
         # over-allocation blocks the transaction
         blocked = [peid for peid, amt in payment_amount.items()
@@ -86,6 +90,11 @@ class AmountEngine:
             ev = next((x for x in events if x["event_id"] == eid), None)
             if ev and ev.get("bill_record_id"):
                 return lineage_of_record.get(ev["bill_record_id"], "UNLINKED")
+            # unallocated-to-bill payments attach through their allocations
+            for bid in payment_to_bills.get(eid, []):
+                lin = lineage_of_record.get(bid)
+                if lin:
+                    return lin
             return "UNLINKED"
 
         # gross posted and reversals per lineage
@@ -100,12 +109,15 @@ class AmountEngine:
             acc = out.setdefault(lin, LineageAmounts(lineage_id=lin))
             acc.gross_posted += amt
             allocated = allocation_sum.get(peid, 0)
-            if allocated == 0:
-                acc.unallocated += amt
+            if allocated < amt:
+                acc.unallocated += amt - allocated
             revs = reversal_targets.get(peid, [])
             for r in revs:
                 r_amt = r.get("amount_minor") or 0
-                acc.reversed += min(r_amt, amt)  # never reverse more than posted
+                remaining = max(0, amt - acc.reversed)
+                if remaining == 0:
+                    break  # cumulative reversal cap reached
+                acc.reversed += min(r_amt, remaining)
 
         for r in reversals_unresolved:
             self.conflicts.append(AmountConflict(

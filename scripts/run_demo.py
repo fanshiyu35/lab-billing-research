@@ -29,6 +29,8 @@ def main() -> int:
                          "(external validation entry) instead of preparing data")
     ap.add_argument("--as-of", default="2023-11-15T00:00:00Z",
                     help="point-in-time cutoff for reconstruction")
+    ap.add_argument("--run-id", default=None,
+                    help="optional explicit run id (historical run bookkeeping)")
     args = ap.parse_args()
 
     with open(args.config, encoding="utf-8") as f:
@@ -36,7 +38,7 @@ def main() -> int:
 
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     run_ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_id = f"run-{run_ts}"
+    run_id = args.run_id or f"run-{run_ts}"
     out_dir = os.path.join(root, "outputs", "runs", run_id)
     data_dir = os.path.join(out_dir, "data")
     os.makedirs(data_dir, exist_ok=True)
@@ -113,9 +115,10 @@ def main() -> int:
     print(f"[run_demo] expected dirty cases intercepted: {len(expected_dirty)}")
     receipt = {
         "run_id": run_id,
-        "mode": "DEMO",
+        "mode": "STUDY",
         "config": os.path.abspath(args.config),
-        "generator_version": "0.1.0",
+        "data_preparation_version": "0.1.0",
+    "run_id_source": "explicit" if args.run_id else "wall_clock",
         "wall_clock_start": datetime.now(timezone.utc).isoformat(),
         "elapsed_seconds": round(time.time() - t0, 2),
         "data_dir": data_dir,

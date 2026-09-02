@@ -8,4 +8,4 @@ Test reports, protocols and run receipts are distinct records: the protocol
 defines how each problem is verified; the receipt records program execution
 evidence; this report records the observed outcome.
 
-Referenced run: outputs/runs/run-20260922T045731Z
+Referenced run: outputs/runs/run-20260922T061834Z

@@ -68,6 +68,30 @@ def truth_adjacency_pairs(data_dir: str) -> set[tuple[str, str]]:
     return pairs
 
 
+def a0_unconstrained_baseline(data_dir: str, truth: set) -> dict:
+    """A0: an unconstrained linkage baseline. Within each org, records are
+    chained in submission order with no evidence requirements. Serves as the
+    lower bound every constrained method must beat."""
+    bills = load_csv(os.path.join(data_dir, "bills.csv"))
+    by_org: dict = {}
+    for b in bills:
+        by_org.setdefault(b["org_token"], []).append(b)
+    pred: set = set()
+    for org, members in by_org.items():
+        ordered = sorted(members, key=lambda m: (m.get("submitted_at") or "", m["record_id"]))
+        for a, b in zip(ordered, ordered[1:]):
+            pred.add((a["record_id"], b["record_id"]))
+    tp = len(pred & truth)
+    fp = len(pred - truth)
+    fn = len(truth - pred)
+    return {
+        "predicted_pairs": len(pred),
+        "true_positive": tp, "false_positive": fp, "false_negative": fn,
+        "precision": round(tp / len(pred), 4) if pred else 0.0,
+        "recall": round(tp / len(truth), 4) if truth else 0.0,
+    }
+
+
 def evaluate_module_a(data_dir: str, module_a_dir: str) -> dict:
     truth = truth_adjacency_pairs(data_dir)
     links = load_csv(os.path.join(module_a_dir, "links.csv"))
@@ -87,6 +111,7 @@ def evaluate_module_a(data_dir: str, module_a_dir: str) -> dict:
         "precision": round(precision, 4),
         "recall": round(recall, 4),
         "refusal_ratio": round(len(rq) / (len(rq) + len(pred)), 4) if (rq or pred) else 0.0,
+        "baseline_a0_unconstrained": a0_unconstrained_baseline(data_dir, truth),
         "note": "Truth pairs are same-lineage adjacent versions; multi-candidate "
                 "ambiguities queued for review count as neither TP nor FP.",
     }

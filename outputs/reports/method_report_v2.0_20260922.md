@@ -29,7 +29,10 @@
 - Zeng et al. (2007), Schoonbee (2022): invoice-lateness prediction; the aging baseline
   is informed by these, with explicit censoring treatment added.
 
-Full scan: research/prior_work.csv (nine references, verified).
+Reference list: research/prior_work.csv (nine references). Reading scope is
+recorded per reference: bibliography-verified (metadata confirmed against the
+publisher's record) or bib-and-abstract-verified (metadata plus abstract read
+in full). Full-text analysis is not claimed for any reference at this stage.
 
 ## 3. Data and Permissions
 
@@ -78,21 +81,36 @@ Full scan: research/prior_work.csv (nine references, verified).
 
 ## 7. Results (locked test set)
 
+Cohort flow (all records of the reference run):
+bills 1,164 -> reconstructed lineages 1,044 -> snapshots 959
+-> locked test snapshots 192. Snapshots whose outcome was already
+determined before the landmark are not prediction targets and are
+excluded at snapshot construction.
+
 Module A (held-out adjudicated adjacency evaluation):
 - reference pairs 95; predicted 123
-- true positives 94; false positives 29;
-  false negatives 1
-- precision 0.7642; recall 0.9895; refusal ratio 0.0956
-- The weak-evidence rule R3 is the dominant false-positive source; multi-candidate
-  ambiguity is routed to review instead of being forced.
+- true positives 94; false positives 29; false negatives 1
+- precision 0.7642 (95% Wilson interval 0.680-0.832); recall 0.9895
+  (0.943-0.999); refusal ratio 0.0956
+- A0 unconstrained baseline (same-org chaining in submission order,
+  no evidence requirements): precision 0.0017, recall 0.0211. The
+  constrained method improves precision by ~450x and recall by ~47x
+  over this lower bound.
+- The weak-evidence rule R3 is the dominant false-positive source;
+  multi-candidate ambiguity is routed to review instead of being forced.
 
-Module B (snapshot-level, n=206 test snapshots; outcome mix
-{"payment": 539, "still_open": 488, "censored": 2, "close_no_payment": 8}):
-- B0: snap log-loss 0.736, Brier 0.514
-- B1: snap log-loss 0.669, Brier 0.462
-  (relative improvement 9.0%)
-- C1: snap log-loss 0.668, Brier 0.462
-  (delta vs B1 -0.0009 — no incremental value)
+Module B (snapshot-level, n=192 test snapshots; outcome mix
+{"payment": 576, "still_open": 375, "close_no_payment": 8} over all
+959 snapshots):
+- B0: snap log-loss 0.7149, Brier 0.4943
+- B1: snap log-loss 0.7123, Brier 0.4908
+  (absolute delta -0.0026; relative improvement 0.36%)
+- C1: snap log-loss 0.7124, Brier 0.4915
+  (delta vs B1 +0.0001 — no incremental value)
+- The B1-vs-B0 delta of 0.36% does not clear any practically meaningful
+  improvement threshold; it is reported as a neutral result. No
+  pre-specified gain margin was frozen in the protocol; that omission is
+  recorded as a study-design limitation (section 9).
 
 ## 8. Negative / Neutral Findings (reported as-is)
 
@@ -101,6 +119,8 @@ Module B (snapshot-level, n=206 test snapshots; outcome mix
   probabilities approximately 4x; corrected after diagnostics (2024-12).
 - Close-no-payment events are rare in the observation window (n=8);
   the model abstains rather than fabricating probabilities where support is insufficient.
+- The candidate B1 improves snapshot log-loss over the B0 baseline by only
+  0.36% on the locked test set — not a substantive gain.
 
 ## 9. Applicability and Limitations
 
@@ -111,7 +131,11 @@ Module B (snapshot-level, n=206 test snapshots; outcome mix
 - Limitations: the participating sites span three ownership models in one national
   context; generalization to other settings requires further validation. Landmark
   and horizon are fixed study defaults pending operational confirmation. No external
-  independent validation has been completed to date.
+  independent validation has been completed to date. No pre-specified gain margin
+  for the Module B comparison was frozen in the research protocol; the post-hoc
+  interpretation of the observed 0.36% delta is therefore descriptive, not
+  confirmatory. Uncertainty intervals for Module B snapshot-level differences
+  are not reported because the snapshot estimates are not independent.
 
 ## 10. Contributions
 
@@ -123,8 +147,7 @@ Module B (snapshot-level, n=206 test snapshots; outcome mix
 ## 11. Reproducibility
 
 - Environment: environment.json (Python 3.12.13; historical snapshot 3.11.5).
-- Commands: the standard pipeline entry (full pipeline); pytest (22 acceptance
-  tests); the validation entry (held-out evaluation). Full command references in README.
+- Commands: the standard pipeline entry (full pipeline); pytest (32 acceptance and regression tests); the validation entry (held-out evaluation). Full command references in README.
 - Code and data access: https://github.com/fanshiyu35/lab-billing-research
 - Run referenced: the v1.4 reference run (artifacts archived with the code release).
 

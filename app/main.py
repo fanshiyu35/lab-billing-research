@@ -125,6 +125,12 @@ def main() -> None:
         st.metric("Snapshots predicted", len(preds))
         if not preds.empty:
             show = preds[preds["outcome"] != "ABSTAIN"].head(100)
+            if ("P_still_open_by_H" not in show.columns
+                    and {"P_payment_by_H", "P_close_no_payment_by_H"} <= set(show.columns)):
+                show["P_still_open_by_H"] = (
+                    1.0 - show["P_payment_by_H"].astype(float)
+                    - show["P_close_no_payment_by_H"].astype(float)
+                ).round(4)
             st.dataframe(show)
         metrics = {}
         mp2 = os.path.join(ROOT, "outputs", "runs", run, "module_b",

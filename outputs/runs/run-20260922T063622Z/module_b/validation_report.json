@@ -1,0 +1,75 @@
+{
+  "validation_version": "1.0",
+  "run_dir": "outputs/runs/run-20260922T063622Z",
+  "module_a": {
+    "truth_pairs": 95,
+    "predicted_pairs": 123,
+    "true_positive": 94,
+    "false_positive": 29,
+    "false_negative": 1,
+    "precision": 0.7642,
+    "recall": 0.9895,
+    "refusal_ratio": 0.0956,
+    "baseline_a0_unconstrained": {
+      "predicted_pairs": 1164,
+      "true_positive": 2,
+      "false_positive": 1162,
+      "false_negative": 93,
+      "precision": 0.0017,
+      "recall": 0.0211
+    },
+    "note": "Truth pairs are same-lineage adjacent versions; multi-candidate ambiguities queued for review count as neither TP nor FP."
+  },
+  "module_b": {
+    "snapshots": 959,
+    "test_snapshots": 192,
+    "outcomes": {
+      "payment": 576,
+      "still_open": 375,
+      "close_no_payment": 8
+    },
+    "models": {
+      "B0_age_stage_baseline": {
+        "status": "FITTED",
+        "snap_brier": 0.4943193812002867,
+        "snap_log_loss": 0.7148682447611714,
+        "n_snapshots": 192,
+        "n_abstain": 0
+      },
+      "B1_discrete_multinomial": {
+        "status": "FITTED",
+        "snap_brier": 0.4908483777418546,
+        "snap_log_loss": 0.7123097346939679,
+        "n_snapshots": 192,
+        "n_abstain": 0
+      },
+      "C1_quality_augmented": {
+        "status": "FITTED",
+        "snap_brier": 0.4914677676105672,
+        "snap_log_loss": 0.7124455697623446,
+        "n_snapshots": 192,
+        "n_abstain": 0
+      }
+    }
+  },
+  "ablations": {
+    "quality_features": {
+      "B1_snap_log_loss": 0.7123097346939679,
+      "C1_snap_log_loss": 0.7124455697623446,
+      "delta": 0.0001,
+      "interpretation": "quality features add no incremental value on the locked test set"
+    },
+    "candidate_vs_baseline": {
+      "B0_snap_log_loss": 0.7148682447611714,
+      "B1_snap_log_loss": 0.7123097346939679,
+      "relative_improvement": 0.0036
+    }
+  },
+  "limitations": {
+    "study_scope": "All figures come from the study dataset of three participating sites. No research claim transfers to real operations.",
+    "censored_share": 0,
+    "close_class_rarity": 8,
+    "landmark_fixed": "landmark=7d and H=30d are study defaults pending business confirmation (unknowns U03/U04).",
+    "leakage_audit": "T10/T13/T14/T15 enforced: as-of truncation, forbidden fields, lineage-grouped splits, train-only preprocessing."
+  }
+}

@@ -32,7 +32,7 @@ RULES = {
         "source": "version chains within a native bill number (spec section 10.3)",
     },
     "R3_amount_date_window": {
-        "inputs": ["bills.payer_token", "bills.service_token",
+        "inputs": ["bills.source_system", "bills.payer_token", "bills.service_token",
                    "bills.billed_amount_minor", "bills.submitted_at"],
         "action": "candidate pair on amount/date pattern; accept only when the "
                   "candidate is unique, otherwise queue for review",
@@ -93,7 +93,8 @@ def generate_r3_candidates(bills: list[dict], window_days: int = 7,
     for b in bills:
         if not b.get("payer_token") or not b.get("service_token"):
             continue  # R3 needs both signals; never the sole basis
-        by_key.setdefault((b["org_token"], b["payer_token"], b["service_token"]), []).append(b)
+        by_key.setdefault((b["org_token"], b["source_system"],
+                            b["payer_token"], b["service_token"]), []).append(b)
     for key, members in by_key.items():
         if len(members) < 2:
             continue

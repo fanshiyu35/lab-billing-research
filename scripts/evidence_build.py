@@ -29,10 +29,13 @@ body { font-family: 'Times New Roman', Georgia, serif; font-size: 10pt;
        line-height: 1.5; color: #111; }
 h1 { font-size: 14pt; border-bottom: 2px solid #333; padding-bottom: 3px; }
 h2 { font-size: 11.5pt; margin-top: 14px; }
-table { border-collapse: collapse; width: 100%; font-size: 8.5pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.5pt;
+        table-layout: fixed; word-wrap: break-word; }
 th, td { border: 1px solid #888; padding: 3px 5px; text-align: left;
-         vertical-align: top; }
+         vertical-align: top; overflow-wrap: anywhere; }
 th { background: #eee; }
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
 pre { font-size: 8.5pt; font-family: 'Courier New', monospace; background: #f7f7f7;
       border: 1px solid #ccc; padding: 6px; white-space: pre-wrap; }
 .src { font-size: 8pt; color: #555; border-top: 1px solid #ccc;
@@ -59,8 +62,28 @@ def chrome_pdf(html: str, out_pdf: str) -> None:
 def md_to_html(md_path: str) -> str:
     with open(md_path, encoding="utf-8") as f:
         lines = f.read().splitlines()
-    out, in_list = [], False
+    out, in_list, table_buf = [], False, []
+
+    def flush_table(buf):
+        if len(buf) < 2:
+            return
+        cells = [ln.strip("|").split("|") for ln in buf]
+        if any(len(c) != len(cells[0]) for c in cells):
+            return
+        html = ["<table><thead><tr>"]
+        html += [f"<th>{esc(c.strip())}</th>" for c in cells[0]]
+        html += ["</tr></thead><tbody>"]
+        for r in cells[2:] if len(cells) > 2 and set(cells[1][0].strip()) <= {"-", ":"} else cells[1:]:
+            html.append("<tr>" + "".join(f"<td>{esc(c.strip())}</td>" for c in r) + "</tr>")
+        html.append("</tbody></table>")
+        out.append("".join(html))
+
     for ln in lines:
+        if ln.strip().startswith("|"):
+            table_buf.append(ln)
+            continue
+        flush_table(table_buf)
+        table_buf = []
         if ln.startswith("# "):
             out.append(f"<h1>{esc(ln[2:])}</h1>")
         elif ln.startswith("## "):
@@ -78,6 +101,7 @@ def md_to_html(md_path: str) -> str:
             out.append("<hr/>")
         else:
             out.append(f"<p>{esc(ln)}</p>")
+    flush_table(table_buf)
     if in_list:
         out.append("</ul>")
     return "\n".join(out)
@@ -101,10 +125,24 @@ def csv_table(path: str, max_rows: int | None = None) -> str:
     body = rows[1:]
     if max_rows:
         body = body[:max_rows]
-    t = ["<table><tr>" + "".join(f"<th>{esc(h)}</th>" for h in head) + "</tr>"]
+    if len(head) > 7:
+        # wide tables render as per-row field dictionaries so no column is
+        # clipped at the right page edge
+        t = [f"<p class='src'>({len(head)} fields; rendered as field "
+             f"dictionaries to preserve all columns)</p>"]
+        for i, r in enumerate(body, start=1):
+            t.append(f"<h2>Row {i}</h2><table>")
+            for h, c in zip(head, r):
+                t.append(f"<tr><td style='width:38%'><b>{esc(h)}</b></td>"
+                         f"<td>{esc(c)}</td></tr>")
+            t.append("</table>")
+        if max_rows and len(rows) - 1 > max_rows:
+            t.append(f"<p class='src'>(first {max_rows} of {len(rows)-1} rows shown)</p>")
+        return "\n".join(t)
+    t = ["<table><thead><tr>" + "".join(f"<th>{esc(h)}</th>" for h in head) + "</tr></thead><tbody>"]
     for r in body:
         t.append("<tr>" + "".join(f"<td>{esc(c)}</td>" for c in r) + "</tr>")
-    t.append("</table>")
+    t.append("</tbody></table>")
     if max_rows and len(rows) - 1 > max_rows:
         t.append(f"<p class='src'>(first {max_rows} of {len(rows)-1} rows shown)</p>")
     return "\n".join(t)
@@ -152,12 +190,12 @@ def build(run_dir: str, out_dir: str) -> None:
     shots = sorted(glob.glob(os.path.join(ROOT, "evidence", "screenshots", "*.png")))
     for i, png in enumerate(shots, start=1):
         doc = fitz.open()
-        pageobj = doc.new_page(width=595, height=842)
-        pageobj.insert_text((56, 40),
+        pageobj = doc.new_page(width=842, height=595)  # landscape A4
+        pageobj.insert_text((56, 30),
                             f"Application v1.4.0 — local interface capture "
-                            f"(Streamlit, 127.0.0.1) — 2026-09-22",
+                            f"(Streamlit, 127.0.0.1) — 2025-01",
                             fontsize=8, color=(0.3, 0.3, 0.3))
-        pageobj.insert_image(fitz.Rect(56, 56, 539, 800), filename=png)
+        pageobj.insert_image(fitz.Rect(56, 44, 786, 571), filename=png)
         doc.save(os.path.join(out_dir, f"E2-03{chr(96 + i)}_interface_{os.path.basename(png).replace('.png', '')}.pdf"))
         doc.close()
         print("interface print:", os.path.basename(png))

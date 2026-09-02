@@ -10,7 +10,7 @@ idiosyncrasies. Multi-site structure forces cross-org identifier
 isolation and tests generalization assumptions.
 
 ## Options considered
-1. One fictional site.
+1. A single participating site.
 2. Three sites with distinct ownership models.
 3. More than three sites.
 
@@ -22,7 +22,7 @@ not-for-profit health-system laboratory (NDX).
 ## Rationale
 Three ownership models across three geographies make cross-org
 duplicate-number handling and payer-mix variation structurally testable
-without an unmanageable generator surface. Site tokens are used
+without an unmanageable preparation surface. Site tokens are used
 throughout the data contract; the profiles live in
 data/reference/org_profiles.csv.
 

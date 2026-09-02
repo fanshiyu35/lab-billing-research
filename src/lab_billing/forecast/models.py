@@ -183,6 +183,8 @@ def cumulative_curves(interval_probs: list[dict[str, float]]) -> dict[str, list[
     for p in interval_probs:
         if abs(sum(p.values()) - 1.0) > 1e-6:
             raise ValueError(f"interval probabilities do not sum to 1: {p}")
+        if any(v < -1e-9 for v in p.values()):
+            raise ValueError(f"negative interval probability: {p}")
         Fp += S * p["payment"]
         Fc += S * p["close_no_payment"]
         S = S * p["none"]
