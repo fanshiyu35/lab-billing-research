@@ -1,7 +1,7 @@
-"""Run the full demo pipeline (spec section 04 entry point).
+"""Run the full pipeline (spec section 04 entry point).
 
 Usage:
-    python scripts/run_demo.py --config configs/demo.json
+    python scripts/run_pipeline.py --config configs/reference.json
 
 Stages: prepare data -> validate schema -> write manifest.
 Later stages (reconstruction, prediction) are attached as they land.
