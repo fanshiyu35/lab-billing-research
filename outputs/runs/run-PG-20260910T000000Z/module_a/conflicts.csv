@@ -1,0 +1,30 @@
+run_id,conflict_type,record_ids,detail
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000321|EV002119,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001813|EV002120,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001207|EV002121,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001781|EV002122,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001783|EV002123,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001964|EV002124,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001392|EV002125,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000136|EV002126,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001716|EV002127,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV002063|EV002128,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000961|EV002129,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000100|EV002130,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001046|EV002131,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000521|EV002132,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000226|EV002133,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001094|EV002134,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV000468|EV002135,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001460|EV002136,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001972|EV002137,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001864|EV002138,identical event content imported twice
+run-PG-20260910T000000Z-A,DUPLICATE_IMPORT,EV001834|EV002139,identical event content imported twice
+run-PG-20260910T000000Z-A,MULTIPLE_SUCCESSOR,CPL-R00027,one record is the predecessor of several distinct successors
+run-PG-20260910T000000Z-A,MULTIPLE_SUCCESSOR,CPL-R00150,one record is the predecessor of several distinct successors
+run-PG-20260910T000000Z-A,NON_USD_EVENT,EV000192,event EV000192 currency EUR excluded
+run-PG-20260910T000000Z-A,NON_USD_EVENT,EV000716,event EV000716 currency EUR excluded
+run-PG-20260910T000000Z-A,NON_USD_EVENT,EV000758,event EV000758 currency EUR excluded
+run-PG-20260910T000000Z-A,NON_USD_EVENT,EV000853,event EV000853 currency EUR excluded
+run-PG-20260910T000000Z-A,NON_USD_EVENT,EV000945,event EV000945 currency EUR excluded
+run-PG-20260910T000000Z-A,NON_USD_EVENT,EV001186,event EV001186 currency EUR excluded

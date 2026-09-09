@@ -1,0 +1,38 @@
+run_id,conflict_type,record_ids,detail
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000827|EV002528,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001559|EV002529,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001547|EV002530,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001087|EV002531,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000411|EV002532,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001348|EV002533,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001162|EV002534,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001523|EV002535,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV002338|EV002536,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV002333|EV002537,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000955|EV002538,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000214|EV002539,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000634|EV002540,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000979|EV002541,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001996|EV002542,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV002122|EV002543,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001855|EV002544,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000313|EV002545,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000988|EV002546,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000444|EV002547,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001658|EV002548,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV002203|EV002549,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000258|EV002550,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV001792|EV002551,identical event content imported twice
+run-WCP-20260910T000000Z-A,DUPLICATE_IMPORT,EV000711|EV002552,identical event content imported twice
+run-WCP-20260910T000000Z-A,MULTIPLE_SUCCESSOR,CPL-R00015,one record is the predecessor of several distinct successors
+run-WCP-20260910T000000Z-A,MULTIPLE_SUCCESSOR,CPL-R00203,one record is the predecessor of several distinct successors
+run-WCP-20260910T000000Z-A,MULTIPLE_SUCCESSOR,CPL-R00073,one record is the predecessor of several distinct successors
+run-WCP-20260910T000000Z-A,MULTIPLE_SUCCESSOR,CPL-R00185,one record is the predecessor of several distinct successors
+run-WCP-20260910T000000Z-A,NON_USD_EVENT,EV000854,event EV000854 currency EUR excluded
+run-WCP-20260910T000000Z-A,NON_USD_EVENT,EV001433,event EV001433 currency EUR excluded
+run-WCP-20260910T000000Z-A,NON_USD_EVENT,EV001823,event EV001823 currency EUR excluded
+run-WCP-20260910T000000Z-A,NON_USD_EVENT,EV001923,event EV001923 currency EUR excluded
+run-WCP-20260910T000000Z-A,NON_USD_EVENT,EV002324,event EV002324 currency EUR excluded
+run-WCP-20260910T000000Z-A,UNRESOLVED_REVERSAL,EV000615,reversal EV000615 has no target; not deducted anywhere
+run-WCP-20260910T000000Z-A,UNRESOLVED_REVERSAL,EV000657,reversal EV000657 has no target; not deducted anywhere
+run-WCP-20260910T000000Z-A,UNRESOLVED_REVERSAL,EV001766,reversal EV001766 has no target; not deducted anywhere

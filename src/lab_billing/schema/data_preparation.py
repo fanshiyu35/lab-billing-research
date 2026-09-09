@@ -275,7 +275,7 @@ class DataPreparationPipeline:
             self._emit_event(chain, "CLOSED_NO_PAYMENT", close_time,
                              bill_record_id=current_rid, terminal=True)
             self.true_outcomes.append({"true_lineage_id": lid, "outcome": "CLOSED_NO_PAYMENT",
-                                       "close_at": _fmt(close_time)})
+                                       "first_payment_at": "", "close_at": _fmt(close_time)})
         elif u < 0.16:  # still open at as_of (recent submissions)
             self.true_outcomes.append({"true_lineage_id": lid, "outcome": "STILL_OPEN",
                                        "first_payment_at": "", "close_at": ""})

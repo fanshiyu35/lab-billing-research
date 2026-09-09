@@ -1,0 +1,42 @@
+{
+  "run_id": "run-PM-20260910T000000Z",
+  "mode": "STUDY",
+  "config": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/configs/reference.json",
+  "data_preparation_version": "0.1.0",
+  "run_id_source": "explicit",
+  "wall_clock_start": "2026-09-22T06:44:23.568832+00:00",
+  "elapsed_seconds": 0.01,
+  "data_dir": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/outputs/runs/run-PM-20260910T000000Z/data",
+  "schema_errors_unexpected": [],
+  "expected_dirty_intercepted": 31,
+  "status": "OK",
+  "module_a_summary": {
+    "bills": 1034,
+    "links": 98,
+    "lineages": 936,
+    "conflicts": 31,
+    "review_queue": 3
+  },
+  "module_b_summary": {
+    "n_snapshots": 852,
+    "n_interval_rows": 3725,
+    "models": {
+      "B0_age_stage_baseline": {
+        "status": "FITTED",
+        "log_loss": 0.41487451756845806,
+        "brier_three_class": 0.2225022679340313,
+        "n": 760,
+        "snap_brier": 0.4932675548048901,
+        "snap_log_loss": 0.8390089519103634,
+        "n_snapshots": 171,
+        "n_abstain": 0
+      },
+      "B1_discrete_multinomial": {
+        "status": "INSUFFICIENT_DATA"
+      },
+      "C1_quality_augmented": {
+        "status": "INSUFFICIENT_DATA"
+      }
+    }
+  }
+}

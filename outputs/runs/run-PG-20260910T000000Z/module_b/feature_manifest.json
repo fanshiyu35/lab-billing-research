@@ -1,0 +1,17 @@
+{
+  "feature_version": "1.0.0",
+  "features": [],
+  "forbidden_fields": [
+    "record_id",
+    "true_lineage_id",
+    "future event fields",
+    "final payment amounts",
+    "test labels",
+    "hidden truth ids"
+  ],
+  "leakage_guards": [
+    "features computed only from available_at <= t",
+    "hidden ground truth directory excluded from inputs",
+    "temporal grouped split keeps lineages within one split"
+  ]
+}

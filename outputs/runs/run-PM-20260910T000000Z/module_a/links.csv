@@ -1,0 +1,99 @@
+run_id,as_of,method_version,left_record_id,right_record_id,decision,rule_ids,reason,score,score_kind,review_required
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00009,CPL-R00010,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00011,CPL-R00012,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00039,CPL-R00040,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00102,CPL-R00103,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00148,CPL-R00149,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00152,CPL-R00153,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00164,CPL-R00165,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00168,CPL-R00169,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00185,CPL-R00186,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00223,CPL-R00224,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00235,CPL-R00236,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00237,CPL-R00238,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00239,CPL-R00240,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00256,CPL-R00257,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00269,CPL-R00270,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00294,CPL-R00295,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00296,CPL-R00297,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00307,CPL-R00308,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00333,CPL-R00334,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00337,CPL-R00338,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00355,CPL-R00356,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00390,CPL-R00391,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00394,CPL-R00395,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00419,CPL-R00420,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00446,TRI-R00447,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00448,TRI-R00449,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00463,TRI-R00464,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00533,TRI-R00534,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00535,TRI-R00536,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00544,TRI-R00545,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00563,TRI-R00564,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00611,TRI-R00612,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00620,TRI-R00621,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00656,TRI-R00657,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00674,TRI-R00675,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00688,TRI-R00689,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00700,TRI-R00701,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00710,TRI-R00711,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00762,TRI-R00763,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00774,TRI-R00775,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00799,NDX-R00800,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00802,NDX-R00803,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00810,NDX-R00811,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00814,NDX-R00815,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00842,NDX-R00843,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00859,NDX-R00860,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00865,NDX-R00866,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00904,NDX-R00905,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00920,NDX-R00921,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00926,NDX-R00927,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00933,NDX-R00934,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00967,NDX-R00968,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00987,NDX-R00988,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R01006,NDX-R01007,accepted,R1_native_previous_id,native explicit predecessor reference,,NOT_SCORED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00014,CPL-R00015,accepted,R2_same_bill_id_versions,version chain 1->2 of 2022-4000012,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00031,CPL-R00032,accepted,R2_same_bill_id_versions,version chain 1->2 of 2022-4000028,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00087,CPL-R00088,accepted,R2_same_bill_id_versions,version chain 1->2 of 2022-4000082,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00187,CPL-R00188,accepted,R2_same_bill_id_versions,version chain 1->2 of 2023-4000175,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00207,CPL-R00208,accepted,R2_same_bill_id_versions,version chain 1->2 of 2022-4000194,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00264,CPL-R00265,accepted,R2_same_bill_id_versions,version chain 1->2 of 2023-4000245,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00267,CPL-R00268,accepted,R2_same_bill_id_versions,version chain 1->2 of 2023-4000247,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00321,CPL-R00322,accepted,R2_same_bill_id_versions,version chain 1->2 of 2023-4000295,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00375,CPL-R00376,accepted,R2_same_bill_id_versions,version chain 1->2 of 2023-4000345,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00417,CPL-R00418,accepted,R2_same_bill_id_versions,version chain 1->2 of 2022-4000384,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00428,TRI-R00429,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000007,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00430,TRI-R00431,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000008,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00488,TRI-R00489,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000062,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00493,TRI-R00494,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000066,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00513,TRI-R00514,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000085,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00595,TRI-R00596,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000162,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00672,TRI-R00673,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000235,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00776,TRI-R00777,accepted,R2_same_bill_id_versions,version chain 1->2 of 2000330,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00788,NDX-R00789,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000005,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00848,NDX-R00849,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000059,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00886,NDX-R00887,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000094,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00983,NDX-R00984,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000185,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00985,NDX-R00986,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000186,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00998,NDX-R00999,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000197,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R01017,NDX-R01018,accepted,R2_same_bill_id_versions,version chain 1->2 of 08000214,0.9,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00309,CPL-R00359,accepted,R3_amount_date_window,"same payer/service, amounts 6333/6612, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00008,CPL-R00128,accepted,R3_amount_date_window,"same payer/service, amounts 10729/10244, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00091,CPL-R00365,accepted,R3_amount_date_window,"same payer/service, amounts 4094/3788, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00186,CPL-R00264,accepted,R3_amount_date_window,"same payer/service, amounts 8256/8472, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00139,CPL-R00140,accepted,R3_amount_date_window,"same payer/service, amounts 11539/12111, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00067,CPL-R00125,accepted,R3_amount_date_window,"same payer/service, amounts 13569/13329, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00388,CPL-R00389,accepted,R3_amount_date_window,"same payer/service, amounts 39209/38955, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00040,CPL-R00041,accepted,R3_amount_date_window,"same payer/service, amounts 18987/19274, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00076,CPL-R00094,accepted,R3_amount_date_window,"same payer/service, amounts 10363/11112, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00117,CPL-R00118,accepted,R3_amount_date_window,"same payer/service, amounts 7873/7348, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,CPL-R00057,CPL-R00181,accepted,R3_amount_date_window,"same payer/service, amounts 9645/10213, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00580,TRI-R00581,accepted,R3_amount_date_window,"same payer/service, amounts 7346/7313, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00766,TRI-R00767,accepted,R3_amount_date_window,"same payer/service, amounts 13627/14367, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00585,TRI-R00705,accepted,R3_amount_date_window,"same payer/service, amounts 6803/6924, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,TRI-R00669,TRI-R00670,accepted,R3_amount_date_window,"same payer/service, amounts 13850/14693, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00833,NDX-R00971,accepted,R3_amount_date_window,"same payer/service, amounts 10203/9796, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00793,NDX-R00958,accepted,R3_amount_date_window,"same payer/service, amounts 7937/7524, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R01020,NDX-R01021,accepted,R3_amount_date_window,"same payer/service, amounts 13462/14115, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false
+run-PM-20260910T000000Z-A,2023-11-15T00:00:00+00:00,1.0.0,NDX-R00811,NDX-R01005,accepted,R3_amount_date_window,"same payer/service, amounts 6264/5912, dates within 7d",0.55,UNVALIDATED_SCORE_UNLESS_CALIBRATED,false

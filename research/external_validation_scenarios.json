@@ -1,0 +1,40 @@
+{
+  "PM": {
+    "module_a": {
+      "truth_pairs": 142,
+      "predicted_pairs": 98,
+      "true_positive": 87,
+      "false_positive": 11,
+      "false_negative": 55,
+      "precision": 0.8878,
+      "recall": 0.6127,
+      "refusal_ratio": 0.0297
+    },
+    "module_b": {
+      "snapshots": 852,
+      "test_snapshots": 171,
+      "outcomes": {
+        "still_open": 359,
+        "payment": 491,
+        "close_no_payment": 2
+      },
+      "models": {
+        "B0_age_stage_baseline": {
+          "snap_brier": 0.4933,
+          "snap_log_loss": 0.839,
+          "n_abstain": 0
+        },
+        "B1_discrete_multinomial": {},
+        "C1_quality_augmented": {}
+      }
+    },
+    "a0": {
+      "predicted_pairs": 1037,
+      "true_positive": 3,
+      "false_positive": 1034,
+      "false_negative": 139,
+      "precision": 0.0029,
+      "recall": 0.0211
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "run_id": "run-PM-20260910T000000Z-B",
+  "method_version": "1.0.0",
+  "n_snapshots": 852,
+  "n_interval_rows": 3725,
+  "n_train_rows": 2240,
+  "n_test_rows": 760,
+  "n_test_snapshots": 171,
+  "outcomes": {
+    "still_open": 359,
+    "payment": 491,
+    "close_no_payment": 2
+  },
+  "models": {
+    "B0_age_stage_baseline": {
+      "status": "FITTED",
+      "log_loss": 0.41487451756845806,
+      "brier_three_class": 0.2225022679340313,
+      "n": 760,
+      "snap_brier": 0.4932675548048901,
+      "snap_log_loss": 0.8390089519103634,
+      "n_snapshots": 171,
+      "n_abstain": 0
+    },
+    "B1_discrete_multinomial": {
+      "status": "INSUFFICIENT_DATA"
+    },
+    "C1_quality_augmented": {
+      "status": "INSUFFICIENT_DATA"
+    }
+  }
+}

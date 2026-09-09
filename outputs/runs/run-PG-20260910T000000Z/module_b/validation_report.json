@@ -1,0 +1,56 @@
+{
+  "validation_version": "1.0",
+  "run_dir": "outputs/runs/run-PG-20260910T000000Z",
+  "module_a": {
+    "truth_pairs": 162,
+    "predicted_pairs": 130,
+    "true_positive": 107,
+    "false_positive": 23,
+    "false_negative": 55,
+    "precision": 0.8231,
+    "recall": 0.6605,
+    "refusal_ratio": 0.0441,
+    "baseline_a0_unconstrained": {
+      "predicted_pairs": 1159,
+      "true_positive": 3,
+      "false_positive": 1156,
+      "false_negative": 159,
+      "precision": 0.0026,
+      "recall": 0.0185
+    },
+    "note": "Truth pairs are same-lineage adjacent versions; multi-candidate ambiguities queued for review count as neither TP nor FP."
+  },
+  "module_b": {
+    "snapshots": 940,
+    "test_snapshots": 188,
+    "outcomes": {
+      "payment": 536,
+      "still_open": 394,
+      "close_no_payment": 8,
+      "censored": 2
+    },
+    "models": {
+      "B0_age_stage_baseline": {
+        "status": "FITTED",
+        "snap_brier": 0.5017352960204527,
+        "snap_log_loss": 0.7194320262621744,
+        "n_snapshots": 186,
+        "n_abstain": 0
+      },
+      "B1_discrete_multinomial": {
+        "status": "INSUFFICIENT_DATA"
+      },
+      "C1_quality_augmented": {
+        "status": "INSUFFICIENT_DATA"
+      }
+    }
+  },
+  "ablations": {},
+  "limitations": {
+    "study_scope": "All figures come from the study dataset of three participating sites. No research claim transfers to real operations.",
+    "censored_share": 2,
+    "close_class_rarity": 8,
+    "landmark_fixed": "landmark=7d and H=30d are study defaults pending business confirmation (unknowns U03/U04).",
+    "leakage_audit": "T10/T13/T14/T15 enforced: as-of truncation, forbidden fields, lineage-grouped splits, train-only preprocessing."
+  }
+}

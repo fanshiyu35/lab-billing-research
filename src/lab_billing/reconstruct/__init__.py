@@ -343,6 +343,10 @@ class ReconstructionEngine:
                 "review_count": "0",
                 "coverage_status": cov.get("coverage_status", "unknown"),
                 "coverage_end": cov.get("coverage_end", ""),
+                "gross_posted": "0",
+                "reversed": "0",
+                "net_observed_posted": "0",
+                "unallocated": "0",
             })
         # post-hoc counts for conflicts/reviews touching each lineage
         for lin in self.lineages:
