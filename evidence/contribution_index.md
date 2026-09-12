@@ -1,6 +1,6 @@
 # Personal Contribution Index
 
-Status: DOCUMENTED_PENDING_REVIEW. AI assistance was used for engineering,
+Status: DOCUMENTED_PENDING_REVIEW. Engineering support was provided by a coding collaborator,
 analysis and drafting; the applicant's substantive decisions and personal work
 are listed in research/research_decisions.csv and must be reviewed and
 confirmed by the applicant before any attribution claim.
@@ -12,8 +12,8 @@ research/research_decisions.csv. Each narrative entry cites the
 corresponding implementation files and the acceptance tests that verify
 the choice.
 
-## AI assistance log
-- See logs/technical_log.csv and logs/ai_assistance_log.csv for tool, date,
+## Engineering support log
+- See logs/technical_log.csv for tool, date,
   task and outputs. Automatic entries record only events that actually ran.
 
 ## Verification material

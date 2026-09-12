@@ -1,4 +1,4 @@
-"""Regression tests for reviewer findings C-01 through C-10."""
+"""Regression tests for reconstruction and forecasting edge cases (C-01 through C-10)."""
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
@@ -204,3 +204,83 @@ def test_c10_r3_does_not_cross_source_systems():
     ]
     cands = generate_r3_candidates(bills)
     assert cands == [], "R3 candidates must not cross source systems"
+
+
+# ------------------------------------------------------------------ C-11
+def test_c11_reversal_cap_is_per_payment_not_per_lineage():
+    """Two fully-reversed payments on the same lineage must both reverse."""
+    eng = AmountEngine("t")
+    events = [
+        {"event_id": "P1", "event_type": "PAYMENT_POSTED", "bill_record_id": "B2",
+         "amount_minor": 100, "currency": "USD"},
+        {"event_id": "R1", "event_type": "PAYMENT_REVERSED", "bill_record_id": "B2",
+         "amount_minor": 100, "currency": "USD", "reverses_event_id": "P1"},
+        {"event_id": "P2", "event_type": "PAYMENT_POSTED", "bill_record_id": "B2",
+         "amount_minor": 100, "currency": "USD"},
+        {"event_id": "R2", "event_type": "PAYMENT_REVERSED", "bill_record_id": "B2",
+         "amount_minor": 100, "currency": "USD", "reverses_event_id": "P2"},
+    ]
+    lin_of = {"B2": "L1"}
+    out = eng.compute(events, [], lin_of)
+    assert out["L1"].gross_posted == 200
+    assert out["L1"].reversed == 200, "second payment's reversal must not be capped by the first"
+    assert out["L1"].net_observed_posted == 0
+
+
+# ------------------------------------------------------------------ C-12
+def test_c12_payment_split_across_lineages_attributed_per_allocation():
+    """A payment spanning two lineages must split gross, unallocated and
+    reversals in proportion to its allocations, not dump everything on the
+    first lineage found."""
+    eng = AmountEngine("t")
+    events = [
+        {"event_id": "P1", "event_type": "PAYMENT_POSTED", "bill_record_id": "",
+         "amount_minor": 1000, "currency": "USD"},
+        {"event_id": "R1", "event_type": "PAYMENT_REVERSED", "bill_record_id": "",
+         "amount_minor": 400, "currency": "USD", "reverses_event_id": "P1"},
+    ]
+    allocs = [
+        {"allocation_id": "A1", "payment_event_id": "P1", "bill_record_id": "B2",
+         "allocated_amount_minor": 600, "currency": "USD"},
+        {"allocation_id": "A2", "payment_event_id": "P1", "bill_record_id": "B3",
+         "allocated_amount_minor": 200, "currency": "USD"},
+    ]
+    lin_of = {"B2": "L1", "B3": "L2"}
+    out = eng.compute(events, allocs, lin_of)
+    # gross: L1 600 + unalloc 200 (single-lineage remainder attaches to L1's
+    # allocated lineage here is NOT single — allocations span L1 and L2, so
+    # the unallocated 200 belongs to UNLINKED)
+    assert out["L1"].gross_posted == 600, out["L1"]
+    assert out["L2"].gross_posted == 200, out["L2"]
+    assert out["UNLINKED"].gross_posted == 200, out.get("UNLINKED")
+    assert out["UNLINKED"].unallocated == 200
+    # reversal 400 split across the three attribution parts (600:200:200)
+    assert out["L1"].reversed == 240, out["L1"]
+    assert out["L2"].reversed == 80, out["L2"]
+    assert out["UNLINKED"].reversed == 80, out.get("UNLINKED")
+    # net check
+    assert out["L1"].net_observed_posted == 600 - 240
+    assert out["L2"].net_observed_posted == 200 - 80
+
+
+def test_p302_two_payments_same_lineage_each_fully_reversed():
+    """Pro P3-02 counterexample: two equal payments on one lineage, each fully
+    reversed. The first payment's reversal must not consume the second
+    payment's reversal cap."""
+    eng = AmountEngine("t")
+    events = [
+        {"event_id": "P1", "event_type": "PAYMENT_POSTED", "bill_record_id": "B1",
+         "amount_minor": 1000, "currency": "USD"},
+        {"event_id": "P2", "event_type": "PAYMENT_POSTED", "bill_record_id": "B2",
+         "amount_minor": 1000, "currency": "USD"},
+        {"event_id": "R1", "event_type": "PAYMENT_REVERSED", "bill_record_id": "B1",
+         "amount_minor": 1000, "currency": "USD", "reverses_event_id": "P1"},
+        {"event_id": "R2", "event_type": "PAYMENT_REVERSED", "bill_record_id": "B2",
+         "amount_minor": 1000, "currency": "USD", "reverses_event_id": "P2"},
+    ]
+    lin_of = {"B1": "L1", "B2": "L1"}
+    out = eng.compute(events, [], lin_of)
+    acc = out["L1"]
+    assert acc.gross_posted == 2000, acc
+    assert acc.reversed == 2000, f"both payments must be fully reversed, got {acc.reversed}"
+    assert acc.net_observed_posted == 0, acc

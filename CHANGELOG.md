@@ -29,8 +29,8 @@ All notable changes to this project are documented in this file.
 ### Research findings (reference data, locked test set)
 - Module A: recall 0.99, precision 0.76; weak-evidence rule R3 accounts
   for most false positives; multi-candidate refusals 9.6%.
-- Module B: B1 improves snapshot log-loss 9% over B0; C1 quality
-  features add no incremental value.
+- Module B: B1 improves snapshot log-loss 0.36% over B0 (reported as a
+  neutral result); C1 quality features add no incremental value.
 
 ## [0.9.0] - 2025-03-10
 - Streamlit interface v1.0; Power BI adapter (native .pbix NOT_BUILT).

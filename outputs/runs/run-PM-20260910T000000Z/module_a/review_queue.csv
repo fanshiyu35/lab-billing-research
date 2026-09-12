@@ -1,4 +1,5 @@
 run_id,review_type,record_ids,detail,status
-run-PM-20260910T000000Z-A,DANGLING_REFERENCE,CPL-R00291|CPL-R00290,reference target CPL-R00290 not found in inputs,pending
-run-PM-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00019|CPL-R00158,"same payer/service, amounts 6658/7211, dates within 7d",pending
-run-PM-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00021|CPL-R00158,"same payer/service, amounts 7776/7211, dates within 7d",pending
+run-PM-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PM-R00445|PM-R00446,"same payer/service, amounts 9076/9125, dates within 7d",pending
+run-PM-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PM-R00446|PM-R00661,"same payer/service, amounts 9125/9822, dates within 7d",pending
+run-PM-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PM-R00621|PM-R00795,"same payer/service, amounts 8291/8880, dates within 7d",pending
+run-PM-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PM-R00622|PM-R00795,"same payer/service, amounts 9546/8880, dates within 7d",pending

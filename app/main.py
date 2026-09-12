@@ -37,7 +37,7 @@ def load_csv(run: str, module: str, name: str) -> pd.DataFrame:
 def main() -> None:
     runs = list_runs()
     if not runs:
-        st.error("No runs found. Execute scripts/run_demo.py first.")
+        st.error("No runs found. Execute scripts/run_pipeline.py first.")
         return
     run = st.sidebar.selectbox("Run", runs, index=len(runs) - 1)
     data_dir = os.path.join(ROOT, "outputs", "runs", run, "data")

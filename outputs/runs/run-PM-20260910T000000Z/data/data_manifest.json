@@ -1,25 +1,28 @@
 {
   "manifest_version": "1.0",
-  "generated_at": "2023-11-15",
-  "data_mode": "STUDY",
-  "seed": 42,
+  "data_mode": "EXTERNAL_VALIDATION",
+  "org_token": "PM",
+  "source_systems": [
+    "PM_CLAIMS",
+    "PM_LIS",
+    "PM_OR_BILLING"
+  ],
+  "seed": 19,
   "n_lineages": 900,
-  "business_start": "2022-07-01T00:00:00+00:00",
-  "as_of": "2023-11-15T00:00:00+00:00",
+  "business_start": "2022-07-01",
+  "as_of": "2023-11-15",
   "generator_version": "0.1.0",
   "orgs": {
-    "CPL": "Clinical Pathology Laboratories (site token CPL)",
-    "TRI": "TriCore Reference Laboratories (site token TRI)",
-    "NDX": "NorDx (site token NDX)"
+    "PM": "PM \u2014 external validation site, single organization"
   },
   "identified_data": false,
   "adjudicated_labels_held_out": true,
   "tables": {
     "bills": {
-      "rows": 1038
+      "rows": 1053
     },
     "events": {
-      "rows": 1922
+      "rows": 1938
     },
     "allocations": {
       "rows": 783

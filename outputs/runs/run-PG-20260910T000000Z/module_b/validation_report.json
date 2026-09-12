@@ -2,54 +2,73 @@
   "validation_version": "1.0",
   "run_dir": "outputs/runs/run-PG-20260910T000000Z",
   "module_a": {
-    "truth_pairs": 162,
-    "predicted_pairs": 130,
-    "true_positive": 107,
+    "truth_pairs": 93,
+    "predicted_pairs": 113,
+    "true_positive": 90,
     "false_positive": 23,
-    "false_negative": 55,
-    "precision": 0.8231,
-    "recall": 0.6605,
-    "refusal_ratio": 0.0441,
+    "false_negative": 3,
+    "precision": 0.7965,
+    "recall": 0.9677,
+    "refusal_ratio": 0.0424,
     "baseline_a0_unconstrained": {
-      "predicted_pairs": 1159,
-      "true_positive": 3,
-      "false_positive": 1156,
-      "false_negative": 159,
-      "precision": 0.0026,
-      "recall": 0.0185
+      "predicted_pairs": 1153,
+      "true_positive": 0,
+      "false_positive": 1153,
+      "false_negative": 93,
+      "precision": 0.0,
+      "recall": 0.0
     },
     "note": "Truth pairs are same-lineage adjacent versions; multi-candidate ambiguities queued for review count as neither TP nor FP."
   },
   "module_b": {
-    "snapshots": 940,
-    "test_snapshots": 188,
+    "snapshots": 975,
+    "test_snapshots": 195,
     "outcomes": {
-      "payment": 536,
-      "still_open": 394,
-      "close_no_payment": 8,
-      "censored": 2
+      "payment": 561,
+      "still_open": 407,
+      "close_no_payment": 7
     },
     "models": {
       "B0_age_stage_baseline": {
         "status": "FITTED",
-        "snap_brier": 0.5017352960204527,
-        "snap_log_loss": 0.7194320262621744,
-        "n_snapshots": 186,
+        "snap_brier": 0.48661693773760745,
+        "snap_log_loss": 0.6889301619738549,
+        "n_snapshots": 195,
         "n_abstain": 0
       },
       "B1_discrete_multinomial": {
-        "status": "INSUFFICIENT_DATA"
+        "status": "FITTED",
+        "snap_brier": 0.501853971320956,
+        "snap_log_loss": 0.7054464076400216,
+        "n_snapshots": 195,
+        "n_abstain": 0
       },
       "C1_quality_augmented": {
-        "status": "INSUFFICIENT_DATA"
+        "status": "FITTED",
+        "snap_brier": 0.50180799087198,
+        "snap_log_loss": 0.7048925225148981,
+        "n_snapshots": 195,
+        "n_abstain": 0
       }
     }
   },
-  "ablations": {},
+  "ablations": {
+    "quality_features": {
+      "B1_snap_log_loss": 0.7054464076400216,
+      "C1_snap_log_loss": 0.7048925225148981,
+      "delta": -0.0006,
+      "interpretation": "quality features add no incremental value on the locked test set"
+    },
+    "candidate_vs_baseline": {
+      "B0_snap_log_loss": 0.6889301619738549,
+      "B1_snap_log_loss": 0.7054464076400216,
+      "relative_improvement": -0.024
+    }
+  },
   "limitations": {
     "study_scope": "All figures come from the study dataset of three participating sites. No research claim transfers to real operations.",
-    "censored_share": 2,
-    "close_class_rarity": 8,
+    "censored_share": 0,
+    "close_class_rarity": 7,
     "landmark_fixed": "landmark=7d and H=30d are study defaults pending business confirmation (unknowns U03/U04).",
     "leakage_audit": "T10/T13/T14/T15 enforced: as-of truncation, forbidden fields, lineage-grouped splits, train-only preprocessing."
   }

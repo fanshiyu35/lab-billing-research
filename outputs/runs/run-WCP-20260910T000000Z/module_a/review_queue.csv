@@ -1,14 +1,13 @@
 run_id,review_type,record_ids,detail,status
-run-WCP-20260910T000000Z-A,DANGLING_REFERENCE,CPL-R00552|CPL-R00551,reference target CPL-R00551 not found in inputs,pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00003|CPL-R00241,"same payer/service, amounts 9194/9836, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00155|CPL-R00241,"same payer/service, amounts 10485/9836, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00256|CPL-R00278,"same payer/service, amounts 5300/5655, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00257|CPL-R00278,"same payer/service, amounts 5296/5655, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00488|CPL-R00489,"same payer/service, amounts 20454/20107, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00488|CPL-R00496,"same payer/service, amounts 20454/20449, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,TRI-R00719|TRI-R00816,"same payer/service, amounts 20687/19080, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,TRI-R00719|TRI-R00817,"same payer/service, amounts 20687/21450, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,TRI-R00588|TRI-R00746,"same payer/service, amounts 6547/6299, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,TRI-R00746|TRI-R00747,"same payer/service, amounts 6299/5964, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,NDX-R01121|NDX-R01122,"same payer/service, amounts 13428/13241, dates within 7d",pending
-run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,NDX-R01122|NDX-R01196,"same payer/service, amounts 13241/13908, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00323|WCP-R00535,"same payer/service, amounts 4945/5200, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00534|WCP-R00535,"same payer/service, amounts 5519/5200, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00047|WCP-R00079,"same payer/service, amounts 6608/6634, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00047|WCP-R00434,"same payer/service, amounts 6608/6650, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00255|WCP-R00256,"same payer/service, amounts 9339/9788, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00255|WCP-R00257,"same payer/service, amounts 9339/8853, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00711|WCP-R01031,"same payer/service, amounts 2878/2846, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R01031|WCP-R01032,"same payer/service, amounts 2846/2830, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00666|WCP-R00987,"same payer/service, amounts 7062/7428, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R00986|WCP-R00987,"same payer/service, amounts 7910/7428, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R01120|WCP-R01229,"same payer/service, amounts 6044/5665, dates within 7d",pending
+run-WCP-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,WCP-R01228|WCP-R01229,"same payer/service, amounts 5532/5665, dates within 7d",pending

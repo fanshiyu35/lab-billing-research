@@ -248,7 +248,7 @@ def build(run_dir: str, out_dir: str) -> None:
     vr = os.path.join(run_dir, "module_b", "validation_report.json")
     if os.path.exists(vr):
         v = json.load(open(vr, encoding="utf-8"))
-        # research-edition sanitize: strip internal flags, keep all numbers
+        # documentation build: strip internal flags, keep all numbers
         v.pop("validation_version", None)
         v.pop("run_dir", None)
         lim = v.get("limitations", {})

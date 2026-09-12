@@ -8,42 +8,41 @@
 
 ## Snapshots and labels
 {
-  "payment": 673,
-  "still_open": 463,
-  "close_no_payment": 9,
-  "censored": 1
+  "payment": 712,
+  "still_open": 454,
+  "close_no_payment": 9
 }
 
 ## Models
 {
   "B0_age_stage_baseline": {
     "status": "FITTED",
-    "log_loss": 0.4821809307396395,
-    "brier_three_class": 0.27734987842783504,
-    "n": 924,
-    "snap_brier": 0.47373696522832576,
-    "snap_log_loss": 0.789862937987002,
-    "n_snapshots": 229,
+    "log_loss": 0.45025286881948395,
+    "brier_three_class": 0.27477465386828415,
+    "n": 957,
+    "snap_brier": 0.45116110574385276,
+    "snap_log_loss": 0.6543020337465313,
+    "n_snapshots": 235,
     "n_abstain": 0
   },
   "B1_discrete_multinomial": {
     "status": "FITTED",
-    "log_loss": 0.4585216045487647,
-    "brier_three_class": 0.27770712088241434,
-    "n": 924,
-    "snap_brier": 0.4695990057919413,
-    "snap_log_loss": 0.6915486510254,
-    "n_snapshots": 229,
+    "log_loss": 0.4507387034856437,
+    "brier_three_class": 0.27559846245878084,
+    "n": 957,
+    "snap_brier": 0.4554132470748415,
+    "snap_log_loss": 0.657866770318999,
+    "n_snapshots": 235,
     "n_abstain": 0
   },
   "C1_quality_augmented": {
     "status": "FITTED",
-    "log_loss": 0.45852199163546664,
-    "brier_three_class": 0.2777316694801429,
-    "n": 924,
-    "snap_brier": 0.46959330755191914,
-    "snap_log_loss": 0.691423569067588,
-    "n_snapshots": 229,
+    "log_loss": 0.4508205964185302,
+    "brier_three_class": 0.2756142635752133,
+    "n": 957,
+    "snap_brier": 0.4554509398833274,
+    "snap_log_loss": 0.6582195476837311,
+    "n_snapshots": 235,
     "n_abstain": 0
   }
 }

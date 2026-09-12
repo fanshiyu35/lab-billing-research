@@ -4,6 +4,15 @@ Tracks gross posted, reversed, net observed posted and unallocated amounts.
 Allocation sums exceeding the payment amount block the transaction's math
 and record a conflict. Partial reversals are applied by their exact amount
 and never double-deducted. Cross-currency amounts are never summed.
+
+Attribution rules:
+- A payment with allocations is split across the lineages of its allocated
+  bills in proportion to the allocated amounts; the unallocated remainder is
+  attributed to the payment's main lineage (its own bill, or the single
+  allocated lineage, or UNLINKED when the allocation spans lineages).
+- Reversal caps are enforced PER PAYMENT EVENT (a reversal can never deduct
+  more than its own target payment), then distributed across the same
+  attribution split as the gross amount.
 """
 from __future__ import annotations
 
@@ -42,6 +51,8 @@ class AmountEngine:
         allocation_sum: dict[str, int] = {}
         reversal_targets: dict[str, list[dict]] = {}
         reversals_unresolved: list[dict] = []
+        # payment -> ordered list of (bill_record_id, allocated_amount)
+        payment_allocations: dict[str, list[tuple[str, int]]] = {}
 
         for e in events:
             if e.get("currency") not in ("", "USD"):
@@ -60,7 +71,6 @@ class AmountEngine:
                 else:
                     reversals_unresolved.append(e)
 
-        payment_to_bills: dict[str, list[str]] = {}
         for a in allocations:
             if a.get("currency") != "USD":
                 self.conflicts.append(AmountConflict(
@@ -72,7 +82,7 @@ class AmountEngine:
             allocation_sum[peid] = allocation_sum.get(peid, 0) + amt
             bid = (a.get("bill_record_id") or "").strip()
             if bid:
-                payment_to_bills.setdefault(peid, []).append(bid)
+                payment_allocations.setdefault(peid, []).append((bid, amt))
 
         # over-allocation blocks the transaction
         blocked = [peid for peid, amt in payment_amount.items()
@@ -86,18 +96,47 @@ class AmountEngine:
             payment_amount.pop(peid, None)
             allocation_sum.pop(peid, None)
 
-        def lin_of_event(eid: str) -> str:
-            ev = next((x for x in events if x["event_id"] == eid), None)
-            if ev and ev.get("bill_record_id"):
-                return lineage_of_record.get(ev["bill_record_id"], "UNLINKED")
-            # unallocated-to-bill payments attach through their allocations
-            for bid in payment_to_bills.get(eid, []):
-                lin = lineage_of_record.get(bid)
-                if lin:
-                    return lin
+        def lin_of_bill(bid: str) -> str:
+            return lineage_of_record.get(bid, "UNLINKED")
+
+        def main_lineage(e: dict, allocs_list: list[tuple[str, int]]) -> str:
+            """The lineage the unallocated remainder attaches to."""
+            if e.get("bill_record_id"):
+                return lin_of_bill(e["bill_record_id"])
+            lins = {lin_of_bill(bid) for bid, _ in allocs_list}
+            if len(lins) == 1:
+                return next(iter(lins))
             return "UNLINKED"
 
-        # gross posted and reversals per lineage
+        def _parts(amt: int, allocs_list: list[tuple[str, int]],
+                   main_lin: str) -> list[tuple[str, int]]:
+            """Attribution split of a payment amount across lineages."""
+            parts: list[tuple[str, int]] = []
+            for bid, a_amt in allocs_list:
+                parts.append((lin_of_bill(bid), a_amt))
+            unalloc = amt - sum(a for _, a in allocs_list)
+            if unalloc > 0:
+                parts.append((main_lin, unalloc))
+            if not parts:
+                parts.append((main_lin, amt))
+            return parts
+
+        def _distribute(total: int, parts: list[tuple[str, int]]) -> list[tuple[str, int]]:
+            """Split `total` across parts in proportion to their amounts
+            (integer floor, remainder to the last part)."""
+            base = sum(a for _, a in parts)
+            if base <= 0 or total <= 0:
+                return [(lin, 0) for lin, _ in parts]
+            used = 0
+            out_rows: list[tuple[str, int]] = []
+            for i, (lin, a) in enumerate(parts):
+                share = total * a // base if i < len(parts) - 1 else total - used
+                used += share
+                out_rows.append((lin, share))
+            return out_rows
+
+        # gross posted, unallocated and reversals per lineage
+        payment_reversed: dict[str, int] = {}
         for e in events:
             if e["event_type"] != "PAYMENT_POSTED":
                 continue
@@ -105,19 +144,29 @@ class AmountEngine:
             amt = payment_amount.get(peid, 0)
             if amt <= 0:
                 continue
-            lin = lin_of_event(peid)
-            acc = out.setdefault(lin, LineageAmounts(lineage_id=lin))
-            acc.gross_posted += amt
-            allocated = allocation_sum.get(peid, 0)
-            if allocated < amt:
-                acc.unallocated += amt - allocated
+            allocs_list = payment_allocations.get(peid, [])
+            main_lin = main_lineage(e, allocs_list)
+            parts = _parts(amt, allocs_list, main_lin)
+            for lin, share in _distribute(amt, parts):
+                acc = out.setdefault(lin, LineageAmounts(lineage_id=lin))
+                acc.gross_posted += share
+            unalloc_amt = amt - sum(a for _, a in allocs_list)
+            if unalloc_amt > 0:
+                acc = out.setdefault(main_lin, LineageAmounts(lineage_id=main_lin))
+                acc.unallocated += unalloc_amt
             revs = reversal_targets.get(peid, [])
             for r in revs:
                 r_amt = r.get("amount_minor") or 0
-                remaining = max(0, amt - acc.reversed)
-                if remaining == 0:
-                    break  # cumulative reversal cap reached
-                acc.reversed += min(r_amt, remaining)
+                # per-payment reversal cap: each payment's reversals can never
+                # exceed that payment's own posted amount
+                remaining = max(0, amt - payment_reversed.get(peid, 0))
+                if remaining <= 0:
+                    break
+                take = min(r_amt, remaining)
+                payment_reversed[peid] = payment_reversed.get(peid, 0) + take
+                for lin, share in _distribute(take, parts):
+                    acc = out.setdefault(lin, LineageAmounts(lineage_id=lin))
+                    acc.reversed += share
 
         for r in reversals_unresolved:
             self.conflicts.append(AmountConflict(

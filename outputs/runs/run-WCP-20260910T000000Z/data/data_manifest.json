@@ -1,28 +1,31 @@
 {
   "manifest_version": "1.0",
-  "generated_at": "2023-11-15",
-  "data_mode": "STUDY",
-  "seed": 42,
+  "data_mode": "EXTERNAL_VALIDATION",
+  "org_token": "WCP",
+  "source_systems": [
+    "WCP_CLAIMS",
+    "WCP_LIS",
+    "WCP_OR_BILLING"
+  ],
+  "seed": 7,
   "n_lineages": 1200,
-  "business_start": "2022-07-01T00:00:00+00:00",
-  "as_of": "2023-11-15T00:00:00+00:00",
+  "business_start": "2022-07-01",
+  "as_of": "2023-11-15",
   "generator_version": "0.1.0",
   "orgs": {
-    "CPL": "Clinical Pathology Laboratories (site token CPL)",
-    "TRI": "TriCore Reference Laboratories (site token TRI)",
-    "NDX": "NorDx (site token NDX)"
+    "WCP": "WCP \u2014 external validation site, single organization"
   },
   "identified_data": false,
   "adjudicated_labels_held_out": true,
   "tables": {
     "bills": {
-      "rows": 1392
+      "rows": 1388
     },
     "events": {
-      "rows": 2564
+      "rows": 2563
     },
     "allocations": {
-      "rows": 1037
+      "rows": 1009
     },
     "observation_windows": {
       "rows": 6

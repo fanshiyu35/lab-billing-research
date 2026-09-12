@@ -29,26 +29,54 @@ def junit_summary() -> dict:
         return {"status": "NOT_RUN", "tests": 0, "failures": 0, "errors": 0}
     tree = ET.parse(path)
     root = tree.getroot()
+    suites = root if root.tag == "testsuite" else list(root.iter("testsuite"))
+    tests = failures = errors = skipped = 0
+    time_s = 0.0
+    for s in suites:
+        tests += int(s.get("tests", 0) or 0)
+        failures += int(s.get("failures", 0) or 0)
+        errors += int(s.get("errors", 0) or 0)
+        skipped += int(s.get("skipped", 0) or 0)
+        time_s += float(s.get("time", 0) or 0)
     return {
-        "status": "PASS" if root.get("failures") == "0" and root.get("errors") == "0" else "FAIL",
-        "tests": int(root.get("tests", 0)),
-        "failures": int(root.get("failures", 0)),
-        "errors": int(root.get("errors", 0)),
-        "time_s": float(root.get("time", 0)),
+        "status": "PASS" if failures == 0 and errors == 0 and tests > 0 else "FAIL",
+        "tests": tests,
+        "failures": failures,
+        "errors": errors,
+        "skipped": skipped,
+        "time_s": time_s,
     }
 
 
 def write_test_report(run_dir: str, out_dir: str, date: str) -> str:
     s = junit_summary()
+    # actual test composition from the junit file, so the report always
+    # matches what was actually run
+    tree = ET.parse(os.path.join(ROOT, "outputs", "qa", "junit.xml"))
+    suites = list(tree.getroot().iter("testsuite"))
+    t_n = c_n = other = 0
+    for st in suites:
+        for tc in st.iter("testcase"):
+            nm = tc.get("name", "")
+            if nm.startswith("test_T"):
+                t_n += 1
+            elif nm.startswith("test_c"):
+                c_n += 1
+            else:
+                other += 1
     txt = f"""# Test Report — Acceptance Suites T01-T25
 
 - Generated: {date} (from outputs/qa/junit.xml)
 - Status: {s['status']} — {s['tests']} tests, {s['failures']} failures,
   {s['errors']} errors, {s['time_s']:.1f}s
+- Composition: {t_n} acceptance-suite tests (T-series), {c_n} regression
+  tests (C-series), {other} additional regression test(s)
 
 Test reports, protocols and run receipts are distinct records: the protocol
 defines how each problem is verified; the receipt records program execution
-evidence; this report records the observed outcome.
+evidence; this report records the observed outcome. The T-series covers the
+acceptance suites T01–T25; C-series tests lock edge-case fixes (C-01 onward);
+both are executed in the same session and reported together.
 
 Referenced run: {run_dir}
 """

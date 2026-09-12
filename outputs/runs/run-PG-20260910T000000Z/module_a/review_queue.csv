@@ -1,7 +1,6 @@
 run_id,review_type,record_ids,detail,status
-run-PG-20260910T000000Z-A,DANGLING_REFERENCE,CPL-R00204|CPL-R00203,reference target CPL-R00203 not found in inputs,pending
-run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00010|CPL-R00011,"same payer/service, amounts 8889/9082, dates within 7d",pending
-run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00010|CPL-R00458,"same payer/service, amounts 8889/8775, dates within 7d",pending
-run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,CPL-R00011|CPL-R00458,"same payer/service, amounts 9082/8775, dates within 7d",pending
-run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,TRI-R00735|TRI-R00736,"same payer/service, amounts 9993/9866, dates within 7d",pending
-run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,TRI-R00736|TRI-R00739,"same payer/service, amounts 9866/9171, dates within 7d",pending
+run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PG-R00100|PG-R00112,"same payer/service, amounts 5646/5327, dates within 7d",pending
+run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PG-R00100|PG-R00224,"same payer/service, amounts 5646/5486, dates within 7d",pending
+run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PG-R00112|PG-R00435,"same payer/service, amounts 5327/5119, dates within 7d",pending
+run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PG-R00927|PG-R00966,"same payer/service, amounts 7153/6604, dates within 7d",pending
+run-PG-20260910T000000Z-A,MULTI_CANDIDATE_AMBIGUITY,PG-R00928|PG-R00966,"same payer/service, amounts 6477/6604, dates within 7d",pending

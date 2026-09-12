@@ -8,28 +8,42 @@
 
 ## Snapshots and labels
 {
-  "still_open": 359,
-  "payment": 491,
-  "close_no_payment": 2
+  "payment": 522,
+  "still_open": 352,
+  "close_no_payment": 9
 }
 
 ## Models
 {
   "B0_age_stage_baseline": {
     "status": "FITTED",
-    "log_loss": 0.41487451756845806,
-    "brier_three_class": 0.2225022679340313,
-    "n": 760,
-    "snap_brier": 0.4932675548048901,
-    "snap_log_loss": 0.8390089519103634,
-    "n_snapshots": 171,
+    "log_loss": 0.41727420629201,
+    "brier_three_class": 0.2482045900811998,
+    "n": 742,
+    "snap_brier": 0.4735642963770813,
+    "snap_log_loss": 0.6795940948251171,
+    "n_snapshots": 177,
     "n_abstain": 0
   },
   "B1_discrete_multinomial": {
-    "status": "INSUFFICIENT_DATA"
+    "status": "FITTED",
+    "log_loss": 0.41765156351465005,
+    "brier_three_class": 0.24897427860321328,
+    "n": 742,
+    "snap_brier": 0.4743888504944438,
+    "snap_log_loss": 0.6799228452001366,
+    "n_snapshots": 177,
+    "n_abstain": 0
   },
   "C1_quality_augmented": {
-    "status": "INSUFFICIENT_DATA"
+    "status": "FITTED",
+    "log_loss": 0.41777211908836176,
+    "brier_three_class": 0.2489891305137189,
+    "n": 742,
+    "snap_brier": 0.4744658775697467,
+    "snap_log_loss": 0.680180660907574,
+    "n_snapshots": 177,
+    "n_abstain": 0
   }
 }
 

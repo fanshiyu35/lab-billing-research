@@ -8,29 +8,42 @@
 
 ## Snapshots and labels
 {
-  "payment": 536,
-  "still_open": 394,
-  "close_no_payment": 8,
-  "censored": 2
+  "payment": 561,
+  "still_open": 407,
+  "close_no_payment": 7
 }
 
 ## Models
 {
   "B0_age_stage_baseline": {
     "status": "FITTED",
-    "log_loss": 0.38324429514861297,
-    "brier_three_class": 0.21872372856104408,
-    "n": 825,
-    "snap_brier": 0.5017352960204527,
-    "snap_log_loss": 0.7194320262621744,
-    "n_snapshots": 186,
+    "log_loss": 0.37866721199938275,
+    "brier_three_class": 0.2189282981271632,
+    "n": 868,
+    "snap_brier": 0.48661693773760745,
+    "snap_log_loss": 0.6889301619738549,
+    "n_snapshots": 195,
     "n_abstain": 0
   },
   "B1_discrete_multinomial": {
-    "status": "INSUFFICIENT_DATA"
+    "status": "FITTED",
+    "log_loss": 0.3822374436048067,
+    "brier_three_class": 0.22136867104718172,
+    "n": 868,
+    "snap_brier": 0.501853971320956,
+    "snap_log_loss": 0.7054464076400216,
+    "n_snapshots": 195,
+    "n_abstain": 0
   },
   "C1_quality_augmented": {
-    "status": "INSUFFICIENT_DATA"
+    "status": "FITTED",
+    "log_loss": 0.38216445689015194,
+    "brier_three_class": 0.22131008259883853,
+    "n": 868,
+    "snap_brier": 0.50180799087198,
+    "snap_log_loss": 0.7048925225148981,
+    "n_snapshots": 195,
+    "n_abstain": 0
   }
 }
 

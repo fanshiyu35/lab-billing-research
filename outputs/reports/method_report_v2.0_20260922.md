@@ -94,8 +94,9 @@ Module A (held-out adjudicated adjacency evaluation):
   (0.943-0.999); refusal ratio 0.0956
 - A0 unconstrained baseline (same-org chaining in submission order,
   no evidence requirements): precision 0.0017, recall 0.0211. The
-  constrained method improves precision by ~450x and recall by ~47x
-  over this lower bound.
+  constrained method's precision is materially higher (0.7642 vs 0.0017);
+  the A0 baseline is retained only as a deliberately weak lower bound and
+  is not presented as a competing method.
 - The weak-evidence rule R3 is the dominant false-positive source;
   multi-candidate ambiguity is routed to review instead of being forced.
 

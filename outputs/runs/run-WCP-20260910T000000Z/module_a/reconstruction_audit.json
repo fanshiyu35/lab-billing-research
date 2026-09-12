@@ -7,11 +7,11 @@
       "stage": "load",
       "detail": "normalized inputs",
       "counts": {
-        "bills": 1391,
-        "bills_invalid": 1,
-        "events": 2547,
-        "events_invalid": 10,
-        "allocations": 1037,
+        "bills": 1386,
+        "bills_invalid": 2,
+        "events": 2560,
+        "events_invalid": 0,
+        "allocations": 1009,
         "allocations_invalid": 0,
         "windows": 6
       }
@@ -20,7 +20,7 @@
       "stage": "dedup",
       "detail": "deduplicated bill rows",
       "counts": {
-        "kept": 1391
+        "kept": 1386
       }
     },
     {
@@ -34,15 +34,15 @@
       "stage": "amounts",
       "detail": "amount engine v1.0",
       "counts": {
-        "lineages_with_amounts": 930
+        "lineages_with_amounts": 992
       }
     }
   ],
   "summary": {
-    "bills": 1391,
-    "links": 155,
-    "lineages": 1241,
+    "bills": 1386,
+    "links": 135,
+    "lineages": 1252,
     "conflicts": 37,
-    "review_queue": 13
+    "review_queue": 12
   }
 }

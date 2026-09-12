@@ -1,8 +1,0 @@
-claim_id,claim,evidence_file,scope,limitations,verification_status
-C01,Module A recall 0.99 on hidden-truth adjacency,outputs/runs/run-20260922T040752Z-demo/module_b/validation_report.json,study dataset (three participating sites),R3 weak evidence dominates false positives; not real data,verified_against_run
-C02,Module A precision 0.76 with 9.6% refusals,outputs/runs/run-20260922T040752Z-demo/module_b/validation_report.json,study dataset,false positives concentrated in R3,verified_against_run
-C03,B1 improves snapshot log-loss 9% over B0,outputs/runs/run-20260922T040752Z-demo/module_b/forecast_metrics.json,locked test set; study dataset,fixed landmark/H; close class rare,verified_against_run
-C04,C1 quality features add no incremental value,outputs/runs/run-20260922T040752Z-demo/module_b/forecast_metrics.json,locked test set; study dataset,quality signal may differ on real data,verified_against_run
-C05,Pipeline handles 25 boundary scenarios (T01-T25),outputs/qa/junit.xml,engineering correctness,does not imply research or filing value,verified_against_run
-C06,Real-data applicability,governance/data_permissions.json,NOT_OBTAINED,REAL-LOCAL mode disabled,not_obtained
-C07,External validation,external/status.json,NOT_OBTAINED,none obtained,not_obtained

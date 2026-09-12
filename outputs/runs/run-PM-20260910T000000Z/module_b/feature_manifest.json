@@ -1,6 +1,23 @@
 {
   "feature_version": "1.0.0",
-  "features": [],
+  "features": [
+    "age_days",
+    "payer_commercial",
+    "payer_government",
+    "payer_self",
+    "payer_unknown",
+    "billed_amount_minor",
+    "n_versions",
+    "n_corrected",
+    "n_voids",
+    "n_payments_pre_t",
+    "n_unknown_pre_t",
+    "n_status_updates_pre_t",
+    "n_closes_pre_t",
+    "n_reopens_pre_t",
+    "interval",
+    "quality_penalty"
+  ],
   "forbidden_fields": [
     "record_id",
     "true_lineage_id",

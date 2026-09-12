@@ -17,7 +17,7 @@ PY = os.path.join(ROOT, ".venv", "bin", "python")
 def test_T25_full_pipeline_smoke(tmp_path):
     env = dict(os.environ)
     # run pipeline with outputs redirected into a temp tree via cwd?
-    # run_demo writes to outputs/runs under the project root; to keep this
+    # the pipeline writes to outputs/runs under the project root; to keep this
     # test isolated we invoke it and then assert on the newest run dir.
     result = subprocess.run(
         [PY, "scripts/run_pipeline.py", "--config", "configs/reference.json"],

@@ -4,38 +4,52 @@
   "config": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/configs/reference.json",
   "data_preparation_version": "0.1.0",
   "run_id_source": "explicit",
-  "wall_clock_start": "2026-09-22T06:44:23.568832+00:00",
+  "wall_clock_start": "2026-09-22T10:52:29.816465+00:00",
   "elapsed_seconds": 0.01,
   "data_dir": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/outputs/runs/run-PM-20260910T000000Z/data",
   "schema_errors_unexpected": [],
-  "expected_dirty_intercepted": 31,
+  "expected_dirty_intercepted": 6,
   "status": "OK",
   "module_a_summary": {
-    "bills": 1034,
-    "links": 98,
-    "lineages": 936,
-    "conflicts": 31,
-    "review_queue": 3
+    "bills": 1050,
+    "links": 100,
+    "lineages": 951,
+    "conflicts": 28,
+    "review_queue": 4
   },
   "module_b_summary": {
-    "n_snapshots": 852,
-    "n_interval_rows": 3725,
+    "n_snapshots": 883,
+    "n_interval_rows": 3790,
     "models": {
       "B0_age_stage_baseline": {
         "status": "FITTED",
-        "log_loss": 0.41487451756845806,
-        "brier_three_class": 0.2225022679340313,
-        "n": 760,
-        "snap_brier": 0.4932675548048901,
-        "snap_log_loss": 0.8390089519103634,
-        "n_snapshots": 171,
+        "log_loss": 0.41727420629201,
+        "brier_three_class": 0.2482045900811998,
+        "n": 742,
+        "snap_brier": 0.4735642963770813,
+        "snap_log_loss": 0.6795940948251171,
+        "n_snapshots": 177,
         "n_abstain": 0
       },
       "B1_discrete_multinomial": {
-        "status": "INSUFFICIENT_DATA"
+        "status": "FITTED",
+        "log_loss": 0.41765156351465005,
+        "brier_three_class": 0.24897427860321328,
+        "n": 742,
+        "snap_brier": 0.4743888504944438,
+        "snap_log_loss": 0.6799228452001366,
+        "n_snapshots": 177,
+        "n_abstain": 0
       },
       "C1_quality_augmented": {
-        "status": "INSUFFICIENT_DATA"
+        "status": "FITTED",
+        "log_loss": 0.41777211908836176,
+        "brier_three_class": 0.2489891305137189,
+        "n": 742,
+        "snap_brier": 0.4744658775697467,
+        "snap_log_loss": 0.680180660907574,
+        "n_snapshots": 177,
+        "n_abstain": 0
       }
     }
   }
