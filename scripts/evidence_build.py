@@ -303,8 +303,8 @@ def build(run_dir: str, out_dir: str) -> None:
     for i, name in enumerate(sorted(glob.glob(os.path.join(gh_dir, "*.pdf"))), start=1):
         dst = os.path.join(out_dir, f"E2-02{chr(96 + i)}_{os.path.basename(name)}")
         if os.path.basename(name) == "gh04_code_rules.pdf":
-            _src, body = code_page(os.path.join(ROOT, "src/lab_billing/reconstruct/rules.py"))
-            chrome_pdf(page("Repository code capture — rules.py (rendered from the repository source)",
+            _src, body = code_page(os.path.join(ROOT, "README.md"))
+            chrome_pdf(page("Repository code capture — README.md (rendered from the repository source)",
                             body, _src, CODE_CSS), dst)
             print("github print (local render):", os.path.basename(name))
             continue

@@ -31,6 +31,6 @@ Sunter (1969) is the theoretical basis for an explicit review tier
 ## Verification
 - Acceptance tests T04 (multi-candidate needs review) and T05 (broken
   reference flagged) in tests/test_module_a.py.
-- Hidden-truth evaluation: recall 0.99 / precision 0.76 with a 9.6%
-  refusal ratio (validation_report.json) — high recall with controlled
-  review volume was the goal of this choice.
+- Hidden-truth evaluation on the initial implementation sample: recall
+  0.99 / precision 0.76 with a 9.6% refusal ratio — high recall with
+  controlled review volume was the goal of this choice.

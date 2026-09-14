@@ -1,4 +1,4 @@
-"""Constrained linkage rules (module A, v0.7).
+"""Constrained linkage rules (module A).
 
 Each rule carries an ID, input dependencies, action, conflict priority and
 source rationale. Rules only propose candidate pairs within an org and a

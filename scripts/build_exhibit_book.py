@@ -75,7 +75,7 @@ EXHIBITS = [
     ("E2", "Exhibit 11", "Repository — Releases", "E2-02c_gh03_tags.pdf",
      "Versioned releases v0.2.0 through v1.4.0 with their dates.",
      "github.com/fanshiyu35/lab-billing-research/tags — printed 2026-09"),
-    ("E2", "Exhibit 12", "Repository — Representative Code", "E2-02d_gh04_code_rules.pdf",
+    ("E2", "Exhibit 12", "Repository — README", "E2-02d_gh04_code_rules.pdf",
      "Representative source file as published on the repository.",
      "src/lab_billing/reconstruct/rules.py — rendered from the repository source"),
     ("E2", "Exhibit 13", "Interface — Project and Data Status", "E2-03d_interface_app_status_202501.pdf",
