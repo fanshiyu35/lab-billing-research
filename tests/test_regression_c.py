@@ -7,7 +7,7 @@ import pytest
 
 from lab_billing.reconstruct.amounts import AmountEngine
 from lab_billing.reconstruct.rules import generate_r3_candidates
-from lab_billing.forecast.snapshot import SnapshotBuilder
+from lab_billing.forecast.snapshot import SnapshotBuilder, _utc
 from lab_billing.forecast.models import DiscreteMultinomial, cumulative_curves
 
 
@@ -284,3 +284,67 @@ def test_p302_two_payments_same_lineage_each_fully_reversed():
     assert acc.gross_posted == 2000, acc
     assert acc.reversed == 2000, f"both payments must be fully reversed, got {acc.reversed}"
     assert acc.net_observed_posted == 0, acc
+
+
+# ------------------------------------------------------------------ C-13
+def test_c13_lineage_level_reversal_cap_pro_counterexample():
+    """Pro review finding 13: one 100-cent payment split 50/50 across two
+    lineages, reversed in two steps (1c then 99c). The cumulative reversal of
+    a lineage may not exceed its own gross attribution."""
+    eng = AmountEngine("t")
+    events = [
+        {"event_id": "P1", "event_type": "PAYMENT_POSTED", "bill_record_id": "",
+         "amount_minor": 100, "currency": "USD"},
+        {"event_id": "R1", "event_type": "PAYMENT_REVERSED", "bill_record_id": "",
+         "amount_minor": 1, "currency": "USD", "reverses_event_id": "P1"},
+        {"event_id": "R2", "event_type": "PAYMENT_REVERSED", "bill_record_id": "",
+         "amount_minor": 99, "currency": "USD", "reverses_event_id": "P1"},
+    ]
+    allocs = [
+        {"allocation_id": "A1", "payment_event_id": "P1", "bill_record_id": "B1",
+         "allocated_amount_minor": 50, "currency": "USD"},
+        {"allocation_id": "A2", "payment_event_id": "P1", "bill_record_id": "B2",
+         "allocated_amount_minor": 50, "currency": "USD"},
+    ]
+    lin_of = {"B1": "LA", "B2": "LB"}
+    out = eng.compute(events, allocs, lin_of)
+    assert out["LA"].gross_posted == 50, out["LA"]
+    assert out["LB"].gross_posted == 50, out["LB"]
+    assert out["LA"].reversed == 50, f"LA must be capped at its 50 gross, got {out['LA'].reversed}"
+    assert out["LB"].reversed == 50, f"LB must be capped at its 50 gross, got {out['LB'].reversed}"
+    assert out["LA"].net_observed_posted == 0, out["LA"]
+    assert out["LB"].net_observed_posted == 0, out["LB"]
+    assert out["LA"].reversed + out["LB"].reversed == 100, "payment fully reversed"
+
+
+# ------------------------------------------------------------------ C-14
+def test_c14_repeated_lineage_parts_aggregate_before_split():
+    """Pro finding N4: a payment whose allocations map to the SAME lineage
+    (e.g. 40 allocated + 60 unallocated remainder, both to lineage A) must
+    not produce duplicated shares that double-count on reversal."""
+    eng = AmountEngine("t")
+    events = [
+        {"event_id": "P1", "event_type": "PAYMENT_POSTED", "bill_record_id": "",
+         "amount_minor": 100, "currency": "USD"},
+        {"event_id": "R1", "event_type": "PAYMENT_REVERSED", "bill_record_id": "",
+         "amount_minor": 100, "currency": "USD", "reverses_event_id": "P1"},
+    ]
+    allocs = [
+        {"allocation_id": "A1", "payment_event_id": "P1", "bill_record_id": "B1",
+         "allocated_amount_minor": 40, "currency": "USD"},
+    ]
+    lin_of = {"B1": "LA"}
+    out = eng.compute(events, allocs, lin_of)
+    acc = out["LA"]
+    assert acc.gross_posted == 100, acc
+    assert acc.reversed == 100, f"full reversal must fully reverse, got {acc.reversed}"
+    assert acc.net_observed_posted == 0, acc
+
+
+# ------------------------------------------------------------------ C-15
+def test_c15_alloc_time_compared_chronologically_not_lexicographically():
+    """Pro finding N5: two allocation timestamps with different UTC offsets
+    must be ordered by actual instant, not by raw string comparison."""
+    a = "2023-11-05T01:30:00-04:00"   # 05:30 UTC
+    b = "2023-11-05T01:15:00-05:00"   # 06:15 UTC
+    assert _utc(a) < _utc(b), "string order would wrongly pick b; chronological order must pick a"

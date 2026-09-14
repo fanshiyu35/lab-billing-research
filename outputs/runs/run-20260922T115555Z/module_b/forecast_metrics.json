@@ -1,0 +1,46 @@
+{
+  "run_id": "run-20260922T115555Z-B",
+  "method_version": "1.0.0",
+  "n_snapshots": 961,
+  "n_interval_rows": 4106,
+  "n_train_rows": 2433,
+  "n_test_rows": 850,
+  "n_test_snapshots": 193,
+  "outcomes": {
+    "payment": 577,
+    "still_open": 376,
+    "close_no_payment": 8
+  },
+  "models": {
+    "B0_age_stage_baseline": {
+      "status": "FITTED",
+      "log_loss": 0.3987372917429596,
+      "brier_three_class": 0.2296268893620147,
+      "n": 850,
+      "snap_brier": 0.49154897182576973,
+      "snap_log_loss": 0.7116755492983594,
+      "n_snapshots": 193,
+      "n_abstain": 0
+    },
+    "B1_discrete_multinomial": {
+      "status": "FITTED",
+      "log_loss": 0.3968170477596823,
+      "brier_three_class": 0.22941166356118275,
+      "n": 850,
+      "snap_brier": 0.4882041929015912,
+      "snap_log_loss": 0.7095474261306225,
+      "n_snapshots": 193,
+      "n_abstain": 0
+    },
+    "C1_quality_augmented": {
+      "status": "FITTED",
+      "log_loss": 0.3965364386794061,
+      "brier_three_class": 0.22928583069884292,
+      "n": 850,
+      "snap_brier": 0.48867644005549926,
+      "snap_log_loss": 0.7089357277319144,
+      "n_snapshots": 193,
+      "n_abstain": 0
+    }
+  }
+}

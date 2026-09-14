@@ -1,6 +1,6 @@
 """Module B models (spec section 12).
 
-B0: transparent age/stage empirical-risk baseline (rules, not probabilities).
+B0: transparent payer-category/age-bucket empirical-risk baseline (rules, not probabilities).
 B1: discrete-time multinomial logistic regression on interval rows.
 C1: B1 plus reconstruction-quality features (candidate under test).
 

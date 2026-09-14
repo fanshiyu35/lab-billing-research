@@ -35,4 +35,4 @@ operational question.
 ## Verification
 - T16 (probabilities non-negative, sum to one, cumulative curves
   correct), tests/test_module_b.py.
-- Locked-test snapshot metrics: B1 log-loss 0.669 vs B0 0.736.
+- Locked-test snapshot metrics (run-20260922T104226Z): B1 log-loss 0.7095 vs B0 0.7117 (0.30% relative improvement, reported as neutral).

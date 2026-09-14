@@ -4,7 +4,7 @@
   "config": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/configs/reference.json",
   "data_preparation_version": "0.1.0",
   "run_id_source": "explicit",
-  "wall_clock_start": "2026-09-22T10:52:25.502438+00:00",
+  "wall_clock_start": "2026-09-23T05:25:47.378080+00:00",
   "elapsed_seconds": 0.02,
   "data_dir": "/Users/shiyufan/Desktop/\u6587\u4e66\u6279\u91cf\u5236\u4f5c agent/clients/\u5f90\u96c5\u6377/lab_billing_research/outputs/runs/run-WCP-20260910T000000Z/data",
   "schema_errors_unexpected": [],
@@ -18,37 +18,37 @@
     "review_queue": 12
   },
   "module_b_summary": {
-    "n_snapshots": 1175,
-    "n_interval_rows": 5010,
+    "n_snapshots": 1177,
+    "n_interval_rows": 5039,
     "models": {
       "B0_age_stage_baseline": {
         "status": "FITTED",
-        "log_loss": 0.45025286881948395,
-        "brier_three_class": 0.27477465386828415,
-        "n": 957,
-        "snap_brier": 0.45116110574385276,
-        "snap_log_loss": 0.6543020337465313,
-        "n_snapshots": 235,
+        "log_loss": 0.45031664753088463,
+        "brier_three_class": 0.2747212555589652,
+        "n": 964,
+        "snap_brier": 0.45256949618066755,
+        "snap_log_loss": 0.6557858409756108,
+        "n_snapshots": 236,
         "n_abstain": 0
       },
       "B1_discrete_multinomial": {
         "status": "FITTED",
-        "log_loss": 0.4507387034856437,
-        "brier_three_class": 0.27559846245878084,
-        "n": 957,
-        "snap_brier": 0.4554132470748415,
-        "snap_log_loss": 0.657866770318999,
-        "n_snapshots": 235,
+        "log_loss": 0.4509101893303061,
+        "brier_three_class": 0.2756438925047948,
+        "n": 964,
+        "snap_brier": 0.45743452314827326,
+        "snap_log_loss": 0.6603241491297168,
+        "n_snapshots": 236,
         "n_abstain": 0
       },
       "C1_quality_augmented": {
         "status": "FITTED",
-        "log_loss": 0.4508205964185302,
-        "brier_three_class": 0.2756142635752133,
-        "n": 957,
-        "snap_brier": 0.4554509398833274,
-        "snap_log_loss": 0.6582195476837311,
-        "n_snapshots": 235,
+        "log_loss": 0.45085153122731664,
+        "brier_three_class": 0.2756216746608152,
+        "n": 964,
+        "snap_brier": 0.4573326745734148,
+        "snap_log_loss": 0.6601006320809859,
+        "n_snapshots": 236,
         "n_abstain": 0
       }
     }

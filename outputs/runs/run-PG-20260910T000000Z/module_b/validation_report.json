@@ -10,6 +10,14 @@
     "precision": 0.7965,
     "recall": 0.9677,
     "refusal_ratio": 0.0424,
+    "baseline_exact_id": {
+      "predicted_pairs": 63,
+      "true_positive": 63,
+      "false_positive": 0,
+      "false_negative": 30,
+      "precision": 1.0,
+      "recall": 0.6774
+    },
     "baseline_a0_unconstrained": {
       "predicted_pairs": 1153,
       "true_positive": 0,
@@ -23,30 +31,31 @@
   "module_b": {
     "snapshots": 975,
     "test_snapshots": 195,
+    "n_censored_snapshots": 0,
     "outcomes": {
-      "payment": 561,
-      "still_open": 407,
+      "payment": 558,
+      "still_open": 410,
       "close_no_payment": 7
     },
     "models": {
       "B0_age_stage_baseline": {
         "status": "FITTED",
-        "snap_brier": 0.48661693773760745,
-        "snap_log_loss": 0.6889301619738549,
+        "snap_brier": 0.489501389337307,
+        "snap_log_loss": 0.6918389741084606,
         "n_snapshots": 195,
         "n_abstain": 0
       },
       "B1_discrete_multinomial": {
         "status": "FITTED",
-        "snap_brier": 0.501853971320956,
-        "snap_log_loss": 0.7054464076400216,
+        "snap_brier": 0.5058119226999702,
+        "snap_log_loss": 0.7098226449896026,
         "n_snapshots": 195,
         "n_abstain": 0
       },
       "C1_quality_augmented": {
         "status": "FITTED",
-        "snap_brier": 0.50180799087198,
-        "snap_log_loss": 0.7048925225148981,
+        "snap_brier": 0.505904011902689,
+        "snap_log_loss": 0.7091348376799902,
         "n_snapshots": 195,
         "n_abstain": 0
       }
@@ -54,15 +63,15 @@
   },
   "ablations": {
     "quality_features": {
-      "B1_snap_log_loss": 0.7054464076400216,
-      "C1_snap_log_loss": 0.7048925225148981,
-      "delta": -0.0006,
+      "B1_snap_log_loss": 0.7098226449896026,
+      "C1_snap_log_loss": 0.7091348376799902,
+      "delta": -0.0007,
       "interpretation": "quality features add no incremental value on the locked test set"
     },
     "candidate_vs_baseline": {
-      "B0_snap_log_loss": 0.6889301619738549,
-      "B1_snap_log_loss": 0.7054464076400216,
-      "relative_improvement": -0.024
+      "B0_snap_log_loss": 0.6918389741084606,
+      "B1_snap_log_loss": 0.7098226449896026,
+      "relative_improvement": -0.026
     }
   },
   "limitations": {

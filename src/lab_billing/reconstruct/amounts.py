@@ -110,16 +110,27 @@ class AmountEngine:
 
         def _parts(amt: int, allocs_list: list[tuple[str, int]],
                    main_lin: str) -> list[tuple[str, int]]:
-            """Attribution split of a payment amount across lineages."""
-            parts: list[tuple[str, int]] = []
+            """Attribution split of a payment amount across lineages.
+
+            Returns one entry per lineage: allocations mapping to the same
+            lineage (and any unallocated remainder) are aggregated, so
+            downstream proportional splits see each lineage exactly once."""
+            agg: dict[str, int] = {}
+            order: list[str] = []
             for bid, a_amt in allocs_list:
-                parts.append((lin_of_bill(bid), a_amt))
+                lin = lin_of_bill(bid)
+                if lin not in agg:
+                    order.append(lin)
+                agg[lin] = agg.get(lin, 0) + a_amt
             unalloc = amt - sum(a for _, a in allocs_list)
             if unalloc > 0:
-                parts.append((main_lin, unalloc))
-            if not parts:
-                parts.append((main_lin, amt))
-            return parts
+                if main_lin not in agg:
+                    order.append(main_lin)
+                agg[main_lin] = agg.get(main_lin, 0) + unalloc
+            if not agg:
+                agg[main_lin] = amt
+                order = [main_lin]
+            return [(lin, agg[lin]) for lin in order]
 
         def _distribute(total: int, parts: list[tuple[str, int]]) -> list[tuple[str, int]]:
             """Split `total` across parts in proportion to their amounts
@@ -134,6 +145,45 @@ class AmountEngine:
                 used += share
                 out_rows.append((lin, share))
             return out_rows
+
+        def _distribute_capped(total: int, parts: list[tuple[str, int]],
+                               caps: dict[str, int]) -> list[tuple[str, int]]:
+            """Split `total` across parts in proportion to their amounts, but
+            never let any lineage's cumulative reversal exceed its own gross
+            attribution (caps). Any share that would overflow a cap is
+            redistributed to lineages that still have headroom."""
+            base = sum(a for _, a in parts)
+            zeros = [(lin, 0) for lin, _ in parts]
+            if base <= 0 or total <= 0:
+                return zeros
+            used = 0
+            shares: dict[str, int] = {}
+            order = [lin for lin, _ in parts]
+            for i, (lin, a) in enumerate(parts):
+                s = total * a // base if i < len(parts) - 1 else total - used
+                used += s
+                shares[lin] = s
+            out: dict[str, int] = {}
+            overflow = 0
+            for lin in order:
+                cap = max(0, caps.get(lin, 0))
+                take = min(shares[lin], cap)
+                out[lin] = take
+                overflow += shares[lin] - take
+            while overflow > 0:
+                moved = False
+                for lin in order:
+                    if overflow <= 0:
+                        break
+                    space = caps.get(lin, 0) - out[lin]
+                    if space > 0:
+                        give = min(space, overflow)
+                        out[lin] += give
+                        overflow -= give
+                        moved = True
+                if not moved:
+                    break
+            return [(lin, out[lin]) for lin in order]
 
         # gross posted, unallocated and reversals per lineage
         payment_reversed: dict[str, int] = {}
@@ -154,7 +204,13 @@ class AmountEngine:
             if unalloc_amt > 0:
                 acc = out.setdefault(main_lin, LineageAmounts(lineage_id=main_lin))
                 acc.unallocated += unalloc_amt
+            # per-lineage gross attribution (for capping reversals) and
+            # per-lineage cumulative reversal tracker
+            gross_parts: dict[str, int] = {}
+            for lin, share in _distribute(amt, parts):
+                gross_parts[lin] = gross_parts.get(lin, 0) + share
             revs = reversal_targets.get(peid, [])
+            pay_rev: dict[str, int] = {}
             for r in revs:
                 r_amt = r.get("amount_minor") or 0
                 # per-payment reversal cap: each payment's reversals can never
@@ -164,7 +220,12 @@ class AmountEngine:
                     break
                 take = min(r_amt, remaining)
                 payment_reversed[peid] = payment_reversed.get(peid, 0) + take
-                for lin, share in _distribute(take, parts):
+                # per-lineage cap (within this payment): a lineage's cumulative
+                # reversal may not exceed its own gross attribution
+                caps = {lin: max(0, g - pay_rev.get(lin, 0))
+                        for lin, g in gross_parts.items()}
+                for lin, share in _distribute_capped(take, parts, caps):
+                    pay_rev[lin] = pay_rev.get(lin, 0) + share
                     acc = out.setdefault(lin, LineageAmounts(lineage_id=lin))
                     acc.reversed += share
 

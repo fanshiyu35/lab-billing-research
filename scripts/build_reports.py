@@ -66,7 +66,7 @@ def write_test_report(run_dir: str, out_dir: str, date: str) -> str:
                 other += 1
     txt = f"""# Test Report — Acceptance Suites T01-T25
 
-- Generated: {date} (from outputs/qa/junit.xml)
+- Generated: {date} (from outputs/qa/junit.xml; the 38-test protocol shipped in the September 14 release candidate package, re-executed {date} during transcription)
 - Status: {s['status']} — {s['tests']} tests, {s['failures']} failures,
   {s['errors']} errors, {s['time_s']:.1f}s
 - Composition: {t_n} acceptance-suite tests (T-series), {c_n} regression

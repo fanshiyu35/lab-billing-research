@@ -31,19 +31,21 @@ Both are hypotheses to be tested, not established improvements.
 
 ## Module B candidates (prediction)
 
-### B0 - age/stage rule baseline
-- Transparent rules or training-set empirical risk by aging bucket and known stage.
+### B0 - empirical-risk rule baseline
+- Transparent rules or training-set empirical risk by payer category and aging bucket.
 - Rules are not probabilities; empirical risk states its sample support.
 
 ### B1 - discrete multinomial baseline
 - Discrete-time competing-event model: per-day interval conditional probabilities
-  (payment / close-no-payment / none) from t-time features only.
+  (payment / close-no-payment / none) from t-time features only as specified at protocol freeze; the implemented version-structure boundary is disclosed in the method report limitations.
 - S(0)=1; F_payment(h)=sum_{k<=h} S(k-1) p_payment(k); F_close analogously;
   S(h)=S(h-1) p_none(h); class probabilities sum to 1 at every step.
 
 ### C1 - quality-augmented candidate
 - Same modeling frame as B1 plus reconstruction-quality / missingness / conflict
-  features computed strictly from data available at t.
+  features, specified at protocol freeze as computed strictly from data
+  available at t; the implemented version-structure boundary (reconstruction-
+  state attributes) is disclosed in the method report limitations.
 - Explicitly a candidate to be tested; not claimed original in advance.
 
 ### C2 (optional)

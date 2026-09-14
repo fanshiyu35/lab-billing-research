@@ -27,7 +27,7 @@
     "hidden truth ids"
   ],
   "leakage_guards": [
-    "features computed only from available_at <= t",
+    "event-stream features computed only from available_at <= t; version-structure attributes from the reconstruction state (disclosed)",
     "hidden ground truth directory excluded from inputs",
     "temporal grouped split keeps lineages within one split"
   ]

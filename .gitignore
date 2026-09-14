@@ -10,3 +10,8 @@ __pycache__/
 .pytest_cache/
 .idea/
 .DS_Store
+
+# local evidence artifacts (regenerated per filing; not versioned)
+evidence/
+outputs/runs/run-T25-SMOKE*
+# wall-clock research runs after the filing date are not versioned

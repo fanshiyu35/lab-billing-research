@@ -30,4 +30,4 @@ instead exercised by the multi-site data contract (D03).
 ## Verification
 - T14 (no lineage across splits), T15 (preprocessing fitted on train
   only), tests/test_module_b.py.
-- Split sizes on the reference run: 2,419 train / 846 test interval rows (192 test snapshots).
+- Split sizes on the reference run: 2,433 train / 850 test interval rows (193 test snapshots).

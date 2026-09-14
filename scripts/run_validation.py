@@ -111,9 +111,32 @@ def evaluate_module_a(data_dir: str, module_a_dir: str) -> dict:
         "precision": round(precision, 4),
         "recall": round(recall, 4),
         "refusal_ratio": round(len(rq) / (len(rq) + len(pred)), 4) if (rq or pred) else 0.0,
+        "baseline_exact_id": exact_id_baseline(data_dir, truth),
         "baseline_a0_unconstrained": a0_unconstrained_baseline(data_dir, truth),
         "note": "Truth pairs are same-lineage adjacent versions; multi-candidate "
                 "ambiguities queued for review count as neither TP nor FP.",
+    }
+
+
+def exact_id_baseline(data_dir: str, truth: set[tuple[str, str]]) -> dict:
+    """A0 exact-id baseline: link every explicit native predecessor reference
+    (previous_record_id) that stays within one organization. No chaining."""
+    bills = load_csv(os.path.join(data_dir, "bills.csv"))
+    pairs = set()
+    for b in bills:
+        prev = (b.get("previous_record_id") or "").strip()
+        if prev:
+            pairs.add((prev, b["record_id"]))
+    tp = len(pairs & truth)
+    fp = len(pairs - truth)
+    fn = len(truth - pairs)
+    return {
+        "predicted_pairs": len(pairs),
+        "true_positive": tp,
+        "false_positive": fp,
+        "false_negative": fn,
+        "precision": round(tp / len(pairs), 4) if pairs else 0.0,
+        "recall": round(tp / len(truth), 4) if truth else 0.0,
     }
 
 
@@ -143,6 +166,7 @@ def main() -> int:
         report["module_b"] = {
             "snapshots": metrics.get("n_snapshots"),
             "test_snapshots": metrics.get("n_test_snapshots"),
+            "n_censored_snapshots": metrics.get("n_censored_snapshots"),
             "outcomes": metrics.get("outcomes"),
             "models": {k: {kk: vv for kk, vv in v.items()
                            if kk in ("status", "snap_log_loss", "snap_brier",

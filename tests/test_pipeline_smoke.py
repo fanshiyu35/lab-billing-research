@@ -19,14 +19,16 @@ def test_T25_full_pipeline_smoke(tmp_path):
     # run pipeline with outputs redirected into a temp tree via cwd?
     # the pipeline writes to outputs/runs under the project root; to keep this
     # test isolated we invoke it and then assert on the newest run dir.
+    smoke_run = os.path.join(ROOT, "outputs", "runs", "run-T25-SMOKE-20250930T000000Z")
+    import shutil
+    shutil.rmtree(smoke_run, ignore_errors=True)
     result = subprocess.run(
-        [PY, "scripts/run_pipeline.py", "--config", "configs/reference.json"],
+        [PY, "scripts/run_pipeline.py", "--config", "configs/reference.json",
+         "--run-id", "run-T25-SMOKE-20250930T000000Z"],
         cwd=ROOT, capture_output=True, text=True, timeout=600, env=env,
     )
     assert result.returncode == 0, result.stdout[-2000:]
-    runs = sorted(os.listdir(os.path.join(ROOT, "outputs", "runs")))
-    newest = runs[-1]
-    out = os.path.join(ROOT, "outputs", "runs", newest)
+    out = smoke_run
     for module, files in {
         "data": ["bills.csv", "events.csv", "allocations.csv", "observation_windows.csv"],
         "module_a": ["lineages.csv", "links.csv", "conflicts.csv",
@@ -46,3 +48,5 @@ def test_T25_full_pipeline_smoke(tmp_path):
     # ground truth stays separated
     gt = os.path.join(out, "data", "_ground_truth")
     assert os.path.exists(gt)
+    # cleanup: the smoke run is a test artifact and must not persist
+    shutil.rmtree(smoke_run, ignore_errors=True)

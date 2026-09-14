@@ -8,8 +8,8 @@
 
 ## Snapshots and labels
 {
-  "payment": 576,
-  "still_open": 375,
+  "payment": 577,
+  "still_open": 376,
   "close_no_payment": 8
 }
 
@@ -17,32 +17,32 @@
 {
   "B0_age_stage_baseline": {
     "status": "FITTED",
-    "log_loss": 0.3986246761194671,
-    "brier_three_class": 0.22934425857239368,
-    "n": 846,
-    "snap_brier": 0.4943193812002867,
-    "snap_log_loss": 0.7148682447611714,
-    "n_snapshots": 192,
+    "log_loss": 0.3987372917429596,
+    "brier_three_class": 0.2296268893620147,
+    "n": 850,
+    "snap_brier": 0.49154897182576973,
+    "snap_log_loss": 0.7116755492983594,
+    "n_snapshots": 193,
     "n_abstain": 0
   },
   "B1_discrete_multinomial": {
     "status": "FITTED",
-    "log_loss": 0.39675153486654724,
-    "brier_three_class": 0.22912457318098037,
-    "n": 846,
-    "snap_brier": 0.4908483777418546,
-    "snap_log_loss": 0.7123097346939679,
-    "n_snapshots": 192,
+    "log_loss": 0.3968170477596823,
+    "brier_three_class": 0.22941166356118275,
+    "n": 850,
+    "snap_brier": 0.4882041929015912,
+    "snap_log_loss": 0.7095474261306225,
+    "n_snapshots": 193,
     "n_abstain": 0
   },
   "C1_quality_augmented": {
     "status": "FITTED",
-    "log_loss": 0.39662935474669936,
-    "brier_three_class": 0.229064186674721,
-    "n": 846,
-    "snap_brier": 0.4914677676105672,
-    "snap_log_loss": 0.7124455697623446,
-    "n_snapshots": 192,
+    "log_loss": 0.3965364386794061,
+    "brier_three_class": 0.22928583069884292,
+    "n": 850,
+    "snap_brier": 0.48867644005549926,
+    "snap_log_loss": 0.7089357277319144,
+    "n_snapshots": 193,
     "n_abstain": 0
   }
 }

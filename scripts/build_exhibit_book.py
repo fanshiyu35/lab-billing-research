@@ -123,7 +123,7 @@ def make_cover() -> fitz.Document:
     _ctext(p, y + 36, "Clinical Laboratory Settings", size=14)
     y = 330
     _ctext(p, y, "Beneficiary: Yajie Xu", size=12)
-    _ctext(p, y + 18, "Tool release: v1.4.0 (2026-09-22)", size=11)
+    _ctext(p, y + 18, "Tool release: v1.4.0 (release candidate 2026-09-14; tagged 2026-09-22)", size=11)
     _ctext(p, y + 34, "24 exhibits · sections E1-E4", size=11)
     return d
 

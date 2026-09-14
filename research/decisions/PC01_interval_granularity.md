@@ -33,5 +33,4 @@ the implementation stay in sync.
 - research/protocol_v1.json v1.1 with change_history.
 
 ## Verification
-- Post-change locked-test metrics: B1 snapshot log-loss 0.669 (B0
-  0.736); C1 shows no incremental value (reported as-is).
+- Post-change locked-test metrics (run-20260922T104226Z): B1 snapshot log-loss 0.7095 (B0 0.7117); C1 shows no incremental value (reported as-is).

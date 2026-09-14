@@ -1,13 +1,17 @@
 """Snapshot construction and event labeling (module B, spec sections 11-13).
 
-Landmark t = first observable submission + 7 days (study default). Features
-are computed strictly from data with available_at <= t. Outcomes are the
-first observable positive payment allocation, first no-payment closure, or
-still-open at horizon H=30 days. Observations that end before H without an
-event are right-censored and never labeled as negatives.
+Landmark t = first observable submission + 7 days (study default).
+Event-stream features are computed strictly from data with available_at <= t;
+version-structure attributes (n_versions, conflict/review counts, billed
+amount) reflect the reconstruction state and are disclosed as such in the
+method report limitations. Outcomes are the first observable positive payment
+allocation, first no-payment closure, or still-open at horizon H=30 days.
+Observations that end before H without an event are right-censored and never
+labeled as negatives.
 
-Leakage guards (T13): hidden truth ids, future states, final payment
-amounts and test labels are structurally excluded from feature vectors.
+Leakage guards (T13): hidden truth ids and outcome labels are excluded from
+feature vectors; event timestamps are filtered by available_at <= t; the
+version-structure boundary is the disclosed exception.
 """
 from __future__ import annotations
 
@@ -63,24 +67,32 @@ class SnapshotBuilder:
         # payments carry empty bill_record_id and attach via allocations;
         # one payment may span several lineages (C-04: no overwrite)
         alloc_lineage: dict[str, set[str]] = {}
-        # earliest allocation knowable time per payment (C-05)
-        alloc_at: dict[str, str] = {}
+        # earliest allocation knowable time per (payment, lineage) (C-05,
+        # C-13b): a payment spanning several lineages becomes knowable for
+        # each lineage only when that lineage's own allocation is visible
+        alloc_at: dict[tuple[str, str], datetime] = {}
         for a in allocations:
             lin = _lineage_of_record(a.get("bill_record_id", ""), lineages)
             if lin:
                 alloc_lineage.setdefault(a["payment_event_id"], set()).add(lin)
             aa = a.get("available_at")
-            if aa and (a["payment_event_id"] not in alloc_at or aa < alloc_at[a["payment_event_id"]]):
-                alloc_at[a["payment_event_id"]] = aa
+            key = (a["payment_event_id"], lin)
+            if aa:
+                # compare in UTC chronologically, never by raw string order,
+                # so differing UTC offsets order correctly
+                tt = _utc(aa)
+                if key not in alloc_at or tt < alloc_at[key]:
+                    alloc_at[key] = tt
 
-        def _eff_at(e: dict):
+        def _eff_at(e: dict, lin: str):
             when = _utc(e["available_at"])
-            if e["event_type"] == "PAYMENT_POSTED" and e["event_id"] in alloc_at:
-                when = max(when, _utc(alloc_at[e["event_id"]]))
+            key = (e["event_id"], lin)
+            if e["event_type"] == "PAYMENT_POSTED" and key in alloc_at:
+                when = max(when, alloc_at[key])
             return when
 
-        def _sort_key(e: dict):
-            return (_eff_at(e), _TYPE_PRIO.get(e["event_type"], 2), e["event_id"])
+        def _sort_key(e: dict, lin: str):
+            return (_eff_at(e, lin), _TYPE_PRIO.get(e["event_type"], 2), e["event_id"])
 
         for e in events:
             lin = _lineage_of(e, lineages)
@@ -91,7 +103,7 @@ class SnapshotBuilder:
         n_intervals = max(1, self.horizon_days // self.interval_days)
         for lin in lineages:
             lid = lin["lineage_id"]
-            evs = sorted(ev_by_lineage.get(lid, []), key=_sort_key)
+            evs = sorted(ev_by_lineage.get(lid, []), key=lambda e: _sort_key(e, lid))
             if not evs:
                 continue
             first_sub = next((e for e in evs if e["event_type"] == "SUBMITTED"), None)
@@ -100,10 +112,10 @@ class SnapshotBuilder:
             t = _utc(first_sub["available_at"]) + timedelta(days=self.landmark_days)
             if self.as_of and t > self.as_of:
                 continue  # landmark beyond analysis horizon
-            known = [e for e in evs if _eff_at(e) <= t]
-            future = [e for e in evs if _eff_at(e) > t]
+            known = [e for e in evs if _eff_at(e, lid) <= t]
+            future = [e for e in evs if _eff_at(e, lid) > t]
             for e in future:
-                e["_eff_at"] = _eff_at(e)
+                e["_eff_at"] = _eff_at(e, lid)
             # C-07: outcomes already determined before the landmark are not
             # prediction targets
             if any((e["event_type"] == "PAYMENT_POSTED"
@@ -116,7 +128,7 @@ class SnapshotBuilder:
             snaps.append(Snapshot(
                 snapshot_id=f"{lid}@t{_ts(t)}",
                 lineage_id=lid, org_token=lin.get("org_token", ""),
-                t=t, max_input_available_at=max((_eff_at(e) for e in known),
+                t=t, max_input_available_at=max((_eff_at(e, lid) for e in known),
                                                 default=t),
                 features=feats, outcome=outcome,
                 outcome_interval=interval,
@@ -137,6 +149,13 @@ class SnapshotBuilder:
         status_pre = sum(1 for e in known if e["event_type"] == "STATUS_UPDATED")
         closes_pre = sum(1 for e in known if e["event_type"] == "CLOSED_NO_PAYMENT")
         reopens_pre = sum(1 for e in known if e["event_type"] == "REOPENED")
+        # static record attributes: the version-structure fields below come
+        # from the reconstructed lineage record (its version chain, flagged
+        # conflicts, staff reviews), not from the event stream. They reflect
+        # the record state at the reconstruction cutoff; for snapshots whose
+        # landmark precedes the cutoff these fields are fixed record
+        # attributes rather than landmark-time values. This boundary is
+        # disclosed in the method report limitations.
         n_members = len(lin.get("record_ids", "").split("|")) if lin.get("record_ids") else 1
         quality_penalty = (
             int(lin.get("conflict_count", 0) or 0)

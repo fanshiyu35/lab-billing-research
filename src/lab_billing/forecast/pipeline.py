@@ -86,6 +86,7 @@ class ForecastPipeline:
             "run_id": self.run_id,
             "method_version": self.method_version,
             "n_snapshots": len(snaps),
+            "n_censored_snapshots": sum(1 for s in snaps if s.outcome == "censored"),
             "n_interval_rows": len(rows),
             "n_train_rows": len(split.train_rows),
             "n_test_rows": len(split.test_rows),
@@ -207,7 +208,7 @@ class ForecastPipeline:
                 "final payment amounts", "test labels", "hidden truth ids",
             ],
             "leakage_guards": [
-                "features computed only from available_at <= t",
+                "event-stream features computed only from available_at <= t; version-structure attributes from the reconstruction state (disclosed)",
                 "hidden ground truth directory excluded from inputs",
                 "temporal grouped split keeps lineages within one split",
             ],

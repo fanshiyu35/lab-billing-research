@@ -10,6 +10,14 @@
     "precision": 0.83,
     "recall": 0.9765,
     "refusal_ratio": 0.0385,
+    "baseline_exact_id": {
+      "predicted_pairs": 55,
+      "true_positive": 55,
+      "false_positive": 0,
+      "false_negative": 30,
+      "precision": 1.0,
+      "recall": 0.6471
+    },
     "baseline_a0_unconstrained": {
       "predicted_pairs": 1052,
       "true_positive": 0,
@@ -21,32 +29,33 @@
     "note": "Truth pairs are same-lineage adjacent versions; multi-candidate ambiguities queued for review count as neither TP nor FP."
   },
   "module_b": {
-    "snapshots": 883,
+    "snapshots": 884,
     "test_snapshots": 177,
+    "n_censored_snapshots": 0,
     "outcomes": {
-      "payment": 522,
-      "still_open": 352,
+      "payment": 521,
+      "still_open": 354,
       "close_no_payment": 9
     },
     "models": {
       "B0_age_stage_baseline": {
         "status": "FITTED",
-        "snap_brier": 0.4735642963770813,
-        "snap_log_loss": 0.6795940948251171,
+        "snap_brier": 0.4736807591577589,
+        "snap_log_loss": 0.6797012551140638,
         "n_snapshots": 177,
         "n_abstain": 0
       },
       "B1_discrete_multinomial": {
         "status": "FITTED",
-        "snap_brier": 0.4743888504944438,
-        "snap_log_loss": 0.6799228452001366,
+        "snap_brier": 0.4737079479836324,
+        "snap_log_loss": 0.6793584625065465,
         "n_snapshots": 177,
         "n_abstain": 0
       },
       "C1_quality_augmented": {
         "status": "FITTED",
-        "snap_brier": 0.4744658775697467,
-        "snap_log_loss": 0.680180660907574,
+        "snap_brier": 0.4737921970749083,
+        "snap_log_loss": 0.6795792168046096,
         "n_snapshots": 177,
         "n_abstain": 0
       }
@@ -54,15 +63,15 @@
   },
   "ablations": {
     "quality_features": {
-      "B1_snap_log_loss": 0.6799228452001366,
-      "C1_snap_log_loss": 0.680180660907574,
-      "delta": 0.0003,
+      "B1_snap_log_loss": 0.6793584625065465,
+      "C1_snap_log_loss": 0.6795792168046096,
+      "delta": 0.0002,
       "interpretation": "quality features add no incremental value on the locked test set"
     },
     "candidate_vs_baseline": {
-      "B0_snap_log_loss": 0.6795940948251171,
-      "B1_snap_log_loss": 0.6799228452001366,
-      "relative_improvement": -0.0005
+      "B0_snap_log_loss": 0.6797012551140638,
+      "B1_snap_log_loss": 0.6793584625065465,
+      "relative_improvement": 0.0005
     }
   },
   "limitations": {

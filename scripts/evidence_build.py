@@ -155,7 +155,7 @@ def code_page(py_path: str) -> tuple[str, str]:
                     capture_output=True, text=True).stdout.strip()[:12]
     with open(py_path, encoding="utf-8") as f:
         src = f.read()
-    return (f"{rel} — git blob {digest} — v1.4.0 (2026-09-22)",
+    return (f"{rel} — git blob {digest} — v1.4.0 (release candidate 2026-09-14)",
             f"<pre>{esc(src)}</pre>")
 
 
@@ -177,10 +177,18 @@ def build(run_dir: str, out_dir: str) -> None:
                    os.path.join(out_dir, f"E2-01{chr(96 + i)}_code_{os.path.basename(rel).replace('.py', '')}.pdf"))
         print("code print:", rel)
 
-    # GitHub evidence group (already printed with URL/date headers)
+    # GitHub evidence group (already printed with URL/date headers).
+    # gh04 (code rules repository capture) is rendered from the local source
+    # instead of the web-page print, which clips long lines.
     gh_dir = os.path.join(ROOT, "evidence", "github")
     for i, name in enumerate(sorted(glob.glob(os.path.join(gh_dir, "*.pdf"))), start=1):
         dst = os.path.join(out_dir, f"E2-02{chr(96 + i)}_{os.path.basename(name)}")
+        if os.path.basename(name) == "gh04_code_rules.pdf":
+            _src, body = code_page(os.path.join(ROOT, "src/lab_billing/reconstruct/rules.py"))
+            chrome_pdf(page("Repository code capture — rules.py (rendered from the repository source)",
+                            body, _src), dst)
+            print("github print (local render):", os.path.basename(name))
+            continue
         with open(name, "rb") as fsrc, open(dst, "wb") as fdst:
             fdst.write(fsrc.read())
         print("github print:", os.path.basename(name))
@@ -193,7 +201,7 @@ def build(run_dir: str, out_dir: str) -> None:
         pageobj = doc.new_page(width=842, height=595)  # landscape A4
         pageobj.insert_text((56, 30),
                             f"Application v1.4.0 — local interface capture "
-                            f"(Streamlit, 127.0.0.1) — 2025-01",
+                            f"(Streamlit, 127.0.0.1) — captured 2026-09 prior to release; on-screen counts reflect the pre-release run and may differ from the reference-run numbers recorded in the validation report",
                             fontsize=8, color=(0.3, 0.3, 0.3))
         pageobj.insert_image(fitz.Rect(56, 44, 786, 571), filename=png)
         doc.save(os.path.join(out_dir, f"E2-03{chr(96 + i)}_interface_{os.path.basename(png).replace('.png', '')}.pdf"))
@@ -217,7 +225,7 @@ def build(run_dir: str, out_dir: str) -> None:
         else:
             body = md_to_html(os.path.join(ROOT, md))
         chrome_pdf(page(name.replace("_", " ").title(), body,
-                        f"source: {md} — v1.4.0 (2026-09-22)"),
+                        f"source: {md} — v1.4.0 (release candidate 2026-09-14)"),
                    os.path.join(out_dir, f"{name}.pdf"))
         print("E1 piece:", name)
 

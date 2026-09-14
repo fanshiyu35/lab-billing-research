@@ -1,6 +1,6 @@
 # Data Card — Participating-Site Billing Event Records
 
-- Version: 2.0 (2026-09-22)
+- Version: 2.0 (release candidate 2026-09-14)
 
 ## Sample formation
 - 1000 billing lineages from three participating clinical

@@ -1,0 +1,84 @@
+{
+  "validation_version": "1.0",
+  "run_dir": "outputs/runs/run-20260922T104226Z",
+  "module_a": {
+    "truth_pairs": 95,
+    "predicted_pairs": 123,
+    "true_positive": 94,
+    "false_positive": 29,
+    "false_negative": 1,
+    "precision": 0.7642,
+    "recall": 0.9895,
+    "refusal_ratio": 0.0956,
+    "baseline_exact_id": {
+      "predicted_pairs": 68,
+      "true_positive": 68,
+      "false_positive": 0,
+      "false_negative": 27,
+      "precision": 1.0,
+      "recall": 0.7158
+    },
+    "baseline_a0_unconstrained": {
+      "predicted_pairs": 1164,
+      "true_positive": 2,
+      "false_positive": 1162,
+      "false_negative": 93,
+      "precision": 0.0017,
+      "recall": 0.0211
+    },
+    "note": "Truth pairs are same-lineage adjacent versions; multi-candidate ambiguities queued for review count as neither TP nor FP."
+  },
+  "module_b": {
+    "snapshots": 961,
+    "test_snapshots": 193,
+    "n_censored_snapshots": 0,
+    "outcomes": {
+      "payment": 577,
+      "still_open": 376,
+      "close_no_payment": 8
+    },
+    "models": {
+      "B0_age_stage_baseline": {
+        "status": "FITTED",
+        "snap_brier": 0.49154897182576973,
+        "snap_log_loss": 0.7116755492983594,
+        "n_snapshots": 193,
+        "n_abstain": 0
+      },
+      "B1_discrete_multinomial": {
+        "status": "FITTED",
+        "snap_brier": 0.4882041929015912,
+        "snap_log_loss": 0.7095474261306225,
+        "n_snapshots": 193,
+        "n_abstain": 0
+      },
+      "C1_quality_augmented": {
+        "status": "FITTED",
+        "snap_brier": 0.48867644005549926,
+        "snap_log_loss": 0.7089357277319144,
+        "n_snapshots": 193,
+        "n_abstain": 0
+      }
+    }
+  },
+  "ablations": {
+    "quality_features": {
+      "B1_snap_log_loss": 0.7095474261306225,
+      "C1_snap_log_loss": 0.7089357277319144,
+      "delta": -0.0006,
+      "interpretation": "quality features add no incremental value on the locked test set"
+    },
+    "candidate_vs_baseline": {
+      "B0_snap_log_loss": 0.7116755492983594,
+      "B1_snap_log_loss": 0.7095474261306225,
+      "relative_improvement": 0.003
+    }
+  },
+  "limitations": {
+    "study_scope": "All figures come from the study dataset of three participating sites. No research claim transfers to real operations.",
+    "censored_share": 0,
+    "close_class_rarity": 8,
+    "landmark_fixed": "landmark=7d and H=30d are study defaults pending business confirmation (unknowns U03/U04).",
+    "leakage_audit": "T10/T13/T14/T15 enforced: as-of truncation, forbidden fields, lineage-grouped splits, train-only preprocessing."
+  }
+}

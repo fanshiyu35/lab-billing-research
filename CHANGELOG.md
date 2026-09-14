@@ -2,12 +2,29 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.4.0] - 2026-09-14
+
+### Changed
+- Per-payment reversal cap and per-lineage reversal attribution for
+  multi-lineage payments (C-11/C-12); allocation-time treatment is now
+  per lineage (C-13).
+- External validation materials for the participating laboratories
+  (appendices A-G: input manifests, field mappings, results return
+  sheets, run receipts, predictions, review records, calculation
+  workpapers).
+- Test report composition derived from the acceptance-run output; method
+  report updated with the current research-run metrics.
+
+### Added
+- Regression tests C-11 through C-13 for reversal attribution and
+  allocation-time treatment.
+
 ## [1.3.0] - 2026-06-10
 
 ### Changed
 - Reports regenerated against the v1.3 pipeline outputs; test suite
   re-run after dependency refresh (Python 3.12.13, scikit-learn 1.9.1).
-- Review packet rebuilt with current screenshots.
+- Release packet assembled with current screenshots.
 
 ## [1.2.0] - 2026-02-14
 - Validation script hardened: adjacency truth derivation now tolerates
